@@ -1,0 +1,15 @@
+name: Sync Issue to Slack List
+
+on:
+  issues:
+    types: [opened] # 이슈가 처음 생성될 때만 실행
+
+jobs:
+  notify-slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Issue Data to Slack Workflow
+        run: |
+          curl -X POST -H "Content-type: application/json" \
+          --data '{"issue_title": "${{ github.event.issue.title }}"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
