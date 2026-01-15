@@ -24,10 +24,10 @@ export const GreetingSection = styled.section`
   justify-content: space-between;
   align-items: flex-start;
   gap: 1.5rem;
-  background-color: white;
+  background-color: ${props => props.isDarkMode ? '#1e293b' : 'white'}; /* bg-slate-800 */
   padding: 1.5rem;
   border-radius: 1.5rem;
-  border: 1px solid #f1f5f9; /* border-slate-100 */
+  border: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'}; /* border-slate-700 or slate-100 */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
 
   @media (min-width: 1024px) {
@@ -57,11 +57,11 @@ export const GreetingText = styled.div`
   h1 {
     font-size: 1.5rem; /* 2xl */
     font-weight: 700;
-    color: #1e293b; /* text-slate-800 */
+    color: ${props => props.isDarkMode ? '#f8fafc' : '#1e293b'}; /* text-slate-50 or text-slate-800 */
   }
 
   p {
-    color: #64748b; /* text-slate-500 */
+    color: ${props => props.isDarkMode ? '#94a3b8' : '#64748b'}; /* text-slate-400 or text-slate-500 */
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -155,14 +155,18 @@ export const StatsGrid = styled.div`
 `;
 
 export const StatCard = styled.div`
-  background-color: ${props => props.variant === 'primary' ? '#4f46e5' : 'white'};
+  background-color: ${props => props.variant === 'primary'
+    ? '#4f46e5'
+    : props.isDarkMode ? '#1e293b' : 'white'};
   padding: 1.5rem;
   border-radius: 1.5rem;
-  border: 1px solid ${props => props.variant === 'primary' ? 'transparent' : '#f1f5f9'};
+  border: 1px solid ${props => props.variant === 'primary'
+    ? 'transparent'
+    : props.isDarkMode ? '#334155' : '#f1f5f9'};
   box-shadow: ${props => props.variant === 'primary'
     ? '0 10px 15px -3px rgba(224, 231, 255, 0.5)'
     : '0 1px 2px 0 rgba(0, 0, 0, 0.05)'};
-  color: ${props => props.variant === 'primary' ? 'white' : '#1e293b'};
+  color: ${props => props.variant === 'primary' || props.isDarkMode ? 'white' : '#1e293b'};
   overflow: hidden;
   position: relative;
   display: flex;
@@ -261,10 +265,10 @@ export const PointButton = styled.button`
 `;
 
 export const ChartSection = styled.div`
-  background-color: white;
+  background-color: ${props => props.isDarkMode ? '#1e293b' : 'white'};
   padding: 1.5rem;
   border-radius: 1.5rem;
-  border: 1px solid #f1f5f9;
+  border: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'};
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 `;
 
@@ -284,11 +288,11 @@ export const ChartHeader = styled.div`
   div:first-child h3 {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #1e293b;
+    color: ${props => props.theme?.isDarkMode || props.isDarkMode ? '#f8fafc' : '#1e293b'};
   }
   
   div:first-child p {
-    color: #94a3b8;
+    color: ${props => props.theme?.isDarkMode || props.isDarkMode ? '#94a3b8' : '#94a3b8'}; /* Keep or update if needed */
     font-size: 0.875rem;
   }
 `;

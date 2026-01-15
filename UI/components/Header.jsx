@@ -95,7 +95,8 @@ const Header = ({
   isAdminMode,
   setIsAdminMode,
   onLogout,
-  userName
+  userName,
+  isDarkMode
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAllNotificationsModal, setShowAllNotificationsModal] = useState(false);
@@ -135,7 +136,7 @@ const Header = ({
 
   return (
     <>
-      <S.HeaderContainer isAdminMode={isAdminMode}>
+      <S.HeaderContainer isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
         <S.InnerContent>
           <S.HeaderRow>
             {/* Left Section */}
@@ -143,7 +144,7 @@ const Header = ({
               <S.BrandGroup>
                 <S.LogoBox onClick={() => onTabChange(NavItemType.DASHBOARD)}>
                   <Logo size={70} />
-                  <S.BrandText isAdminMode={isAdminMode}>
+                  <S.BrandText isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
                     Calm Desk
                     <S.RoleBadge>{isAdminMode ? "ADMIN" : "STAFF"}</S.RoleBadge>
                   </S.BrandText>
@@ -151,6 +152,7 @@ const Header = ({
 
                 <S.ModeToggleButton
                   isAdminMode={isAdminMode}
+                  isDarkMode={isDarkMode}
                   onClick={() => {
                     setIsAdminMode(!isAdminMode);
                     onTabChange(NavItemType.DASHBOARD);
@@ -175,10 +177,11 @@ const Header = ({
                     onClick={() => onTabChange(item.id)}
                     isActive={isActive}
                     isAdminMode={isAdminMode}
+                    isDarkMode={isDarkMode}
                   >
                     <item.icon size={24} />
                     <span>{item.label}</span>
-                    {isActive && <S.ActiveIndicator isAdminMode={isAdminMode} />}
+                    {isActive && <S.ActiveIndicator isAdminMode={isAdminMode} isDarkMode={isDarkMode} />}
                   </S.NavButton>
                 );
               })}
@@ -191,6 +194,7 @@ const Header = ({
                   onClick={() => onTabChange(NavItemType.MYPAGE)}
                   isActive={isMyPageActive}
                   isAdminMode={isAdminMode}
+                  isDarkMode={isDarkMode}
                 >
                   <S.ProfileAvatar
                     isActive={isMyPageActive}
@@ -199,7 +203,7 @@ const Header = ({
                     <UserCircle size={20} />
                   </S.ProfileAvatar>
                   <S.ProfileInfo>
-                    <S.ProfileName isActive={isMyPageActive} isAdminMode={isAdminMode}>
+                    <S.ProfileName isActive={isMyPageActive} isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
                       {isAdminMode ? "관리자" : `${userName} 님`}
                     </S.ProfileName>
                     <S.ProfileRole isAdminMode={isAdminMode}>
@@ -208,13 +212,14 @@ const Header = ({
                   </S.ProfileInfo>
                 </S.ProfileButton>
 
-                <S.ActionDivider isAdminMode={isAdminMode}>
+                <S.ActionDivider isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
                   {/* Notification Button & Popup */}
                   <div style={{ position: 'relative' }} ref={notificationRef}>
                     <S.IconButton
                       onClick={() => setShowNotifications(!showNotifications)}
                       active={showNotifications}
                       isAdminMode={isAdminMode}
+                      isDarkMode={isDarkMode}
                     >
                       <Bell size={20} />
                       <S.NotiDot />
@@ -255,6 +260,7 @@ const Header = ({
                     onClick={onLogout}
                     isAdminMode={isAdminMode}
                     logout
+                    isDarkMode={isDarkMode}
                   >
                     <LogOut size={20} />
                   </S.IconButton>

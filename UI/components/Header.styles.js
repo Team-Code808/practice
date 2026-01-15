@@ -29,7 +29,7 @@ export const HeaderContainer = styled.header`
   border-bottom: 1px solid;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-  ${props => props.isAdminMode ? css`
+  ${props => (props.isAdminMode || props.isDarkMode) ? css`
     background-color: #0f172a; /* slate-900 */
     border-color: #1e293b; /* slate-800 */
   ` : css`
@@ -94,7 +94,7 @@ export const BrandText = styled.span`
     display: block;
   }
   
-  ${props => props.isAdminMode ? css`color: white;` : css`color: #2563eb;`}
+  ${props => (props.isAdminMode || props.isDarkMode) ? css`color: white;` : css`color: #2563eb;`}
 `;
 
 export const RoleBadge = styled.span`
@@ -120,13 +120,18 @@ export const ModeToggleButton = styled.button`
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
     &:hover { background-color: rgba(255, 255, 255, 0.2); }
+  ` : (props.isDarkMode ? css`
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    &:hover { background-color: rgba(255, 255, 255, 0.2); }
   ` : css`
     background-color: #1e293b;
     border-color: #1e293b;
     color: white;
     &:hover { background-color: #0f172a; }
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  `}
+  `)}
 
   svg {
     width: 0.875rem; 
@@ -231,8 +236,18 @@ export const ProfileButton = styled.button`
       border-color: #1e293b;
       &:hover { border-color: #334155; }
     `}
+  ` : (props.isDarkMode ? css`
+    /* Dark Mode Staff */
+    ${props.isActive ? css`
+      background-color: rgba(37, 99, 235, 0.2);
+      border-color: #3b82f6;
+    ` : css`
+      background-color: transparent;
+      border-color: #334155;
+      &:hover { border-color: #475569; }
+    `}
   ` : css`
-    /* Staff Mode */
+    /* Staff Mode Light */
     ${props.isActive ? css`
       background-color: #eff6ff;
       border-color: #2563eb;
@@ -241,7 +256,7 @@ export const ProfileButton = styled.button`
       border-color: #f1f5f9;
       &:hover { border-color: #cbd5e1; }
     `}
-  `}
+  `)}
 `;
 
 export const ProfileAvatar = styled.div`
@@ -255,9 +270,11 @@ export const ProfileAvatar = styled.div`
   
   ${props => props.isAdminMode ? css`
     ${props.isActive ? 'background: #eef2ff; color: white;' : 'background: #1e293b; color: #64748b;'}
+  ` : (props.isDarkMode ? css`
+    ${props.isActive ? 'background: #2563eb; color: white;' : 'background: #334155; color: #94a3b8;'}
   ` : css`
     ${props.isActive ? 'background: #2563eb; color: white;' : 'background: #f1f5f9; color: #94a3b8;'}
-  `}
+  `)}
 `;
 
 export const ProfileInfo = styled.div`
@@ -277,9 +294,11 @@ export const ProfileName = styled.p`
   
   ${props => props.isAdminMode ? css`
     ${props.isActive ? 'color: #818cf8;' : 'color: #cbd5e1;'}
+  ` : (props.isDarkMode ? css`
+    ${props.isActive ? 'color: #60a5fa;' : 'color: #cbd5e1;'}
   ` : css`
     ${props.isActive ? 'color: #2563eb;' : 'color: #334155;'}
-  `}
+  `)}
 `;
 
 export const ProfileRole = styled.p`
@@ -297,7 +316,7 @@ export const ActionDivider = styled.div`
   border-left: 1px solid;
   padding-left: 0.75rem;
   
-  border-color: ${props => props.isAdminMode ? '#1e293b' : '#f1f5f9'};
+  border-color: ${props => (props.isAdminMode || props.isDarkMode) ? '#1e293b' : '#f1f5f9'};
 `;
 
 export const IconButton = styled.button`
@@ -307,11 +326,12 @@ export const IconButton = styled.button`
   transition: all 0.2s;
   
   /* Shared Base */
-  background-color: ${props => props.active ? (props.isAdminMode ? 'rgba(255,255,255,0.05)' : '#eff6ff') : 'transparent'};
-  color: ${props => props.active
-        ? (props.isAdminMode ? '#818cf8' : '#2563eb')
-        : (props.isAdminMode ? '#64748b' : '#94a3b8')
+    : (props.isDarkMode ? (props.active ? 'rgba(59, 130, 246, 0.2)' : 'transparent') : (props.active ? '#eff6ff' : 'transparent'))
     };
+  color: ${props => props.active
+    ? (props.isAdminMode ? '#818cf8' : '#60a5fa')
+    : (props.isAdminMode || props.isDarkMode ? '#64748b' : '#94a3b8')
+  };
 
   /* Hovers */
   &:hover {
@@ -427,9 +447,9 @@ export const NotiItemHeader = styled.div`
     font-weight: 900;
     transition: color 0.2s;
     ${props => props.isAdminMode
-        ? css`color: #cbd5e1; ${NotiItem}:hover & { color: #818cf8; }`
-        : css`color: #334155; ${NotiItem}:hover & { color: #2563eb; }`
-    }
+    ? css`color: #cbd5e1; ${NotiItem}:hover & { color: #818cf8; }`
+    : css`color: #334155; ${NotiItem}:hover & { color: #2563eb; }`
+  }
   }
   
   span:last-child {
@@ -457,9 +477,9 @@ export const NotiFooter = styled.div`
     transition: color 0.2s;
     
     ${props => props.isAdminMode
-        ? css`color: #64748b; &:hover { color: #818cf8; }`
-        : css`color: #94a3b8; &:hover { color: #2563eb; }`
-    }
+    ? css`color: #64748b; &:hover { color: #818cf8; }`
+    : css`color: #94a3b8; &:hover { color: #2563eb; }`
+  }
   }
 `;
 

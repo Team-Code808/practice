@@ -28,6 +28,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState(NavItemType.DASHBOARD);
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleStart = () => setAppState('AUTH');
   const handleFeatureDetails = () => setAppState('FEATURES');
@@ -58,7 +59,7 @@ const App = () => {
       if (isAdminMode) {
         return <AdminMyPage user={user} />;
       }
-      return <MyPage user={user} onNavigate={setActiveTab} />;
+      return <MyPage user={user} onNavigate={setActiveTab} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />;
     }
 
     if (activeTab === NavItemType.DASHBOARD) {
@@ -67,7 +68,7 @@ const App = () => {
       }
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <Dashboard onNavigate={setActiveTab} />
+          <Dashboard onNavigate={setActiveTab} isDarkMode={isDarkMode} />
         </div>
       );
     }
@@ -86,10 +87,11 @@ const App = () => {
     }
 
     switch (activeTab) {
-      case NavItemType.DEPARTMENT: return <Department />;
-      case NavItemType.ATTENDANCE: return <Attendance />;
-      case NavItemType.CONSULTATION: return <Consultation />;
-      case NavItemType.POINT_MALL: return <PointMall />;
+      case NavItemType.DASHBOARD: return <Dashboard isDarkMode={isDarkMode} onNavigate={setActiveTab} />;
+      case NavItemType.DEPARTMENT: return <Department isDarkMode={isDarkMode} />;
+      case NavItemType.ATTENDANCE: return <Attendance isDarkMode={isDarkMode} />;
+      case NavItemType.CONSULTATION: return <Consultation isDarkMode={isDarkMode} />;
+      case NavItemType.POINT_MALL: return <PointMall isDarkMode={isDarkMode} />;
       default:
         return <AdminPlaceholder icon={Construction} title="서비스 준비 중" description="선택하신 기능은 현재 고도화 작업 중입니다." />;
     }
@@ -100,7 +102,7 @@ const App = () => {
   if (appState === 'AUTH') return <AuthPage onLogin={handleLogin} />;
 
   return (
-    <S.AppContainer admin={isAdminMode}>
+    <S.AppContainer admin={isAdminMode} darkMode={isDarkMode}>
       <Header
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -108,6 +110,7 @@ const App = () => {
         setIsAdminMode={setIsAdminMode}
         onLogout={handleLogout}
         userName={user?.name || ''}
+        isDarkMode={isDarkMode}
       />
       <S.MainContent>
         {renderMainContent()}

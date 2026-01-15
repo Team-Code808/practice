@@ -20,8 +20,15 @@ import {
 import * as S from './Attendance.styles';
 
 const Attendance = () => {
+  // 현재 날짜 상태 관리 (년, 월) - 초기값은 2024년 3월
+  const [currentDate, setCurrentDate] = useState(new Date(2024, 2));
+
   const [selectedDay, setSelectedDay] = useState(21);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 현재 보고 있는 연도와 월
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth(); // 0 ~ 11
 
   // 기준이 되는 오늘 날짜 (데모용)
   const today = 21;
@@ -39,28 +46,47 @@ const Attendance = () => {
     { id: 3, type: '워케이션', period: '2024.03.27 - 03.28', status: '승인완료', days: '0.0일' },
   ];
 
-  const daysInMonth = 31;
-  const startDayOffset = 5;
+  // 동적으로 해당 월의 일수와 시작 요일 계산
+  const getDaysInMonth = (y, m) => new Date(y, m + 1, 0).getDate();
+  const getStartDayOffset = (y, m) => new Date(y, m, 1).getDay(); // 0(일) ~ 6(토)
+
+  const daysInMonth = getDaysInMonth(year, month);
+  const startDayOffset = getStartDayOffset(year, month);
+
+  const handlePrevMonth = () => {
+    setCurrentDate(new Date(year, month - 1, 1));
+    setSelectedDay(null); // 달이 바뀌면 선택 초기화
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate(new Date(year, month + 1, 1));
+    setSelectedDay(null); // 달이 바뀌면 선택 초기화
+  };
+
   const calendarDays = Array.from({ length: 42 }, (_, i) => {
     const day = i - startDayOffset + 1;
     if (day <= 0 || day > daysInMonth) return null;
 
     let status = 'none';
 
-    // 1. 휴가/워케이션 일정 체크 (미래 날짜 포함 우선순위 1)
-    if ([14, 25, 26].includes(day)) {
-      status = 'leave';
-    } else if ([27, 28].includes(day)) {
-      status = 'workcation';
-    }
-    // 2. 과거/현재 기록 체크
-    else if (day <= today) {
-      if ([4, 5, 6, 7, 8, 11, 12, 13, 15, 18, 20, 21, 22].includes(day)) status = 'normal';
-      if ([19].includes(day)) status = 'late';
-    }
-    // 3. 기록 없는 미래 날짜
-    else {
-      status = 'future'; // UI에서는 '미정'으로 표시
+    // Mock data는 2024년 3월 기준이므로, 현재 보고 있는 달이 2024년 3월일 때만 상태 표시
+    const isTargetMonth = year === 2024 && month === 2; // 3월은 index 2
+
+    if (isTargetMonth) {
+      if ([14, 25, 26].includes(day)) {
+        status = 'leave';
+      } else if ([27, 28].includes(day)) {
+        status = 'workcation';
+      }
+      else if (day <= today) {
+        if ([4, 5, 6, 7, 8, 11, 12, 13, 15, 18, 20, 21, 22].includes(day)) status = 'normal';
+        if ([19].includes(day)) status = 'late';
+      }
+      else {
+        status = 'future';
+      }
+    } else {
+      status = 'none';
     }
 
     return { day, status };
@@ -68,6 +94,21 @@ const Attendance = () => {
 
   const getSelectedDayDetails = () => {
     if (!selectedDay) return null;
+
+    // 선택된 날짜에 대한 정보 조회도 2024년 3월 기준 mock data
+    const isTargetMonth = year === 2024 && month === 2;
+    if (!isTargetMonth) {
+      return {
+        day: selectedDay,
+        history: null,
+        isLeave: false,
+        isWorkcation: false,
+        isFuture: false,
+        leaveType: null,
+        status: '기록 없음'
+      };
+    }
+
     const history = attendanceHistory.find(h => h.day === selectedDay);
 
     let leaveType = null;
@@ -75,7 +116,7 @@ const Attendance = () => {
     if ([25, 26].includes(selectedDay)) leaveType = '연차';
     if ([27, 28].includes(selectedDay)) leaveType = '워케이션';
 
-    const isLeave = !!leaveType; // 포괄적인 의미의 부재/특수근무
+    const isLeave = !!leaveType;
     const isWorkcation = leaveType === '워케이션';
     const isFuture = selectedDay > today;
 
@@ -132,9 +173,9 @@ const Attendance = () => {
               근태 캘린더
             </h2>
             <S.CalendarNav>
-              <button><ChevronLeft size={16} /></button>
-              <span>2024.03</span>
-              <button><ChevronRight size={16} /></button>
+              <button onClick={handlePrevMonth}><ChevronLeft size={16} /></button>
+              <span>{year}.{String(month + 1).padStart(2, '0')}</span>
+              <button onClick={handleNextMonth}><ChevronRight size={16} /></button>
             </S.CalendarNav>
           </S.CalendarHeader>
 
@@ -182,7 +223,7 @@ const Attendance = () => {
               <S.DetailsHeader>
                 <div>
                   <p>상세 현황</p>
-                  <h3>2024년 3월 {selectedDay}일</h3>
+                  <h3>{year}년 {month + 1}월 {selectedDay || ''}일</h3>
                 </div>
                 <S.StatusBadge status={details?.status} isLeave={details?.isLeave && !details?.isWorkcation}>
                   {details?.status}

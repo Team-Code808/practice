@@ -22,7 +22,6 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 2rem;
   animation: ${slideInBottom} 0.5s ease-out;
-  animation-fill-mode: both;
 `;
 
 export const BannerSection = styled.section`
@@ -423,6 +422,143 @@ export const ActionBtn = styled.button`
     ? 'background-color: #f1f5f9; color: #94a3b8; cursor: not-allowed;'
     : 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(238, 242, 255, 1); &:hover { background-color: #4338ca; }'
   }
+`;
+
+const zoomIn = keyframes`
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+`;
+
+/* Modal Styles */
+export const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  animation: ${fadeIn} 0.3s ease-out;
+`;
+
+export const ModalContainer = styled.div`
+  position: relative;
+  background-color: white;
+  width: 100%;
+  max-width: 28rem;
+  border-radius: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: ${zoomIn} 0.3s ease-out;
+`;
+
+export const ModalHeader = styled.div`
+  background-color: #4f46e5;
+  padding: 2rem;
+  color: white;
+`;
+
+export const ModalHeaderTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+`;
+
+export const IconCircle = styled.div`
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+`;
+
+export const CloseButton = styled.button`
+  padding: 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+  &:hover { background-color: rgba(255, 255, 255, 0.2); }
+`;
+
+export const ModalTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+`;
+
+export const ModalSubtitle = styled.p`
+  color: #e0e7ff;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+`;
+
+export const ModalBody = styled.div`
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+export const PurchaseInfo = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 1rem;
+  
+  .img-placeholder {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    h4 {
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    p {
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+  }
+`;
+
+export const ConfirmButton = styled.button`
+  width: 100%;
+  padding: 1rem;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 1rem;
+  font-weight: 900;
+  font-size: 1.125rem;
+  box-shadow: 0 20px 25px -5px rgba(199, 210, 254, 1);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  &:hover { background-color: #4338ca; }
+  &:active { transform: scale(0.95); }
 `;
 
 

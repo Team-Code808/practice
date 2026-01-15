@@ -30,7 +30,7 @@ import { MOCK_USER, COUPONS, NOTIFICATIONS_DATA } from '../constants';
 import { NavItemType } from '../types';
 import * as S from './MyPage.styles';
 
-const MyPage = ({ user, onNavigate, initialView }) => {
+const MyPage = ({ user, onNavigate, initialView, isDarkMode, setIsDarkMode }) => {
   const [currentView, setCurrentView] = useState('MAIN');
 
   useEffect(() => {
@@ -279,29 +279,29 @@ const MyPage = ({ user, onNavigate, initialView }) => {
           <CreditCard style={{ position: 'absolute', bottom: '-1.5rem', right: '-1.5rem', width: '12rem', height: '12rem', opacity: 0.05, transform: 'rotate(12deg)' }} />
         </S.PointSummaryCard>
 
-        <S.HistoryContainer>
-          <S.HistoryHeader>
+        <S.HistoryContainer isDarkMode={isDarkMode}>
+          <S.HistoryHeader isDarkMode={isDarkMode}>
             <S.FilterTabs>
-              <S.TabButton active={filter === 'ALL'} onClick={() => setFilter('ALL')}>전체</S.TabButton>
-              <S.TabButton active={filter === 'EARN'} onClick={() => setFilter('EARN')} color="#059669">적립</S.TabButton>
-              <S.TabButton active={filter === 'USE'} onClick={() => setFilter('USE')} color="#1e293b">사용</S.TabButton>
+              <S.TabButton active={filter === 'ALL'} onClick={() => setFilter('ALL')} isDarkMode={isDarkMode}>전체</S.TabButton>
+              <S.TabButton active={filter === 'EARN'} onClick={() => setFilter('EARN')} color="#059669" isDarkMode={isDarkMode}>적립</S.TabButton>
+              <S.TabButton active={filter === 'USE'} onClick={() => setFilter('USE')} color="#1e293b" isDarkMode={isDarkMode}>사용</S.TabButton>
             </S.FilterTabs>
             <button style={{ padding: '0.5rem', color: '#94a3b8' }}><Filter size={16} /></button>
           </S.HistoryHeader>
 
           <S.HistoryList>
             {filteredHistory.map((item) => (
-              <S.HistoryItem key={item.id}>
+              <S.HistoryItem key={item.id} isDarkMode={isDarkMode}>
                 <S.ItemLeft>
                   <S.IconBox type={item.type}>
                     {item.type === 'EARN' ? <PlusCircle size={20} /> : <MinusCircle size={20} />}
                   </S.IconBox>
-                  <S.ItemDetails>
+                  <S.ItemDetails isDarkMode={isDarkMode}>
                     <p>{item.title}</p>
                     <p>{item.date}</p>
                   </S.ItemDetails>
                 </S.ItemLeft>
-                <S.ItemRight type={item.type}>
+                <S.ItemRight type={item.type} isDarkMode={isDarkMode}>
                   <p>{item.type === 'EARN' ? '+' : ''}{item.amount.toLocaleString()} P</p>
                   <p>잔액 {item.balance.toLocaleString()} P</p>
                 </S.ItemRight>
@@ -311,7 +311,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
               <div style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8', fontSize: '0.875rem' }}>내역이 없습니다.</div>
             )}
           </S.HistoryList>
-          <S.LoadMoreButton>더 보기</S.LoadMoreButton>
+          <S.LoadMoreButton isDarkMode={isDarkMode}>더 보기</S.LoadMoreButton>
         </S.HistoryContainer>
       </S.SubPageContainer>
     );
@@ -399,7 +399,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
   return (
     <S.Container>
       <S.HeaderSection>
-        <S.TitleGroup>
+        <S.TitleGroup isDarkMode={isDarkMode}>
           <h1>마이페이지</h1>
           <p>개인 정보 및 혜택을 한곳에서 관리하세요.</p>
         </S.TitleGroup>
@@ -408,7 +408,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
       <S.MainGrid>
         {/* Left Column */}
         <S.ColLeft>
-          <S.BentoCard>
+          <S.BentoCard isDarkMode={isDarkMode}>
             <S.ProfileBento>
               <S.AvatarWrapper>
                 <S.AvatarImage>
@@ -419,7 +419,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                 </button>
               </S.AvatarWrapper>
 
-              <S.ProfileInfo>
+              <S.ProfileInfo isDarkMode={isDarkMode}>
                 <h2>{displayUser.name}</h2>
                 <p>{displayUser.position} • {displayUser.department}</p>
               </S.ProfileInfo>
@@ -457,7 +457,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
 
         {/* Right Column */}
         <S.ColRight>
-          <S.BentoCard gradient>
+          <S.BentoCard gradient isDarkMode={isDarkMode}>
             <S.StressGrid>
               <S.StressCircle>
                 <S.CircleContent>
@@ -484,8 +484,8 @@ const MyPage = ({ user, onNavigate, initialView }) => {
             </S.StressGrid>
           </S.BentoCard>
 
-          <S.BentoCard>
-            <S.SectionTitle>
+          <S.BentoCard isDarkMode={isDarkMode}>
+            <S.SectionTitle isDarkMode={isDarkMode}>
               <h3>
                 <Ticket size={22} color="#2563eb" />
                 기프티콘 보관함
@@ -496,7 +496,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
             </S.SectionTitle>
             <S.SmallCouponGrid>
               {COUPONS.slice(0, 3).map((coupon) => (
-                <S.SmallCouponCard key={coupon.id}>
+                <S.SmallCouponCard key={coupon.id} isDarkMode={isDarkMode}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '3rem', height: '3rem', borderRadius: '1rem', backgroundColor: 'rgba(0,0,0,0.05)', fontSize: '1.5rem', marginBottom: '1rem' }}>
                     {coupon.icon}
                   </div>
@@ -508,26 +508,18 @@ const MyPage = ({ user, onNavigate, initialView }) => {
           </S.BentoCard>
 
           <S.SettingsGrid>
-            <S.BentoCard>
-              <S.SectionTitle>
+            <S.BentoCard isDarkMode={isDarkMode}>
+              <S.SectionTitle isDarkMode={isDarkMode}>
                 <h3>
                   <Settings size={20} color="#94a3b8" />
                   환경 설정
                 </h3>
               </S.SectionTitle>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <S.SettingItem>
-                  <S.SettingLeft>
-                    <div><Bell size={18} /></div>
-                    <div>
-                      <p>알림 설정</p>
-                      <p>푸시 및 이메일 수신 여부</p>
-                    </div>
-                  </S.SettingLeft>
-                  <ChevronRight size={14} color="#cbd5e1" />
-                </S.SettingItem>
-                <S.SettingItem>
-                  <S.SettingLeft>
+                {/* Notification Setting Removed */}
+
+                <S.SettingItem onClick={() => setCurrentView('PROFILE')} style={{ cursor: 'pointer' }} isDarkMode={isDarkMode}>
+                  <S.SettingLeft isDarkMode={isDarkMode}>
                     <div><Lock size={18} /></div>
                     <div>
                       <p>비밀번호 변경</p>
@@ -536,24 +528,24 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                   </S.SettingLeft>
                   <ChevronRight size={14} color="#cbd5e1" />
                 </S.SettingItem>
-                <S.SettingItem>
-                  <S.SettingLeft>
+                <S.SettingItem isDarkMode={isDarkMode}>
+                  <S.SettingLeft isDarkMode={isDarkMode}>
                     <div><Moon size={18} /></div>
                     <div>
                       <p>다크 모드</p>
                       <p>눈의 피로를 덜어주는 테마</p>
                     </div>
                   </S.SettingLeft>
-                  <S.ToggleSwitch>
-                    <input type="checkbox" className="sr-only" />
-                    <S.ToggleBg />
-                    <S.ToggleDot />
+                  <S.ToggleSwitch onClick={() => setIsDarkMode(!isDarkMode)}>
+                    <input type="checkbox" className="sr-only" checked={isDarkMode} readOnly />
+                    <S.ToggleBg style={{ backgroundColor: isDarkMode ? '#4f46e5' : '#e2e8f0' }} />
+                    <S.ToggleDot style={{ transform: isDarkMode ? 'translateX(1.25rem)' : 'translateX(0)' }} />
                   </S.ToggleSwitch>
                 </S.SettingItem>
               </div>
             </S.BentoCard>
 
-            <S.BentoCard style={{ padding: 0 }}>
+            <S.BentoCard style={{ padding: 0 }} isDarkMode={isDarkMode}>
               <div style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 900, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <CreditCard size={20} color="#94a3b8" />

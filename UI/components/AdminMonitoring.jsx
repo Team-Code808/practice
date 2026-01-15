@@ -131,7 +131,7 @@ const AdminMonitoring = () => {
               </S.LegendItem>
               <S.LegendItem color="#fb7185">
                 <div />
-                <span>이슈 %</span>
+                <span>스트레스 %</span>
               </S.LegendItem>
             </S.Legend>
           </S.ChartHeader>
@@ -283,17 +283,6 @@ const AdminMonitoring = () => {
               </S.FactorItem>
             ))}
           </S.FactorsList>
-
-          <S.CommentBox>
-            <S.CommentTitle>
-              <Info size={14} color="#818cf8" />
-              전문가 코멘트
-            </S.CommentTitle>
-            <S.CommentText>
-              현재 상담 3팀의 스트레스 지수가 평균 대비 <span>18% 높게</span> 나타나고 있습니다.
-              최근 '업무량' 요인이 증가한 점을 고려할 때, 즉각적인 인원 보강 또는 업무 재분배를 권장합니다.
-            </S.CommentText>
-          </S.CommentBox>
         </S.FactorsCard>
       </S.BottomGrid>
     </S.Container>
