@@ -105,25 +105,7 @@ export const AvatarCircle = styled.div`
   &:hover { transform: scale(1.05); }
 `;
 
-export const AvatarOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.2s;
-  
-  &:hover { opacity: 1; }
-  
-  svg {
-    width: 2rem;
-    height: 2rem;
-    color: white;
-  }
-`;
+
 
 export const FormCard = styled.div`
   @media (min-width: 1024px) {
