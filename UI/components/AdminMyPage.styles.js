@@ -1,5 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 
+
 // Animations
 const fadeIn = keyframes`
   from { opacity: 0; }
@@ -23,7 +24,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  color: #e2e8f0; /* slate-200 */
+  color: #e2e8f0;
   animation: ${slideInBottom} 0.7s ease-out;
 `;
 
@@ -76,10 +77,10 @@ export const AvatarEditCard = styled.div`
   @media (min-width: 1024px) {
     grid-column: span 1 / span 1;
   }
-  background-color: #0f172a; /* slate-900 */
+  background-color: #0f172a;
   padding: 2rem;
   border-radius: 2rem;
-  border: 1px solid #1e293b; /* slate-800 */
+  border: 1px solid #1e293b;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -96,7 +97,7 @@ export const AvatarCircle = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 3.75rem; /* 6xl */
-  border: 4px solid #334155; /* slate-700 */
+  border: 4px solid #334155;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transition: transform 0.2s;
@@ -172,9 +173,9 @@ export const InputWrapper = styled.div`
   transition: all 0.2s;
   
   ${props => props.readonly
-        ? 'background-color: rgba(30, 41, 59, 0.5);'
-        : 'background-color: #1e293b; border-color: #334155; &:focus-within { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); }'
-    }
+    ? 'background-color: rgba(30, 41, 59, 0.5);'
+    : 'background-color: #1e293b; border-color: #334155; &:focus-within { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); }'
+  }
   
   svg {
     width: 1.125rem;
@@ -238,9 +239,9 @@ export const Button = styled.button`
   transition: all 0.2s;
   
   ${props => props.primary
-        ? 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(49, 46, 129, 0.2); &:hover { background-color: #4338ca; }'
-        : 'color: #64748b; &:hover { background-color: #1e293b; }'
-    }
+    ? 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(49, 46, 129, 0.2); &:hover { background-color: #4338ca; }'
+    : 'color: #64748b; &:hover { background-color: #1e293b; }'
+  }
 
   display: flex;
   align-items: center;
@@ -257,12 +258,11 @@ export const MainHeader = styled.div`
   h1 {
     font-size: 2.25rem; /* 4xl */
     font-weight: 900;
-    color: white;
+    /* color prop handled inline or inherited */
     letter-spacing: -0.025em;
   }
   
   p {
-    color: #64748b; /* slate-500 */
     font-weight: 600;
     margin-top: 0.5rem;
     text-transform: uppercase;
@@ -300,6 +300,7 @@ export const ProfileCard = styled.div`
   align-items: center;
   text-align: center;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
 `;
 
 export const ProfileAvatar = styled.div`
@@ -348,7 +349,6 @@ export const ProfileInfo = styled.div`
   h2 {
     font-size: 1.5rem; /* 2xl */
     font-weight: 900;
-    color: white;
     letter-spacing: -0.025em;
   }
   
@@ -519,6 +519,7 @@ export const CodeCard = styled.div`
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s;
 `;
 
 export const CodeContent = styled.div`
@@ -539,7 +540,6 @@ export const CodeText = styled.div`
   h3 {
     font-size: 1.25rem; /* xl */
     font-weight: 900;
-    color: white;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
@@ -547,7 +547,6 @@ export const CodeText = styled.div`
   }
   
   p {
-    color: #94a3b8; /* slate-400 */
     font-size: 0.875rem; /* sm */
     font-weight: 500;
   }
@@ -565,7 +564,6 @@ export const CodeBox = styled.div`
   span {
     font-size: 1.5rem; /* 2xl */
     font-weight: 900;
-    color: white;
     letter-spacing: 0.1em;
     font-family: monospace;
   }
@@ -603,11 +601,11 @@ export const SettingsCard = styled.div`
   padding: 2rem;
   border-radius: 2.5rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
   
   h3 {
     font-size: 1.25rem; /* xl */
     font-weight: 900;
-    color: white;
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
@@ -621,7 +619,7 @@ export const SettingsList = styled.div`
   gap: 1rem;
 `;
 
-export const SettingsItem = styled.button`
+export const SettingsItem = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -640,11 +638,16 @@ export const SettingsItem = styled.button`
     > div > div:first-child {
       color: #818cf8;
     }
-    
-    > svg {
-      color: #818cf8;
-      transform: translateX(0.25rem);
-    }
+  }
+  
+  /* Select ChevronRight when it is a direct child */
+  > svg {
+    transition: all 0.2s;
+  }
+
+  &:hover > svg {
+    color: #818cf8;
+    transform: translateX(0.25rem);
   }
 `;
 
@@ -681,53 +684,4 @@ export const TextWrapper = styled.div`
   }
 `;
 
-export const ToggleSwitch = styled.div`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  pointer-events: none;
-  
-  input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-    
-    &:checked + div {
-      background-color: #4f46e5;
-    }
-    
-    &:checked + div:after {
-      transform: translateX(100%);
-      border-color: white;
-    }
-  }
-  
-  div {
-    width: 2.75rem;
-    height: 1.5rem;
-    background-color: #334155;
-    border-radius: 9999px;
-    transition: all 0.3s;
-    position: relative;
-    
-    &:after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      background-color: white;
-      border: 1px solid #d1d5db;
-      border-radius: 9999px;
-      width: 1.25rem;
-      height: 1.25rem;
-      transition: all 0.3s;
-    }
-  }
-`;
+

@@ -95,8 +95,7 @@ const Header = ({
   isAdminMode,
   setIsAdminMode,
   onLogout,
-  userName,
-  isDarkMode
+  userName
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAllNotificationsModal, setShowAllNotificationsModal] = useState(false);
@@ -136,7 +135,7 @@ const Header = ({
 
   return (
     <>
-      <S.HeaderContainer isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
+      <S.HeaderContainer $isAdminMode={isAdminMode}>
         <S.InnerContent>
           <S.HeaderRow>
             {/* Left Section */}
@@ -144,15 +143,14 @@ const Header = ({
               <S.BrandGroup>
                 <S.LogoBox onClick={() => onTabChange(NavItemType.DASHBOARD)}>
                   <Logo size={70} />
-                  <S.BrandText isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
+                  <S.BrandText $isAdminMode={isAdminMode}>
                     Calm Desk
                     <S.RoleBadge>{isAdminMode ? "ADMIN" : "STAFF"}</S.RoleBadge>
                   </S.BrandText>
                 </S.LogoBox>
 
                 <S.ModeToggleButton
-                  isAdminMode={isAdminMode}
-                  isDarkMode={isDarkMode}
+                  $isAdminMode={isAdminMode}
                   onClick={() => {
                     setIsAdminMode(!isAdminMode);
                     onTabChange(NavItemType.DASHBOARD);
@@ -175,13 +173,12 @@ const Header = ({
                   <S.NavButton
                     key={item.id}
                     onClick={() => onTabChange(item.id)}
-                    isActive={isActive}
-                    isAdminMode={isAdminMode}
-                    isDarkMode={isDarkMode}
+                    $isActive={isActive}
+                    $isAdminMode={isAdminMode}
                   >
                     <item.icon size={24} />
                     <span>{item.label}</span>
-                    {isActive && <S.ActiveIndicator isAdminMode={isAdminMode} isDarkMode={isDarkMode} />}
+                    {isActive && <S.ActiveIndicator $isAdminMode={isAdminMode} />}
                   </S.NavButton>
                 );
               })}
@@ -192,49 +189,47 @@ const Header = ({
               <S.RightGroup>
                 <S.ProfileButton
                   onClick={() => onTabChange(NavItemType.MYPAGE)}
-                  isActive={isMyPageActive}
-                  isAdminMode={isAdminMode}
-                  isDarkMode={isDarkMode}
+                  $isActive={isMyPageActive}
+                  $isAdminMode={isAdminMode}
                 >
                   <S.ProfileAvatar
-                    isActive={isMyPageActive}
-                    isAdminMode={isAdminMode}
+                    $isActive={isMyPageActive}
+                    $isAdminMode={isAdminMode}
                   >
                     <UserCircle size={20} />
                   </S.ProfileAvatar>
                   <S.ProfileInfo>
-                    <S.ProfileName isActive={isMyPageActive} isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
+                    <S.ProfileName $isActive={isMyPageActive} $isAdminMode={isAdminMode}>
                       {isAdminMode ? "관리자" : `${userName} 님`}
                     </S.ProfileName>
-                    <S.ProfileRole isAdminMode={isAdminMode}>
+                    <S.ProfileRole $isAdminMode={isAdminMode}>
                       {isAdminMode ? "운영 총괄" : "상담 1팀"}
                     </S.ProfileRole>
                   </S.ProfileInfo>
                 </S.ProfileButton>
 
-                <S.ActionDivider isAdminMode={isAdminMode} isDarkMode={isDarkMode}>
+                <S.ActionDivider $isAdminMode={isAdminMode}>
                   {/* Notification Button & Popup */}
                   <div style={{ position: 'relative' }} ref={notificationRef}>
                     <S.IconButton
                       onClick={() => setShowNotifications(!showNotifications)}
-                      active={showNotifications}
-                      isAdminMode={isAdminMode}
-                      isDarkMode={isDarkMode}
+                      $active={showNotifications}
+                      $isAdminMode={isAdminMode}
                     >
                       <Bell size={20} />
                       <S.NotiDot />
                     </S.IconButton>
 
                     {showNotifications && (
-                      <S.NotiPopover isAdminMode={isAdminMode}>
-                        <S.NotiHeader isAdminMode={isAdminMode}>
+                      <S.NotiPopover $isAdminMode={isAdminMode}>
+                        <S.NotiHeader $isAdminMode={isAdminMode}>
                           <span>알림</span>
                           <button onClick={() => setShowNotifications(false)}>모두 읽음</button>
                         </S.NotiHeader>
                         <S.NotiList>
                           {notifications.map(notif => (
-                            <S.NotiItem key={notif.id} isAdminMode={isAdminMode}>
-                              <S.NotiItemHeader isAdminMode={isAdminMode}>
+                            <S.NotiItem key={notif.id} $isAdminMode={isAdminMode}>
+                              <S.NotiItemHeader $isAdminMode={isAdminMode}>
                                 <span>{notif.title}</span>
                                 <span>{notif.time}</span>
                               </S.NotiItemHeader>
@@ -242,7 +237,7 @@ const Header = ({
                             </S.NotiItem>
                           ))}
                         </S.NotiList>
-                        <S.NotiFooter isAdminMode={isAdminMode}>
+                        <S.NotiFooter $isAdminMode={isAdminMode}>
                           <button
                             onClick={() => {
                               setShowNotifications(false);
@@ -258,9 +253,8 @@ const Header = ({
 
                   <S.IconButton
                     onClick={onLogout}
-                    isAdminMode={isAdminMode}
-                    logout
-                    isDarkMode={isDarkMode}
+                    $isAdminMode={isAdminMode}
+                    $logout
                   >
                     <LogOut size={20} />
                   </S.IconButton>

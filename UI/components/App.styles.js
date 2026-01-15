@@ -16,11 +16,9 @@ export const AppContainer = styled.div`
   flex-direction: column;
   transition: background-color 0.5s;
   
-  ${props => props.admin
+  ${props => props.$admin
     ? 'background-color: #020617;' // slate-950
-    : props.darkMode
-      ? 'background-color: #020617; color: #e2e8f0;' // slate-950 (Match Admin)
-      : 'background-color: #f8fafc;' // slate-50/50 equivalent approx
+    : 'background-color: #f8fafc;' // slate-50/50 equivalent approx
   }
 `;
 
@@ -41,7 +39,7 @@ export const Footer = styled.footer`
   margin-top: auto;
   transition: all 0.5s;
   
-  ${props => (props.admin || props.darkMode)
+  ${props => props.$admin
     ? 'background-color: #0f172a; border-top: 1px solid #1e293b;' // slate-900 slate-800
     : 'background-color: white; border-top: 1px solid #e2e8f0;' // white slate-200
   }
@@ -94,7 +92,7 @@ export const PlaceholderIconBox = styled.div`
   justify-content: center;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
-  ${props => props.mode === 'admin'
+  ${props => props.$mode === 'admin'
     ? 'background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);'
     : 'background-color: #eef2ff; border: 1px solid #e0e7ff;' // indigo-50 indigo-100
   }
@@ -102,7 +100,7 @@ export const PlaceholderIconBox = styled.div`
   svg {
     width: 3rem;
     height: 3rem;
-    color: ${props => props.mode === 'admin' ? '#818cf8' : '#6366f1'}; // indigo-400 : indigo-500
+    color: ${props => props.$mode === 'admin' ? '#818cf8' : '#6366f1'}; // indigo-400 : indigo-500
   }
 `;
 
@@ -114,7 +112,7 @@ export const PlaceholderText = styled.div`
     font-size: 1.5rem; /* 2xl */
     font-weight: 900;
     margin-bottom: 0.5rem;
-    color: ${props => props.mode === 'admin' ? '#e2e8f0' : '#1e293b'}; // slate-200 : slate-800
+    color: ${props => props.$mode === 'admin' ? '#e2e8f0' : '#1e293b'}; // slate-200 : slate-800
   }
   
   p {

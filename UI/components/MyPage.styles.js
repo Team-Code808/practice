@@ -39,7 +39,7 @@ export const TitleGroup = styled.div`
   h1 {
     font-size: 2.25rem; /* 4xl */
     font-weight: 900;
-    color: ${props => props.isDarkMode ? '#f8fafc' : '#1e293b'}; /* slate-50 or slate-800 */
+    color: #1e293b; /* slate-800 */
     letter-spacing: -0.025em;
   }
   p {
@@ -527,17 +527,17 @@ export const Divider = styled.div`
 `;
 
 export const HistoryContainer = styled.div`
-  background-color: ${props => props.isDarkMode ? '#1e293b' : 'white'};
+  background-color: white;
   border-radius: 2rem;
-  border: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'};
+  border: 1px solid #f1f5f9;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
 `;
 
 export const HistoryHeader = styled.div`
   padding: 1rem;
-  border-bottom: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'};
-  background-color: ${props => props.isDarkMode ? 'rgba(30, 41, 59, 0.5)' : 'rgba(248, 250, 252, 0.5)'};
+  border-bottom: 1px solid #f1f5f9;
+  background-color: rgba(248, 250, 252, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -556,12 +556,12 @@ export const TabButton = styled.button`
   transition: all 0.2s;
 
   ${props => props.active ? css`
-    background-color: ${props.isDarkMode ? '#334155' : 'white'};
+    background-color: white;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
     color: ${props.color || '#1e293b'};
   ` : css`
-    color: ${props.isDarkMode ? '#94a3b8' : '#94a3b8'};
-    &:hover { color: ${props.isDarkMode ? '#e2e8f0' : '#475569'}; }
+    color: #94a3b8;
+    &:hover { color: #475569; }
   `}
 `;
 
@@ -579,7 +579,7 @@ export const HistoryItem = styled.div`
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: ${props => props.isDarkMode ? '#334155' : '#f8fafc'};
+    background-color: #f8fafc;
   }
 `;
 
@@ -610,7 +610,7 @@ export const ItemDetails = styled.div`
   p:first-child {
     font-size: 0.875rem;
     font-weight: 900;
-    color: ${props => props.isDarkMode ? '#f8fafc' : '#1e293b'};
+    color: #1e293b;
   }
   p:last-child {
     font-size: 0.625rem;
@@ -626,7 +626,7 @@ export const ItemRight = styled.div`
   p:first-child {
     font-size: 0.875rem;
     font-weight: 900;
-    color: ${props => props.type === 'EARN' ? '#059669' : (props.isDarkMode ? '#f8fafc' : '#1e293b')};
+    color: ${props => props.type === 'EARN' ? '#059669' : '#1e293b'};
   }
   p:last-child {
     font-size: 0.625rem;
@@ -642,8 +642,8 @@ export const LoadMoreButton = styled.button`
   font-size: 0.75rem;
   font-weight: 900;
   color: #64748b;
-  background-color: ${props => props.isDarkMode ? 'rgba(30, 41, 59, 0.5)' : 'rgba(248, 250, 252, 0.5)'};
-  border-top: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'};
+  background-color: rgba(248, 250, 252, 0.5);
+  border-top: 1px solid #f1f5f9;
   transition: color 0.2s;
   
   &:hover {
@@ -784,9 +784,9 @@ export const ColRight = styled.div`
 `;
 
 export const BentoCard = styled.div`
-  background-color: ${props => props.isDarkMode ? '#1e293b' : 'white'};
+  background-color: white;
   border-radius: 2rem;
-  border: 1px solid ${props => props.isDarkMode ? '#334155' : '#f1f5f9'};
+  border: 1px solid #f1f5f9;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: ${props => props.padding || '2rem'};
@@ -797,9 +797,7 @@ export const BentoCard = styled.div`
   }
 
   ${props => props.gradient && css`
-    background: ${props.isDarkMode
-      ? 'linear-gradient(to bottom right, #1e293b, #0f172a)'
-      : 'linear-gradient(to bottom right, white, rgba(248, 250, 252, 0.5))'};
+    background: linear-gradient(to bottom right, white, rgba(248, 250, 252, 0.5));
   `}
 `;
 
@@ -815,7 +813,7 @@ export const ProfileInfo = styled.div`
   h2 {
     font-size: 1.5rem;
     font-weight: 900;
-    color: ${props => props.isDarkMode ? '#f8fafc' : '#1e293b'};
+    color: #1e293b;
     letter-spacing: -0.025em;
   }
   p {
@@ -1002,7 +1000,7 @@ export const SectionTitle = styled.div`
   h3 {
     font-size: 1.25rem;
     font-weight: 900;
-    color: ${props => props.isDarkMode ? '#f8fafc' : '#1e293b'};
+    color: #1e293b;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -1033,10 +1031,10 @@ export const SmallCouponGrid = styled.div`
 `;
 
 export const SmallCouponCard = styled.div`
-  background-color: ${props => props.isDarkMode ? '#0f172a' : '#f8fafc'};
+  background-color: #f8fafc;
   border-radius: 1.5rem;
   padding: 1.5rem;
-  border: 1px solid ${props => props.isDarkMode ? '#1e293b' : '#f1f5f9'};
+  border: 1px solid #f1f5f9;
   transition: all 0.2s;
   
   &:hover {
@@ -1061,12 +1059,12 @@ export const SettingItem = styled.button`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background-color: ${props => props.isDarkMode ? '#0f172a' : '#f8fafc'};
+  background-color: #f8fafc;
   border-radius: 1rem;
   transition: all 0.2s;
   
   &:hover {
-    background-color: ${props => props.isDarkMode ? '#1e293b' : '#eff6ff'};
+    background-color: #eff6ff;
   }
 `;
 
@@ -1089,7 +1087,7 @@ export const SettingLeft = styled.div`
     p:first-child {
       font-size: 0.75rem; /* xs */
       font-weight: 900;
-      color: ${props => props.isDarkMode ? '#f8fafc' : '#334155'};
+      color: #334155;
     }
     p:last-child {
       font-size: 0.625rem; /* 10px */

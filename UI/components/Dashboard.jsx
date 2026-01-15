@@ -21,7 +21,7 @@ import {
 import { NavItemType } from '../types';
 import * as S from './Dashboard.styles';
 
-const Dashboard = ({ onNavigate, isDarkMode }) => {
+const Dashboard = ({ onNavigate }) => {
   const [isClockedIn, setIsClockedIn] = useState(false);
   const [isCoolDown, setIsCoolDown] = useState(false);
 
@@ -112,12 +112,12 @@ const Dashboard = ({ onNavigate, isDarkMode }) => {
   return (
     <S.Container>
       {/* Top Greeting & Quick Actions */}
-      <S.GreetingSection isDarkMode={isDarkMode}>
+      <S.GreetingSection>
         <S.UserInfo>
           <S.UserAvatar>
             <Smile className="w-8 h-8" />
           </S.UserAvatar>
-          <S.GreetingText isDarkMode={isDarkMode}>
+          <S.GreetingText>
             <h1>안녕하세요, 김철수 상담원님!</h1>
             <p>
               <Clock className="w-4 h-4" />
@@ -153,7 +153,7 @@ const Dashboard = ({ onNavigate, isDarkMode }) => {
 
       {/* Stats Grid */}
       <S.StatsGrid>
-        <S.StatCard align="center" isDarkMode={isDarkMode}>
+        <S.StatCard align="center">
           <S.StatHeader mb="1rem">
             <span>스트레스 지수</span>
             <AlertCircle />
@@ -162,7 +162,7 @@ const Dashboard = ({ onNavigate, isDarkMode }) => {
           <S.StatSubtext tag>매우 양호</S.StatSubtext>
         </S.StatCard>
 
-        <S.StatCard isDarkMode={isDarkMode}>
+        <S.StatCard>
           <S.StatHeader>
             <span>이번 달 출근율</span>
             <Calendar />
@@ -183,7 +183,7 @@ const Dashboard = ({ onNavigate, isDarkMode }) => {
           </S.StatContent>
         </S.StatCard>
 
-        <S.StatCard isDarkMode={isDarkMode}>
+        <S.StatCard>
           <S.StatHeader>
             <span>잔여 연차</span>
             <Info />
@@ -215,7 +215,7 @@ const Dashboard = ({ onNavigate, isDarkMode }) => {
       </S.StatsGrid>
 
       {/* Main Analysis Chart */}
-      <S.ChartSection isDarkMode={isDarkMode}>
+      <S.ChartSection>
         <S.ChartHeader>
           <div>
             <h3>주간 스트레스 분석</h3>

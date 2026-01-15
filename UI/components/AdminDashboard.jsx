@@ -37,7 +37,7 @@ import * as S from './AdminDashboard.styles';
 const deptStressData = [
   { dept: '상담 1팀', stress: 42 },
   { dept: '상담 2팀', stress: 38 },
-  { dept: '상담 3팀', stress: 95 },
+  { dept: '상담 3팀', stress: 75 },
 
   { dept: '운영지원', stress: 24 },
   { dept: '품질관리', stress: 31 },

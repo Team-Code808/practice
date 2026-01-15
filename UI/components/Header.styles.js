@@ -29,7 +29,7 @@ export const HeaderContainer = styled.header`
   border-bottom: 1px solid;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-  ${props => (props.isAdminMode || props.isDarkMode) ? css`
+  ${props => props.$isAdminMode ? css`
     background-color: #0f172a; /* slate-900 */
     border-color: #1e293b; /* slate-800 */
   ` : css`
@@ -94,7 +94,7 @@ export const BrandText = styled.span`
     display: block;
   }
   
-  ${props => (props.isAdminMode || props.isDarkMode) ? css`color: white;` : css`color: #2563eb;`}
+  ${props => props.$isAdminMode ? css`color: white;` : css`color: #2563eb;`}
 `;
 
 export const RoleBadge = styled.span`
@@ -115,12 +115,7 @@ export const ModeToggleButton = styled.button`
   font-weight: 900;
   transition: all 0.2s;
   
-  ${props => props.isAdminMode ? css`
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    &:hover { background-color: rgba(255, 255, 255, 0.2); }
-  ` : (props.isDarkMode ? css`
+  ${props => props.$isAdminMode ? css`
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
     color: white;
@@ -131,7 +126,7 @@ export const ModeToggleButton = styled.button`
     color: white;
     &:hover { background-color: #0f172a; }
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  `)}
+  `}
 
   svg {
     width: 0.875rem; 
@@ -164,17 +159,17 @@ export const NavButton = styled.button`
   gap: 0.375rem;
   transition: all 0.2s;
   
-  ${props => props.isActive ? css`
-    color: ${props.isAdminMode ? '#818cf8' : '#2563eb'}; /* indigo-400 or blue-600 */
+  ${props => props.$isActive ? css`
+    color: ${props.$isAdminMode ? '#818cf8' : '#2563eb'}; /* indigo-400 or blue-600 */
     
     svg {
       stroke-width: 2.5px;
     }
   ` : css`
-    color: ${props.isAdminMode ? '#64748b' : '#94a3b8'}; /* slate-500 or slate-400 */
+    color: ${props.$isAdminMode ? '#64748b' : '#94a3b8'}; /* slate-500 or slate-400 */
     
     &:hover {
-      color: ${props.isAdminMode ? '#cbd5e1' : '#475569'}; /* slate-300 or slate-600 */
+      color: ${props.$isAdminMode ? '#cbd5e1' : '#475569'}; /* slate-300 or slate-600 */
     }
     
     svg {
@@ -197,7 +192,7 @@ export const ActiveIndicator = styled.div`
   height: 0.25rem;
   border-radius: 9999px;
   animation: ${zoomIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  background-color: ${props => props.isAdminMode ? '#818cf8' : '#2563eb'};
+  background-color: ${props => props.$isAdminMode ? '#818cf8' : '#2563eb'};
 `;
 
 /* Right Section */
@@ -226,9 +221,9 @@ export const ProfileButton = styled.button`
   transition: all 0.2s;
   border: 2px solid;
 
-  ${props => props.isAdminMode ? css`
+  ${props => props.$isAdminMode ? css`
     /* Admin Mode */
-    ${props.isActive ? css`
+    ${props.$isActive ? css`
       background-color: rgba(238, 242, 255, 0.1);
       border-color: #6366f1; /* indigo-500 */
     ` : css`
@@ -236,19 +231,9 @@ export const ProfileButton = styled.button`
       border-color: #1e293b;
       &:hover { border-color: #334155; }
     `}
-  ` : (props.isDarkMode ? css`
-    /* Dark Mode Staff */
-    ${props.isActive ? css`
-      background-color: rgba(37, 99, 235, 0.2);
-      border-color: #3b82f6;
-    ` : css`
-      background-color: transparent;
-      border-color: #334155;
-      &:hover { border-color: #475569; }
-    `}
   ` : css`
     /* Staff Mode Light */
-    ${props.isActive ? css`
+    ${props.$isActive ? css`
       background-color: #eff6ff;
       border-color: #2563eb;
     ` : css`
@@ -256,7 +241,7 @@ export const ProfileButton = styled.button`
       border-color: #f1f5f9;
       &:hover { border-color: #cbd5e1; }
     `}
-  `)}
+  `}
 `;
 
 export const ProfileAvatar = styled.div`
@@ -268,13 +253,11 @@ export const ProfileAvatar = styled.div`
   justify-content: center;
   transition: colors 0.2s;
   
-  ${props => props.isAdminMode ? css`
-    ${props.isActive ? 'background: #eef2ff; color: white;' : 'background: #1e293b; color: #64748b;'}
-  ` : (props.isDarkMode ? css`
-    ${props.isActive ? 'background: #2563eb; color: white;' : 'background: #334155; color: #94a3b8;'}
+  ${props => props.$isAdminMode ? css`
+    ${props.$isActive ? 'background: #eef2ff; color: white;' : 'background: #1e293b; color: #64748b;'}
   ` : css`
-    ${props.isActive ? 'background: #2563eb; color: white;' : 'background: #f1f5f9; color: #94a3b8;'}
-  `)}
+    ${props.$isActive ? 'background: #2563eb; color: white;' : 'background: #f1f5f9; color: #94a3b8;'}
+  `}
 `;
 
 export const ProfileInfo = styled.div`
@@ -292,13 +275,11 @@ export const ProfileName = styled.p`
   line-height: 1;
   margin-bottom: 0.125rem;
   
-  ${props => props.isAdminMode ? css`
-    ${props.isActive ? 'color: #818cf8;' : 'color: #cbd5e1;'}
-  ` : (props.isDarkMode ? css`
-    ${props.isActive ? 'color: #60a5fa;' : 'color: #cbd5e1;'}
+  ${props => props.$isAdminMode ? css`
+    ${props.$isActive ? 'color: #818cf8;' : 'color: #cbd5e1;'}
   ` : css`
-    ${props.isActive ? 'color: #2563eb;' : 'color: #334155;'}
-  `)}
+    ${props.$isActive ? 'color: #2563eb;' : 'color: #334155;'}
+  `}
 `;
 
 export const ProfileRole = styled.p`
@@ -306,7 +287,7 @@ export const ProfileRole = styled.p`
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.05em;
-  color: ${props => props.isAdminMode ? '#64748b' : '#94a3b8'};
+  color: ${props => props.$isAdminMode ? '#64748b' : '#94a3b8'};
 `;
 
 export const ActionDivider = styled.div`
@@ -316,7 +297,7 @@ export const ActionDivider = styled.div`
   border-left: 1px solid;
   padding-left: 0.75rem;
   
-  border-color: ${props => (props.isAdminMode || props.isDarkMode) ? '#1e293b' : '#f1f5f9'};
+  border-color: ${props => props.$isAdminMode ? '#1e293b' : '#f1f5f9'};
 `;
 
 export const IconButton = styled.button`
@@ -326,28 +307,27 @@ export const IconButton = styled.button`
   transition: all 0.2s;
   
   /* Shared Base */
-    : (props.isDarkMode ? (props.active ? 'rgba(59, 130, 246, 0.2)' : 'transparent') : (props.active ? '#eff6ff' : 'transparent'))
-    };
-  color: ${props => props.active
-    ? (props.isAdminMode ? '#818cf8' : '#60a5fa')
-    : (props.isAdminMode || props.isDarkMode ? '#64748b' : '#94a3b8')
+  background-color: ${props => props.$active ? '#eff6ff' : 'transparent'};
+  color: ${props => props.$active
+    ? (props.$isAdminMode ? '#818cf8' : '#60a5fa')
+    : (props.$isAdminMode ? '#64748b' : '#94a3b8')
   };
 
   /* Hovers */
   &:hover {
-    ${props => props.isAdminMode ? css`
+    ${props => props.$isAdminMode ? css`
       color: #818cf8;
       background-color: rgba(255,255,255,0.05);
     ` : css`
-      color: ${props.logout ? '#f87171' : '#2563eb'};
-      background-color: ${props.logout ? '#fef2f2' : '#eff6ff'};
+      color: ${props.$logout ? '#f87171' : '#2563eb'};
+      background-color: ${props.$logout ? '#fef2f2' : '#eff6ff'};
     `}
   }
   
   /* Specific override for logout hover text color logic if needed more strictly */
-  ${props => props.logout && css`
+  ${props => props.$logout && css`
     &:hover {
-        color: ${props.isAdminMode ? '#f87171' : '#ef4444'}; /* red-400 or red-500 */
+        color: ${props.$isAdminMode ? '#f87171' : '#ef4444'}; /* red-400 or red-500 */
     }
   `}
 `;
@@ -377,7 +357,7 @@ export const NotiPopover = styled.div`
   z-index: 100;
   animation: ${slideInTop} 0.2s ease-out;
 
-  ${props => props.isAdminMode ? css`
+  ${props => props.$isAdminMode ? css`
     background-color: #0f172a;
     border-color: #1e293b;
   ` : css`
@@ -393,7 +373,7 @@ export const NotiHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   
-  ${props => props.isAdminMode ? css`
+  ${props => props.$isAdminMode ? css`
     border-color: #1e293b;
     background-color: rgba(30, 41, 59, 0.5);
     span { color: white; }
@@ -427,7 +407,7 @@ export const NotiItem = styled.div`
   transition: background-color 0.2s;
   cursor: pointer;
   
-  ${props => props.isAdminMode ? css`
+  ${props => props.$isAdminMode ? css`
     border-color: #1e293b;
     &:hover { background-color: #1e293b; }
   ` : css`
@@ -446,7 +426,7 @@ export const NotiItemHeader = styled.div`
     font-size: 0.75rem;
     font-weight: 900;
     transition: color 0.2s;
-    ${props => props.isAdminMode
+    ${props => props.$isAdminMode
     ? css`color: #cbd5e1; ${NotiItem}:hover & { color: #818cf8; }`
     : css`color: #334155; ${NotiItem}:hover & { color: #2563eb; }`
   }
@@ -469,14 +449,14 @@ export const NotiFooter = styled.div`
   padding: 0.75rem;
   text-align: center;
   
-  ${props => props.isAdminMode ? 'background-color: rgba(30, 41, 59, 0.5);' : 'background-color: rgba(248, 250, 252, 0.5);'}
+  ${props => props.$isAdminMode ? 'background-color: rgba(30, 41, 59, 0.5);' : 'background-color: rgba(248, 250, 252, 0.5);'}
   
   button {
     font-size: 0.75rem;
     font-weight: 700;
     transition: color 0.2s;
     
-    ${props => props.isAdminMode
+    ${props => props.$isAdminMode
     ? css`color: #64748b; &:hover { color: #818cf8; }`
     : css`color: #94a3b8; &:hover { color: #2563eb; }`
   }

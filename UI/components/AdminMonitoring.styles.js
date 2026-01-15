@@ -169,9 +169,9 @@ export const TrendBadge = styled.div`
   font-weight: 900;
   
   ${props => props.trend === 'up'
-        ? 'color: #fb7185;' /* rose-400 */
-        : 'color: #34d399;' /* emerald-400 */
-    }
+    ? 'color: #fb7185;' /* rose-400 */
+    : 'color: #34d399;' /* emerald-400 */
+  }
 `;
 
 export const BackgroundIcon = styled.div`
@@ -443,33 +443,4 @@ export const FactorBarFill = styled.div`
   transition: width 1s ease-out;
 `;
 
-export const CommentBox = styled.div`
-  margin-top: auto;
-  padding: 1.25rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 2rem;
-  border: 1px dashed rgba(255, 255, 255, 0.05);
-`;
 
-export const CommentTitle = styled.p`
-  font-size: 0.6875rem; /* 11px */
-  font-weight: 900;
-  color: #64748b;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-export const CommentText = styled.p`
-  font-size: 0.75rem; /* xs */
-  color: #94a3b8; /* slate-400 */
-  line-height: 1.625;
-  font-weight: 500;
-  
-  span {
-    color: #fb7185;
-    font-weight: 900;
-  }
-`;
