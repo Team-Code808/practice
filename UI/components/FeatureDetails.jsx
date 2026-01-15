@@ -93,7 +93,7 @@ const FeatureDetails = ({ onBack, onStart }) => {
                             위험 수치에 도달하면 즉시 휴식을 제안하고, 전문 상담사와의 연결을 도와줍니다.
                         </S.FeatureDesc>
                         <S.FeatureList>
-                            {['AI 기반 감정 분석', '위험군 자동 알림 시스템', '전문 심리 상담 연계'].map((item) => (
+                            {['데이터 기반 감정 분석', '위험군 자동 알림 시스템', '전문 심리 상담 연계'].map((item) => (
                                 <S.FeatureListItem key={item}>
                                     <S.CheckIcon color="rose"><Check size={14} /></S.CheckIcon>
                                     {item}
@@ -118,7 +118,7 @@ const FeatureDetails = ({ onBack, onStart }) => {
                             모은 포인트로 기프티콘을 구매하거나 휴가권으로 교환하세요.
                         </S.FeatureDesc>
                         <S.FeatureList>
-                            {['일일/주간 미션 시스템', '포인트 쇼핑몰', '성과 배지 & 랭킹'].map((item) => (
+                            {['미션 시스템', '포인트 쇼핑몰', '다양한 리워드 제공'].map((item) => (
                                 <S.FeatureListItem key={item}>
                                     <S.CheckIcon color="amber"><Check size={14} /></S.CheckIcon>
                                     {item}

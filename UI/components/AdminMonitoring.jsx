@@ -71,7 +71,7 @@ const AdminMonitoring = () => {
             <Activity size={28} color="#818cf8" />
             심층 분석 레포트
           </h2>
-          <p>Advanced Emotional Intelligence Analytics</p>
+          <p>Advanced Emotional Analytics</p>
         </S.TitleBox>
         <S.HeaderControls>
           <S.PeriodButton>
