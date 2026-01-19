@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Users,
   Mail,
-  MoreVertical,
   Phone,
   ArrowRight,
   ChevronDown
@@ -115,12 +114,7 @@ const Department = () => {
                   </S.ContactItem>
                 </S.ContactInfo>
 
-                {/* Actions */}
-                <S.ActionGroup>
-                  <S.MoreButton>
-                    <MoreVertical size={20} />
-                  </S.MoreButton>
-                </S.ActionGroup>
+
               </S.CardInner>
             </S.MemberCard>
           ))}
