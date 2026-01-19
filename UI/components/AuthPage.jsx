@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Sparkles,
   Mail,
@@ -39,6 +40,7 @@ const generateRandomCode = () => {
 };
 
 const AuthPage = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState('LOGIN');
   const [formData, setFormData] = useState({
     id: '',
@@ -516,6 +518,13 @@ const AuthPage = ({ onLogin }) => {
 
         {/* Auth Form Container */}
         <S.FormContainer>
+          {step === 'LOGIN' && (
+            <div style={{ marginBottom: '1rem' }}>
+              <S.BackButton type="button" onClick={() => navigate('/')}>
+                <ChevronLeft size={20} />
+              </S.BackButton>
+            </div>
+          )}
           <S.FormHeader>
             <h3>
               {step === 'LOGIN' ? '로그인' : '회원가입'}
@@ -524,7 +533,6 @@ const AuthPage = ({ onLogin }) => {
               {step === 'LOGIN' ? '계정 정보를 입력해 주세요.' : '새로운 계정 생성을 시작합니다.'}
             </p>
           </S.FormHeader>
-
           {renderContent()}
         </S.FormContainer>
       </S.Card>

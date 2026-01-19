@@ -134,23 +134,20 @@ const App = () => {
                     <Route path="monitoring" element={<AdminMonitoring />} />
                     <Route path="applications" element={<AdminApplications />} />
                     <Route path="mypage" element={<AdminMyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>
                 )}
 
                 {/* Staff Routes */}
                 {!isAdminMode && (
                   <>
-                    <Route path="dashboard" element={<Dashboard onNavigate={(tab) => {
-                      // Handle internal dashboard navigation if any, or remove onNavigate prop from Dashboard
-                      if (tab === NavItemType.POINT_MALL) navigate('/app/pointmall');
-                    }} />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="department" element={<Department />} />
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="consultation" element={<Consultation />} />
                     <Route path="pointmall" element={<PointMall />} />
                     <Route path="mypage/*" element={<MyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>
                 )}
               </Routes>

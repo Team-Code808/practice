@@ -95,7 +95,7 @@ export const StatsGrid = styled.div`
   }
   
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 
@@ -147,6 +147,7 @@ export const IconBox = styled.div`
   ${props => props.color === 'rose' && 'color: #fb7185;'}
   ${props => props.color === 'orange' && 'color: #fb923c;'}
   ${props => props.color === 'emerald' && 'color: #34d399;'}
+  ${props => props.color === 'violet' && 'color: #a78bfa;'}
 `;
 
 export const StatValueRow = styled.div`
