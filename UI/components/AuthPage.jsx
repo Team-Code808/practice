@@ -183,6 +183,7 @@ const AuthPage = ({ onLogin }) => {
               <S.InputGroup>
                 <label>이름</label>
                 <S.Input
+                  noIcon
                   type="text"
                   required
                   placeholder="이름"
@@ -193,6 +194,7 @@ const AuthPage = ({ onLogin }) => {
               <S.InputGroup>
                 <label>연락처</label>
                 <S.Input
+                  noIcon
                   type="tel"
                   required
                   placeholder="010-0000-0000"
@@ -205,6 +207,7 @@ const AuthPage = ({ onLogin }) => {
             <S.InputGroup>
               <label>아이디 (이메일)</label>
               <S.Input
+                noIcon
                 type="email"
                 required
                 placeholder="example@company.com"
@@ -216,6 +219,7 @@ const AuthPage = ({ onLogin }) => {
             <S.InputGroup>
               <label>비밀번호</label>
               <S.Input
+                noIcon
                 type="password"
                 required
                 placeholder="8자 이상 입력"
@@ -392,6 +396,7 @@ const AuthPage = ({ onLogin }) => {
               <label>부서</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <S.Select
+                  noIcon
                   required
                   value={isCustomDept ? 'custom' : formData.department}
                   onChange={(e) => {
@@ -414,6 +419,7 @@ const AuthPage = ({ onLogin }) => {
                 </S.Select>
                 {isCustomDept && (
                   <S.Input
+                    noIcon
                     type="text"
                     required
                     placeholder="부서명 직접 입력"
@@ -429,6 +435,7 @@ const AuthPage = ({ onLogin }) => {
               <label>직급 / 직책</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <S.Select
+                  noIcon
                   required
                   value={isCustomPos ? 'custom' : formData.position}
                   onChange={(e) => {
@@ -451,6 +458,7 @@ const AuthPage = ({ onLogin }) => {
                 </S.Select>
                 {isCustomPos && (
                   <S.Input
+                    noIcon
                     type="text"
                     required
                     placeholder="직급 직접 입력"

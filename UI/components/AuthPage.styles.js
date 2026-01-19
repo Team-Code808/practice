@@ -254,6 +254,10 @@ export const Input = styled.input`
     cursor: not-allowed;
     background-color: #f1f5f9;
   `}
+
+  ${props => props.noIcon && css`
+    padding-left: 1rem;
+  `}
 `;
 
 export const Select = styled.select`
@@ -273,6 +277,10 @@ export const Select = styled.select`
   &:focus {
     border-color: ${props => props.variant === 'indigo' ? '#4f46e5' : '#2563eb'};
   }
+
+  ${props => props.noIcon && css`
+    padding-left: 1rem;
+  `}
 `;
 
 export const SubmitButton = styled.button`
