@@ -75,7 +75,8 @@ export const StatusBadge = styled.span`
 `;
 
 export const ActionGroup = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 12rem);
   align-items: center;
   gap: 0.75rem;
   width: 100%;
@@ -86,7 +87,6 @@ export const ActionGroup = styled.div`
 `;
 
 export const ActionButton = styled.button`
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,10 +95,8 @@ export const ActionButton = styled.button`
   border-radius: 1rem;
   font-weight: 700;
   transition: all 0.2s;
-
-  @media (min-width: 1024px) {
-    flex: none;
-  }
+  white-space: nowrap;
+  width: 100%;
 
   /* Default / Inactive Clock State */
   ${props => props.variant === 'primary' && css`
@@ -113,6 +111,14 @@ export const ActionButton = styled.button`
     background-color: #f1f5f9; /* bg-slate-100 */
     color: #475569; /* text-slate-600 */
     &:hover { background-color: #e2e8f0; }
+  `}
+
+  /* Active Away State */
+  ${props => props.variant === 'away' && css`
+    background-color: #f59e0b; /* bg-amber-500 */
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.5); /* shadow-amber-300 */
+    &:hover { background-color: #d97706; }
   `}
 
   /* Active CoolDown State */

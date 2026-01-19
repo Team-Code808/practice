@@ -1161,6 +1161,7 @@ export const PointCard = styled.div`
     margin-top: 2rem;
     padding: 0.5rem 1rem;
     background-color: rgba(255,255,255,0.1);
+    color: white; /* Added explicit white color */
     border-radius: 0.75rem;
     font-size: 0.625rem;
     font-weight: 900;

@@ -15,7 +15,8 @@ import {
   Send,
   Heart,
   MessageSquare,
-  SmilePlus
+  SmilePlus,
+  Pause
 } from 'lucide-react';
 
 import { NavItemType } from '../types';
@@ -23,6 +24,7 @@ import * as S from './Dashboard.styles';
 
 const Dashboard = ({ onNavigate }) => {
   const [isClockedIn, setIsClockedIn] = useState(false);
+  const [isAway, setIsAway] = useState(false);
   const [isCoolDown, setIsCoolDown] = useState(false);
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -109,6 +111,10 @@ const Dashboard = ({ onNavigate }) => {
     setTimeout(() => setIsCoolDown(false), 600000);
   };
 
+  const handleAway = () => {
+    setIsAway(!isAway);
+  };
+
   return (
     <S.Container>
       {/* Top Greeting & Quick Actions */}
@@ -140,8 +146,17 @@ const Dashboard = ({ onNavigate }) => {
           </S.ActionButton>
 
           <S.ActionButton
-            onClick={handleCoolDown}
+            onClick={handleAway}
+            variant={isAway ? 'away' : 'neutral'}
             disabled={!isClockedIn || isCoolDown}
+          >
+            <Pause className="w-4 h-4" />
+            {isAway ? "자리비움 해제" : "자리비움"}
+          </S.ActionButton>
+
+          <S.ActionButton
+            onClick={handleCoolDown}
+            disabled={!isClockedIn || isCoolDown || isAway}
             variant={!isCoolDown && isClockedIn ? 'orange' : undefined}
             cooldownActive={isCoolDown}
           >
