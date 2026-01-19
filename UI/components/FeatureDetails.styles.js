@@ -261,6 +261,7 @@ export const CheckIcon = styled.div`
 
   ${props => props.color === 'rose' && css`background-color: #ffe4e6; color: #e11d48;`}
   ${props => props.color === 'amber' && css`background-color: #fef3c7; color: #d97706;`}
+  ${props => props.color === 'indigo' && css`background-color: #e0e7ff; color: #4338ca;`}
 `;
 
 export const PointBalanceCard = styled.div`
@@ -294,57 +295,7 @@ export const PointBalanceCard = styled.div`
   }
 `;
 
-export const AdminSection = styled.section`
-  background-color: #f8fafc;
-  border-radius: 4rem;
-  padding: 3rem;
-  text-align: center;
-  
-  @media (min-width: 1024px) {
-    padding: 5rem;
-  }
-`;
 
-export const AdminContent = styled.div`
-  max-width: 48rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  
-  h2 {
-    font-size: 2.25rem;
-    font-weight: 900;
-    color: #0f172a;
-    letter-spacing: -0.025em;
-    @media (min-width: 1024px) { font-size: 3rem; }
-  }
-  
-  p {
-    font-size: 1.25rem;
-    color: #64748b;
-    font-weight: 500;
-    line-height: 1.625;
-  }
-`;
-
-export const AdminButton = styled.button`
-  padding: 1rem 2rem;
-  background-color: #4f46e5;
-  color: white;
-  border-radius: 1rem;
-  font-weight: 900;
-  font-size: 1.125rem;
-  box-shadow: 0 20px 25px -5px rgba(199, 210, 254, 1);
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  
-  &:hover { background-color: #4338ca; }
-`;
 
 export const Footer = styled.footer`
   background-color: #0f172a;

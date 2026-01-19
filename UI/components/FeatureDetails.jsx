@@ -5,7 +5,10 @@ import {
     BarChart3,
     Smile,
     Check,
-    ArrowRight
+    ArrowRight,
+    Activity,
+    CalendarCheck,
+    MessageSquare
 } from 'lucide-react';
 import Logo from './Logo';
 import * as S from './FeatureDetails.styles';
@@ -129,26 +132,71 @@ const FeatureDetails = ({ onBack, onStart }) => {
                 </S.FeatureSection>
 
                 {/* Feature 3: Admin Dashboard */}
-                <S.AdminSection>
-                    <S.AdminContent>
+                <S.FeatureSection>
+                    <S.FeatureImageWrapper order={2}>
+                        <S.FeatureCard skew>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem' }}>
+                                <S.CardItem>
+                                    <S.ItemIcon color="indigo">
+                                        <Activity size={24} />
+                                    </S.ItemIcon>
+                                    <S.ItemText>
+                                        <h4>평균 스트레스</h4>
+                                        <p>34% <span style={{ color: '#818cf8', fontWeight: 700 }}>▼ 4% (안정)</span></p>
+                                    </S.ItemText>
+                                </S.CardItem>
+                                <S.CardItem opacity={0.9}>
+                                    <S.ItemIcon color="blue">
+                                        <CalendarCheck size={24} />
+                                    </S.ItemIcon>
+                                    <S.ItemText>
+                                        <h4>전체 출근률</h4>
+                                        <p>94.2% <span style={{ color: '#3b82f6', fontWeight: 700 }}>▲ 2.1%</span></p>
+                                    </S.ItemText>
+                                </S.CardItem>
+                                <S.CardItem opacity={0.8}>
+                                    <S.ItemIcon color="amber">
+                                        <MessageSquare size={24} />
+                                    </S.ItemIcon>
+                                    <S.ItemText>
+                                        <h4>상담 요청</h4>
+                                        <p>12건 (오늘 기준)</p>
+                                    </S.ItemText>
+                                </S.CardItem>
+                                <S.CardItem opacity={0.7}>
+                                    <S.ItemIcon color="rose">
+                                        <HeartPulse size={24} />
+                                    </S.ItemIcon>
+                                    <S.ItemText>
+                                        <h4>스트레스 고위험군</h4>
+                                        <p>5명 (집중 케어 필요)</p>
+                                    </S.ItemText>
+                                </S.CardItem>
+                            </div>
+                        </S.FeatureCard>
+                    </S.FeatureImageWrapper>
+                    <S.FeatureContent order={1}>
                         <S.FeatureIcon color="white">
                             <BarChart3 size={40} />
                         </S.FeatureIcon>
-                        <h2>
+                        <S.FeatureTitle>
                             데이터 기반의 <br />
                             스마트한 조직 관리
-                        </h2>
-                        <p>
+                        </S.FeatureTitle>
+                        <S.FeatureDesc>
                             팀원들의 컨디션 현황을 한눈에 파악하고, 데이터에 기반하여 업무를 배분하세요.
                             조직 전체의 건강한 문화를 만드는 인사이트를 제공합니다.
-                        </p>
-                        <div style={{ marginTop: '2rem' }}>
-                            <S.AdminButton onClick={onStart}>
-                                관리자 모드 체험하기 <ArrowRight size={20} />
-                            </S.AdminButton>
-                        </div>
-                    </S.AdminContent>
-                </S.AdminSection>
+                        </S.FeatureDesc>
+                        <S.FeatureList>
+                            {['팀원별 상세 리포트', '위험 징후 조기 발견', '전사 트렌드 분석'].map((item) => (
+                                <S.FeatureListItem key={item}>
+                                    <S.CheckIcon color="indigo"><Check size={14} /></S.CheckIcon>
+                                    {item}
+                                </S.FeatureListItem>
+                            ))}
+                        </S.FeatureList>
+                    </S.FeatureContent>
+                </S.FeatureSection>
             </S.MainContent>
 
             {/* Footer CTA */}
