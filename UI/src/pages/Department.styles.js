@@ -147,26 +147,75 @@ export const Controls = styled.div`
   gap: 0.5rem;
 `;
 
-export const SelectWrapper = styled.div`
+export const DropdownWrapper = styled.div`
   position: relative;
+  min-width: 140px;
 `;
 
-export const StyledSelect = styled.select`
-  appearance: none;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  padding-right: 2.5rem;
+export const DropdownTrigger = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1rem;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 600;
   background-color: white;
   border: 1px solid #e2e8f0;
-  color: #475569;
+  color: #334155;
   border-radius: 0.75rem;
-  outline: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-  &:hover { background-color: #f8fafc; }
-  &:focus { border-color: #3b82f6; }
+  &:hover {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+  }
+
+  ${props => props.$isOpen && `
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  `}
+`;
+
+export const DropdownMenu = styled.ul`
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #f1f5f9;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  z-index: 50;
+  animation: ${key => keyframes`
+    from { opacity: 0; transform: translateY(-0.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  `} 0.2s ease-out;
+`;
+
+export const DropdownItem = styled.li`
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    background-color: #f8fafc;
+    color: #3b82f6;
+  }
+
+  ${props => props.$isSelected && `
+    background-color: #eff6ff;
+    color: #3b82f6;
+    font-weight: 600;
+  `}
 `;
 
 export const ExcelButton = styled.button`

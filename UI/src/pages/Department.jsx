@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Users,
   Mail,
   Phone,
   ArrowRight,
-  ChevronDown
+  ChevronDown,
+  Check
 } from 'lucide-react';
 import * as S from './Department.styles';
 
@@ -19,6 +20,20 @@ const teamMembers = [
 
 const Department = () => {
   const [filterStatus, setFilterStatus] = useState('전체');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const filteredMembers = teamMembers.filter(member => {
     if (filterStatus === '전체') return true;
@@ -63,18 +78,33 @@ const Department = () => {
             팀원 연락망 <span>실시간 상태</span>
           </S.FilterTitle>
           <S.Controls>
-            <S.SelectWrapper>
-              <S.StyledSelect
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
+            <S.DropdownWrapper ref={dropdownRef}>
+              <S.DropdownTrigger
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                $isOpen={isDropdownOpen}
               >
-                <option value="전체">전체 보기</option>
-                <option value="업무 중">업무 중</option>
-                <option value="자리비움">자리비움</option>
-                <option value="휴가 중">휴가 중</option>
-              </S.StyledSelect>
-              <ChevronDown size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#94a3b8' }} />
-            </S.SelectWrapper>
+                {filterStatus === '전체' ? '전체 보기' : filterStatus}
+                <ChevronDown size={16} style={{ color: '#94a3b8', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+              </S.DropdownTrigger>
+
+              {isDropdownOpen && (
+                <S.DropdownMenu>
+                  {['전체', '업무 중', '자리비움', '휴가 중'].map((option) => (
+                    <S.DropdownItem
+                      key={option}
+                      onClick={() => {
+                        setFilterStatus(option);
+                        setIsDropdownOpen(false);
+                      }}
+                      $isSelected={filterStatus === option}
+                    >
+                      {option === '전체' ? '전체 보기' : option}
+                      {filterStatus === option && <Check size={14} color="#3b82f6" />}
+                    </S.DropdownItem>
+                  ))}
+                </S.DropdownMenu>
+              )}
+            </S.DropdownWrapper>
             <S.ExcelButton>엑셀 다운로드</S.ExcelButton>
           </S.Controls>
         </S.FilterHeader>
