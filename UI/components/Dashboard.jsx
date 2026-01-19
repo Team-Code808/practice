@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StressGauge from './StressGauge';
 import WeeklyChart from './WeeklyChart';
 import {
@@ -22,7 +23,8 @@ import {
 import { NavItemType } from '../types';
 import * as S from './Dashboard.styles';
 
-const Dashboard = ({ onNavigate }) => {
+const Dashboard = () => {
+  const navigate = useNavigate();
   const [isClockedIn, setIsClockedIn] = useState(false);
   const [isAway, setIsAway] = useState(false);
   const [isCoolDown, setIsCoolDown] = useState(false);
@@ -221,7 +223,7 @@ const Dashboard = ({ onNavigate }) => {
               <S.StatValue light>2,450</S.StatValue>
               <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>P</span>
             </div>
-            <S.PointButton onClick={() => onNavigate(NavItemType.POINT_MALL)}>
+            <S.PointButton onClick={() => navigate('/app/pointmall')}>
               포인트 몰 가기 <ChevronRight size={12} />
             </S.PointButton>
           </div>

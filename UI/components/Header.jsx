@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
@@ -90,13 +91,13 @@ const AllNotificationsModal = ({ onClose }) => {
 };
 
 const Header = ({
-  activeTab,
-  onTabChange,
   isAdminMode,
   setIsAdminMode,
   onLogout,
   userName
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAllNotificationsModal, setShowAllNotificationsModal] = useState(false);
   const notificationRef = useRef(null);
@@ -116,22 +117,40 @@ const Header = ({
   }, []);
 
   const userNavItems = [
-    { id: NavItemType.DASHBOARD, label: '대시보드', icon: LayoutDashboard },
-    { id: NavItemType.DEPARTMENT, label: '부서정보', icon: Users },
-    { id: NavItemType.ATTENDANCE, label: '근태관리', icon: CalendarCheck },
-    { id: NavItemType.CONSULTATION, label: '상담신청', icon: MessageSquareHeart },
-    { id: NavItemType.POINT_MALL, label: '포인트몰', icon: Coins },
+    { id: NavItemType.DASHBOARD, label: '대시보드', icon: LayoutDashboard, path: '/app/dashboard' },
+    { id: NavItemType.DEPARTMENT, label: '부서정보', icon: Users, path: '/app/department' },
+    { id: NavItemType.ATTENDANCE, label: '근태관리', icon: CalendarCheck, path: '/app/attendance' },
+    { id: NavItemType.CONSULTATION, label: '상담신청', icon: MessageSquareHeart, path: '/app/consultation' },
+    { id: NavItemType.POINT_MALL, label: '포인트몰', icon: Coins, path: '/app/pointmall' },
   ];
 
   const adminNavItems = [
-    { id: NavItemType.DASHBOARD, label: '통합현황', icon: LayoutDashboard },
-    { id: NavItemType.ADMIN_USERS, label: '팀원관리', icon: Users },
-    { id: NavItemType.ADMIN_MONITORING, label: '상세분석', icon: Activity },
-    { id: NavItemType.ADMIN_APPLICATIONS, label: '신청관리', icon: ClipboardList },
+    { id: NavItemType.DASHBOARD, label: '통합현황', icon: LayoutDashboard, path: '/app/dashboard' },
+    { id: NavItemType.ADMIN_USERS, label: '팀원관리', icon: Users, path: '/app/users' },
+    { id: NavItemType.ADMIN_MONITORING, label: '상세분석', icon: Activity, path: '/app/monitoring' },
+    { id: NavItemType.ADMIN_APPLICATIONS, label: '신청관리', icon: ClipboardList, path: '/app/applications' },
   ];
 
   const currentNavItems = isAdminMode ? adminNavItems : userNavItems;
-  const isMyPageActive = activeTab === NavItemType.MYPAGE;
+
+  // Determine active tab based on path
+  const currentPath = location.pathname;
+  const isMyPageActive = currentPath.includes('/app/mypage');
+
+  let activeTab = null;
+  if (!isMyPageActive) {
+    const activeItem = currentNavItems.find(item => currentPath.startsWith(item.path));
+    if (activeItem) activeTab = activeItem.id;
+  }
+
+  const handleNavClick = (path) => {
+    navigate(path);
+  };
+
+  const handleModeToggle = () => {
+    setIsAdminMode(!isAdminMode);
+    navigate('/app/dashboard');
+  };
 
   return (
     <>
@@ -141,7 +160,7 @@ const Header = ({
             {/* Left Section */}
             <S.LeftSection>
               <S.BrandGroup>
-                <S.LogoBox onClick={() => onTabChange(NavItemType.DASHBOARD)}>
+                <S.LogoBox onClick={() => navigate('/app/dashboard')}>
                   <Logo size={70} />
                   <S.BrandText $isAdminMode={isAdminMode}>
                     Calm Desk
@@ -151,10 +170,7 @@ const Header = ({
 
                 <S.ModeToggleButton
                   $isAdminMode={isAdminMode}
-                  onClick={() => {
-                    setIsAdminMode(!isAdminMode);
-                    onTabChange(NavItemType.DASHBOARD);
-                  }}
+                  onClick={handleModeToggle}
                 >
                   {isAdminMode ? (
                     <><ArrowLeftRight /> 직원 모드 복귀</>
@@ -172,7 +188,7 @@ const Header = ({
                 return (
                   <S.NavButton
                     key={item.id}
-                    onClick={() => onTabChange(item.id)}
+                    onClick={() => handleNavClick(item.path)}
                     $isActive={isActive}
                     $isAdminMode={isAdminMode}
                   >
@@ -188,7 +204,7 @@ const Header = ({
             <S.RightSection>
               <S.RightGroup>
                 <S.ProfileButton
-                  onClick={() => onTabChange(NavItemType.MYPAGE)}
+                  onClick={() => navigate('/app/mypage')}
                   $isActive={isMyPageActive}
                   $isAdminMode={isAdminMode}
                 >
