@@ -179,8 +179,14 @@ const Dashboard = () => {
               <Clock className="w-4 h-4" />
               {currentTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
               <span className="mx-1">•</span>
-              상태: <S.StatusBadge active={isClockedIn}>
-                {isClockedIn ? "업무 중" : "업무 준비 중"}
+              상태: <S.StatusBadge status={
+                isCoolDown ? 'cooldown' :
+                  isAway ? 'away' :
+                    isClockedIn ? 'working' : 'ready'
+              }>
+                {isCoolDown ? "쿨다운" :
+                  isAway ? "자리비움" :
+                    isClockedIn ? "업무 중" : "업무 준비 중"}
               </S.StatusBadge>
             </p>
           </S.GreetingText>

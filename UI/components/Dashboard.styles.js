@@ -71,7 +71,14 @@ export const GreetingText = styled.div`
 
 export const StatusBadge = styled.span`
   font-weight: 600;
-  color: ${props => props.active ? '#16a34a' : '#94a3b8'}; /* text-green-600 or text-slate-400 */
+  color: ${props => {
+    switch (props.status) {
+      case 'working': return '#16a34a'; // green-600
+      case 'away': return '#f59e0b'; // amber-500
+      case 'cooldown': return '#f97316'; // orange-500
+      default: return '#94a3b8'; // slate-400
+    }
+  }};
 `;
 
 export const ActionGroup = styled.div`
