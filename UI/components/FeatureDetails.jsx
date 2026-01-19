@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    ArrowLeft,
     HeartPulse,
     Zap,
     BarChart3,
@@ -16,20 +15,12 @@ const FeatureDetails = ({ onBack, onStart }) => {
         <S.Container>
             {/* Navigation */}
             <S.NavBar>
-                <S.NavContent>
-                    <S.NavLeft>
-                        <S.BackButton onClick={onBack}>
-                            <ArrowLeft />
-                        </S.BackButton>
-                        <S.LogoWrapper>
-                            <Logo size={32} showText={true} textColor="text-slate-800" />
-                            <span>Features</span>
-                        </S.LogoWrapper>
-                    </S.NavLeft>
-                    <S.StartButton onClick={onStart}>
-                        지금 시작하기
-                    </S.StartButton>
-                </S.NavContent>
+                <S.LogoWrapper onClick={onBack}>
+                    <Logo size={40} showText={true} textColor="text-blue-600" />
+                </S.LogoWrapper>
+                <S.StartButton onClick={onStart}>
+                    시작하기
+                </S.StartButton>
             </S.NavBar>
 
             {/* Hero Header */}
