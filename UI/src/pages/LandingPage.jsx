@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, HeartPulse, Zap } from 'lucide-react';
 import Logo from '../components/Logo';
+import FooterLinks from '../components/FooterLinks';
 import * as S from './LandingPage.styles';
 
 const LandingPage = ({ onStart, onViewFeatures }) => {
@@ -86,11 +87,7 @@ const LandingPage = ({ onStart, onViewFeatures }) => {
         <S.LogoWrapper>
           <Logo size={32} showText={true} textColor="text-slate-800" />
         </S.LogoWrapper>
-        <S.FooterLinks>
-          <a href="#">이용약관</a>
-          <a href="#">개인정보처리방침</a>
-          <a href="#">Contact Us</a>
-        </S.FooterLinks>
+        <FooterLinks />
         <S.Copyright>© 2024 Calm Desk. All rights reserved.</S.Copyright>
       </S.Footer>
     </S.Container>

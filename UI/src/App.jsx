@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import useStore from './store/useStore';
+import FooterLinks from './components/FooterLinks';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
@@ -24,33 +26,27 @@ import {
 } from 'lucide-react';
 import * as S from './App.styles';
 
-const MainLayout = ({ children, isAdminMode, setIsAdminMode, onLogout, user }) => {
+const MainLayout = ({ children }) => {
+  const { isAdminMode, setIsAdminMode, logout, user } = useStore();
+
   return (
     <S.AppContainer $admin={isAdminMode}>
-      <Header
-        isAdminMode={isAdminMode}
-        setIsAdminMode={setIsAdminMode}
-        onLogout={onLogout}
-        userName={user?.name || ''}
-      />
+      <Header />
       <S.MainContent>
         {children}
       </S.MainContent>
       <S.Footer $admin={isAdminMode}>
         <S.FooterContent>
           <p>© 2024 Calm Desk Admin Suite. All rights reserved.</p>
-          <S.FooterLinks>
-            <a href="#">이용약관</a>
-            <a href="#">개인정보처리방침</a>
-            <a href="#">고객지원</a>
-          </S.FooterLinks>
+          <FooterLinks />
         </S.FooterContent>
       </S.Footer>
     </S.AppContainer>
   );
 };
 
-const ProtectedRoute = ({ user, children }) => {
+const ProtectedRoute = ({ children }) => {
+  const user = useStore((state) => state.user);
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -58,26 +54,12 @@ const ProtectedRoute = ({ user, children }) => {
 };
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [isAdminMode, setIsAdminMode] = useState(false);
+  const { user, isAdminMode } = useStore();
   const navigate = useNavigate();
 
   const handleStart = () => navigate('/auth');
   const handleFeatureDetails = () => navigate('/features');
   const handleBackToLanding = () => navigate('/');
-
-  const handleLogin = (loggedInUser) => {
-    setUser(loggedInUser);
-    const admin = loggedInUser.role === UserRole.ADMIN;
-    setIsAdminMode(admin);
-    navigate('/app/dashboard');
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    setIsAdminMode(false);
-    navigate('/');
-  };
 
   const AdminPlaceholder = ({ icon: Icon, title, description }) => (
     <S.PlaceholderContainer>
@@ -110,16 +92,11 @@ const App = () => {
     <Routes>
       <Route path="/" element={<LandingPage onStart={handleStart} onViewFeatures={handleFeatureDetails} />} />
       <Route path="/features" element={<FeatureDetails onBack={handleBackToLanding} onStart={handleStart} />} />
-      <Route path="/auth" element={<AuthPage onLogin={handleLogin} />} />
+      <Route path="/auth" element={<AuthPage />} />
 
       <Route path="/app/*" element={
-        <ProtectedRoute user={user}>
-          <MainLayout
-            isAdminMode={isAdminMode}
-            setIsAdminMode={setIsAdminMode}
-            onLogout={handleLogout}
-            user={user}
-          >
+        <ProtectedRoute>
+          <MainLayout>
             {user?.joinStatus === 'PENDING' ? (
               <StatusPlaceholder icon={Clock} title="승인 대기 중" description="관리자의 입사 승인을 기다리고 있습니다." />
             ) : user?.joinStatus === 'REJECTED' ? (
@@ -133,8 +110,8 @@ const App = () => {
                     <Route path="users" element={<AdminTeamManagement />} />
                     <Route path="monitoring" element={<AdminMonitoring />} />
                     <Route path="applications" element={<AdminApplications />} />
-                    <Route path="mypage" element={<AdminMyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="dashboard" replace />} />
+                    <Route path="mypage" element={<AdminMyPage />} />
+                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>
                 )}
 
@@ -146,8 +123,8 @@ const App = () => {
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="consultation" element={<Consultation />} />
                     <Route path="pointmall" element={<PointMall />} />
-                    <Route path="mypage/*" element={<MyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="dashboard" replace />} />
+                    <Route path="mypage/*" element={<MyPage />} />
+                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>
                 )}
               </Routes>
