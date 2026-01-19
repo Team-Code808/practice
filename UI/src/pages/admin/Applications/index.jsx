@@ -12,7 +12,7 @@ import {
   ChevronRight,
   UserPlus
 } from 'lucide-react';
-import * as S from './AdminApplications.styles';
+import * as S from './styles';
 
 const AdminApplications = () => {
   const [activeSubTab, setActiveSubTab] = useState('LEAVE');

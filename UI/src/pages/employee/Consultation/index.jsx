@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Clock, CheckCircle2, Send, Info } from 'lucide-react';
-import * as S from './Consultation.styles';
+import * as S from './styles';
 
 const CounselingRequestPage = () => {
   const [title, setTitle] = useState('');

@@ -14,9 +14,9 @@ import {
   Key,
   ShieldCheck
 } from 'lucide-react';
-import { UserRole } from '../constants/types';
-import Logo from '../components/Logo';
-import * as S from './AuthPage.styles';
+import { UserRole } from '../../../constants/types';
+import Logo from '../../../components/Logo';
+import * as S from './styles';
 
 const DEPARTMENTS = [
   'CS 상담 1팀', 'CS 상담 2팀', 'VIP 전담팀', '기술 지원팀',
@@ -39,7 +39,7 @@ const generateRandomCode = () => {
   return result;
 };
 
-import useStore from '../store/useStore';
+import useStore from '../../../store/useStore';
 
 const AuthPage = () => {
   const login = useStore((state) => state.login);

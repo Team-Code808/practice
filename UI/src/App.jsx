@@ -1,22 +1,33 @@
 import React, { useEffect } from 'react';
 import useStore from './store/useStore';
-import FooterLinks from './components/FooterLinks';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import Header from './components/Header';
-import Dashboard from './pages/Dashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminTeamManagement from './pages/AdminTeamManagement';
-import AdminMonitoring from './pages/AdminMonitoring';
-import AdminApplications from './pages/AdminApplications';
-import AdminMyPage from './pages/AdminMyPage';
-import Department from './pages/Department';
-import Attendance from './pages/Attendance';
-import Consultation from './pages/Consultation';
-import LandingPage from './pages/LandingPage';
-import AuthPage from './pages/AuthPage';
-import MyPage from './pages/MyPage';
-import FeatureDetails from './pages/FeatureDetails';
-import PointMall from './pages/PointMall';
+import MainLayout from './layouts/MainLayout';
+
+// Admin Pages
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminTeamManagement from './pages/admin/TeamManagement';
+import AdminMonitoring from './pages/admin/Monitoring';
+import AdminApplications from './pages/admin/Applications';
+import AdminMyPage from './pages/admin/MyPage';
+// Settings was moved but not used in App.jsx previously? Check if it needs to be added or if it was omitted. 
+// Assuming it was not in the original App.jsx routes provided.
+
+// Employee Pages
+import Dashboard from './pages/employee/Dashboard';
+import Department from './pages/employee/Department';
+import Attendance from './pages/employee/Attendance';
+import Consultation from './pages/employee/Consultation';
+import PointMall from './pages/employee/PointMall';
+import MyPage from './pages/employee/MyPage';
+
+// Common Pages
+import LandingPage from './pages/common/Landing';
+import FeatureDetails from './pages/common/FeatureDetails';
+
+// Auth Pages
+import AuthPage from './pages/auth/Login';
+import NotFound from './pages/common/NotFound';
+
 import { NavItemType, UserRole } from './constants/types';
 import {
   ShieldAlert,
@@ -25,25 +36,6 @@ import {
   Clock
 } from 'lucide-react';
 import * as S from './App.styles';
-
-const MainLayout = ({ children }) => {
-  const { isAdminMode, setIsAdminMode, logout, user } = useStore();
-
-  return (
-    <S.AppContainer $admin={isAdminMode}>
-      <Header />
-      <S.MainContent>
-        {children}
-      </S.MainContent>
-      <S.Footer $admin={isAdminMode}>
-        <S.FooterContent>
-          <p>© 2024 Calm Desk Admin Suite. All rights reserved.</p>
-          <FooterLinks />
-        </S.FooterContent>
-      </S.Footer>
-    </S.AppContainer>
-  );
-};
 
 const ProtectedRoute = ({ children }) => {
   const user = useStore((state) => state.user);
@@ -132,6 +124,7 @@ const App = () => {
           </MainLayout>
         </ProtectedRoute>
       } />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

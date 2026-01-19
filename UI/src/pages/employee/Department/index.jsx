@@ -7,7 +7,7 @@ import {
   ChevronDown,
   Check
 } from 'lucide-react';
-import * as S from './Department.styles';
+import * as S from './styles';
 
 const teamMembers = [
   { id: 1, name: '이민수', role: '팀장', status: '업무 중', email: 'ms.lee@calmdesk.com', avatar: '👨‍💼', phone: '010-2841-7011' },

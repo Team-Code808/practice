@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import StressGauge from '../components/StressGauge';
-import WeeklyChart from '../components/WeeklyChart';
+import StressGauge from '../../../components/StressGauge';
+import WeeklyChart from '../../../components/WeeklyChart';
 import {
   Play,
   Coffee,
@@ -20,8 +20,8 @@ import {
   Pause
 } from 'lucide-react';
 
-import { NavItemType } from '../constants/types';
-import * as S from './Dashboard.styles';
+import { NavItemType } from '../../../constants/types';
+import * as S from './styles';
 
 const Dashboard = () => {
   const navigate = useNavigate();

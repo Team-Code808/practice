@@ -16,9 +16,9 @@ import {
   ArrowLeft,
   Save
 } from 'lucide-react';
-import * as S from './AdminMyPage.styles';
+import * as S from './styles';
 
-import useStore from '../store/useStore';
+import useStore from '../../../store/useStore';
 
 const AdminMyPage = () => {
   const { user } = useStore();

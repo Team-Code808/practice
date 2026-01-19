@@ -18,7 +18,7 @@ import {
   Coins,
   HeartPulse
 } from 'lucide-react';
-import * as S from './AdminTeamManagement.styles';
+import * as S from './styles';
 
 const DEPARTMENTS = ['전체', '상담 1팀', '상담 2팀', '상담 3팀', '운영지원', '기술지원'];
 
