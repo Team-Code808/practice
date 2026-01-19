@@ -14,8 +14,8 @@ import {
   Key,
   ShieldCheck
 } from 'lucide-react';
-import { UserRole } from '../types';
-import Logo from './Logo';
+import { UserRole } from '../constants/types';
+import Logo from '../components/Logo';
 import * as S from './AuthPage.styles';
 
 const DEPARTMENTS = [

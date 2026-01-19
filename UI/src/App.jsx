@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import AdminDashboard from './components/AdminDashboard';
-import AdminTeamManagement from './components/AdminTeamManagement';
-import AdminMonitoring from './components/AdminMonitoring';
-import AdminApplications from './components/AdminApplications';
-import AdminMyPage from './components/AdminMyPage';
-import Department from './components/Department';
-import Attendance from './components/Attendance';
-import Consultation from './components/Consultation';
-import LandingPage from './components/LandingPage';
-import AuthPage from './components/AuthPage';
-import MyPage from './components/MyPage';
-import FeatureDetails from './components/FeatureDetails';
-import PointMall from './components/PointMall';
-import { NavItemType, UserRole } from './types';
+import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminTeamManagement from './pages/AdminTeamManagement';
+import AdminMonitoring from './pages/AdminMonitoring';
+import AdminApplications from './pages/AdminApplications';
+import AdminMyPage from './pages/AdminMyPage';
+import Department from './pages/Department';
+import Attendance from './pages/Attendance';
+import Consultation from './pages/Consultation';
+import LandingPage from './pages/LandingPage';
+import AuthPage from './pages/AuthPage';
+import MyPage from './pages/MyPage';
+import FeatureDetails from './pages/FeatureDetails';
+import PointMall from './pages/PointMall';
+import { NavItemType, UserRole } from './constants/types';
 import {
   ShieldAlert,
   Lock,
   Construction,
   Clock
 } from 'lucide-react';
-import * as S from './components/App.styles';
+import * as S from './App.styles';
 
 const MainLayout = ({ children, isAdminMode, setIsAdminMode, onLogout, user }) => {
   return (

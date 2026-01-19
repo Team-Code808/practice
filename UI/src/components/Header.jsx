@@ -18,9 +18,9 @@ import {
   AlertCircle,
   Info
 } from 'lucide-react';
-import { NavItemType } from '../types';
+import { NavItemType } from '../constants/types';
 import Logo from './Logo';
-import { NOTIFICATIONS_DATA } from '../constants';
+import { NOTIFICATIONS_DATA } from '../constants/constants';
 import * as S from './Header.styles';
 
 const AllNotificationsModal = ({ onClose }) => {

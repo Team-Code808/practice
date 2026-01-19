@@ -25,7 +25,7 @@ import {
   AlertCircle,
   Info
 } from 'lucide-react';
-import { MOCK_USER, COUPONS, NOTIFICATIONS_DATA } from '../constants';
+import { MOCK_USER, COUPONS, NOTIFICATIONS_DATA } from '../constants/constants';
 import * as S from './MyPage.styles';
 
 const MyPage = ({ user }) => {
