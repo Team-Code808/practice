@@ -76,7 +76,7 @@ export const StatusBadge = styled.span`
 
 export const ActionGroup = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 12rem);
+  grid-template-columns: repeat(3, 9rem);
   align-items: center;
   gap: 0.75rem;
   width: 100%;
