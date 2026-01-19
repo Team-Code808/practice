@@ -18,7 +18,10 @@ import {
 } from 'lucide-react';
 import * as S from './AdminMyPage.styles';
 
-const AdminMyPage = ({ user }) => {
+import useStore from '../store/useStore';
+
+const AdminMyPage = () => {
+  const { user } = useStore();
   const [copied, setCopied] = useState(false);
   const [currentView, setCurrentView] = useState('MAIN');
 

@@ -39,7 +39,11 @@ const generateRandomCode = () => {
   return result;
 };
 
-const AuthPage = ({ onLogin }) => {
+import useStore from '../store/useStore';
+
+const AuthPage = () => {
+  const login = useStore((state) => state.login);
+  const onLogin = login;
   const navigate = useNavigate();
   const [step, setStep] = useState('LOGIN');
   const [formData, setFormData] = useState({
@@ -71,6 +75,7 @@ const AuthPage = ({ onLogin }) => {
         ...pendingUser,
         role: UserRole.STAFF
       });
+      navigate('/app/dashboard');
       return;
     }
 
@@ -82,6 +87,7 @@ const AuthPage = ({ onLogin }) => {
       phone: formData.phone,
       joinStatus: 'APPROVED'
     });
+    navigate('/app/dashboard');
   };
 
   const handleBasicSignupSubmit = (e) => {
@@ -101,6 +107,7 @@ const AuthPage = ({ onLogin }) => {
       phone: formData.phone,
       joinStatus: 'APPROVED'
     });
+    navigate('/app/dashboard');
   };
 
   const handleStaffSignup = (e) => {
@@ -121,6 +128,7 @@ const AuthPage = ({ onLogin }) => {
     localStorage.setItem('params_applications', JSON.stringify([...currentApps, newUser]));
 
     onLogin(newUser);
+    navigate('/app/dashboard');
   };
 
   const renderContent = () => {

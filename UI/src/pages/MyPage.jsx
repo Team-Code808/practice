@@ -28,7 +28,10 @@ import {
 import { MOCK_USER, COUPONS, NOTIFICATIONS_DATA } from '../constants/constants';
 import * as S from './MyPage.styles';
 
-const MyPage = ({ user }) => {
+import useStore from '../store/useStore';
+
+const MyPage = () => {
+  const { user } = useStore();
   const navigate = useNavigate();
 
   const displayUser = {
