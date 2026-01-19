@@ -6,81 +6,37 @@ export const Container = styled.div`
 `;
 
 export const NavBar = styled.nav`
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #f1f5f9;
-`;
-
-export const NavContent = styled.div`
   max-width: 80rem; /* max-w-7xl */
   margin: 0 auto;
-  padding: 0 1.5rem;
-  height: 5rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-export const NavLeft = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
-
-export const BackButton = styled.button`
-  padding: 0.5rem;
-  margin-left: -0.5rem;
-  border-radius: 9999px;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #f1f5f9;
-    
-    svg {
-      color: #0f172a;
-    }
-  }
-  
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: #64748b;
-    transition: color 0.2s;
-  }
+  position: relative;
+  z-index: 10;
 `;
 
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  
-  span {
-    font-size: 1.125rem;
-    font-weight: 900;
-    color: #1e293b;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-    margin-left: 0.25rem;
-  }
+  gap: 0.5rem;
+  cursor: pointer;
 `;
 
 export const StartButton = styled.button`
-  padding: 0.625rem 1.5rem;
-  background-color: #0f172a;
+  padding: 0.75rem 2rem;
+  background-color: #0f172a; /* bg-slate-900 */
   color: white;
-  border-radius: 0.75rem;
-  font-size: 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s;
   
   &:hover {
-    background-color: #1e293b;
+    background-color: #1e293b; /* hover:bg-slate-800 */
   }
-  
+
   &:active {
     transform: scale(0.95);
   }

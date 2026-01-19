@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Sparkles,
   Mail,
@@ -38,7 +39,8 @@ const generateRandomCode = () => {
   return result;
 };
 
-const AuthPage = ({ onLogin, onBack }) => {
+const AuthPage = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState('LOGIN');
   const [formData, setFormData] = useState({
     id: '',
@@ -518,7 +520,7 @@ const AuthPage = ({ onLogin, onBack }) => {
         <S.FormContainer>
           {step === 'LOGIN' && (
             <div style={{ marginBottom: '1rem' }}>
-              <S.BackButton type="button" onClick={onBack}>
+              <S.BackButton type="button" onClick={() => navigate('/')}>
                 <ChevronLeft size={20} />
               </S.BackButton>
             </div>

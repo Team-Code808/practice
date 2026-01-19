@@ -339,22 +339,7 @@ export const PhoneText = styled.span`
   letter-spacing: 0.05em;
 `;
 
-export const ActionGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-left: 1rem;
-  border-left: 1px solid #f8fafc;
-  margin-left: auto;
-`;
 
-export const MoreButton = styled.button`
-  padding: 0.5rem;
-  color: #cbd5e1;
-  transition: color 0.2s;
-  
-  &:hover { color: #475569; }
-`;
 
 export const EmptyState = styled.div`
   text-align: center;

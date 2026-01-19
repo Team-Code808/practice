@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StressGauge from './StressGauge';
 import WeeklyChart from './WeeklyChart';
 import {
@@ -22,7 +23,8 @@ import {
 import { NavItemType } from '../types';
 import * as S from './Dashboard.styles';
 
-const Dashboard = ({ onNavigate }) => {
+const Dashboard = () => {
+  const navigate = useNavigate();
   const [isClockedIn, setIsClockedIn] = useState(false);
   const [isAway, setIsAway] = useState(false);
   const [isCoolDown, setIsCoolDown] = useState(false);
@@ -106,9 +108,22 @@ const Dashboard = ({ onNavigate }) => {
     alert(message);
   };
 
+  const cooldownTimerRef = useRef(null);
+
   const handleCoolDown = () => {
-    setIsCoolDown(true);
-    setTimeout(() => setIsCoolDown(false), 600000);
+    if (isCoolDown) {
+      setIsCoolDown(false);
+      if (cooldownTimerRef.current) {
+        clearTimeout(cooldownTimerRef.current);
+        cooldownTimerRef.current = null;
+      }
+    } else {
+      setIsCoolDown(true);
+      cooldownTimerRef.current = setTimeout(() => {
+        setIsCoolDown(false);
+        cooldownTimerRef.current = null;
+      }, 600000);
+    }
   };
 
   const handleAway = () => {
@@ -141,7 +156,6 @@ const Dashboard = ({ onNavigate }) => {
             onClick={handleClockButtonClick}
             variant={isClockedIn ? 'neutral' : 'primary'}
           >
-            <Play className={`w-4 h-4 ${isClockedIn ? "rotate-90" : ""}`} />
             {isClockedIn ? "퇴근하기" : "출근하기"}
           </S.ActionButton>
 
@@ -150,18 +164,18 @@ const Dashboard = ({ onNavigate }) => {
             variant={isAway ? 'away' : 'neutral'}
             disabled={!isClockedIn || isCoolDown}
           >
-            <Pause className="w-4 h-4" />
-            {isAway ? "자리비움 해제" : "자리비움"}
+            {isAway ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            자리비움
           </S.ActionButton>
 
           <S.ActionButton
             onClick={handleCoolDown}
-            disabled={!isClockedIn || isCoolDown || isAway}
+            disabled={!isClockedIn || isAway}
             variant={!isCoolDown && isClockedIn ? 'orange' : undefined}
             cooldownActive={isCoolDown}
           >
             <Coffee className="w-4 h-4" />
-            {isCoolDown ? "쿨다운 작동 중" : "쿨다운"}
+            쿨다운
           </S.ActionButton>
         </S.ActionGroup>
       </S.GreetingSection>
@@ -221,7 +235,7 @@ const Dashboard = ({ onNavigate }) => {
               <S.StatValue light>2,450</S.StatValue>
               <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>P</span>
             </div>
-            <S.PointButton onClick={() => onNavigate(NavItemType.POINT_MALL)}>
+            <S.PointButton onClick={() => navigate('/app/pointmall')}>
               포인트 몰 가기 <ChevronRight size={12} />
             </S.PointButton>
           </div>

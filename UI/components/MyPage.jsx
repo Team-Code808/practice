@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import {
   Mail,
   Phone,
@@ -25,17 +26,10 @@ import {
   Info
 } from 'lucide-react';
 import { MOCK_USER, COUPONS, NOTIFICATIONS_DATA } from '../constants';
-import { NavItemType } from '../types';
 import * as S from './MyPage.styles';
 
-const MyPage = ({ user, onNavigate, initialView }) => {
-  const [currentView, setCurrentView] = useState('MAIN');
-
-  useEffect(() => {
-    if (initialView && initialView !== 'MAIN') {
-      setCurrentView(initialView);
-    }
-  }, [initialView]);
+const MyPage = ({ user }) => {
+  const navigate = useNavigate();
 
   const displayUser = {
     ...MOCK_USER,
@@ -47,13 +41,13 @@ const MyPage = ({ user, onNavigate, initialView }) => {
     } : {})
   };
 
-  // --- Sub Views ---
+  // --- Sub Views Components ---
 
   const ProfileEditView = () => (
     <S.SubPageContainer>
       <S.SubPageHeader>
         <S.HeaderLeft>
-          <S.BackButton onClick={() => setCurrentView('MAIN')}>
+          <S.BackButton onClick={() => navigate('/app/mypage')}>
             <ArrowLeft size={24} />
           </S.BackButton>
           <S.SubTitleGroup>
@@ -130,12 +124,12 @@ const MyPage = ({ user, onNavigate, initialView }) => {
             </div>
 
             <S.ActionRow>
-              <S.CancelButton onClick={() => setCurrentView('MAIN')}>
+              <S.CancelButton onClick={() => navigate('/app/mypage')}>
                 취소
               </S.CancelButton>
               <S.SaveButton onClick={() => {
                 alert('프로필이 성공적으로 수정되었습니다.');
-                setCurrentView('MAIN');
+                navigate('/app/mypage');
               }}>
                 <Save size={18} />
                 저장하기
@@ -155,7 +149,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
       <S.SubPageContainer>
         <S.SubPageHeader>
           <S.HeaderLeft>
-            <S.BackButton onClick={() => setCurrentView('MAIN')}>
+            <S.BackButton onClick={() => navigate('/app/mypage')}>
               <ArrowLeft size={24} />
             </S.BackButton>
             <S.SubTitleGroup>
@@ -177,11 +171,6 @@ const MyPage = ({ user, onNavigate, initialView }) => {
           {filteredCoupons.map((coupon) => (
             <S.CouponCard key={coupon.id} isUsed={coupon.status === 'USED'}>
               <S.CouponTopBar color={coupon.color.replace('bg-', 'var(--tw-bg-opacity, 1) ')} />
-              {/* Note: In real scenarios, color props should be handled better than class string parsing. 
-                  For now we rely on the passed className or switch to prop based colors in data. 
-                  Assuming coupon.color is like 'bg-emerald-500' 
-              */}
-
               <S.CouponHeader>
                 <S.CouponIcon>
                   {coupon.icon}
@@ -212,7 +201,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
 
           <S.CouponCard
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', borderStyle: 'dashed', cursor: 'pointer', minHeight: '300px' }}
-            onClick={() => onNavigate(NavItemType.POINT_MALL)}
+            onClick={() => navigate('/app/pointmall')}
           >
             <div style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
               <ShoppingBag size={24} color="#cbd5e1" />
@@ -240,7 +229,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
       <S.SubPageContainer>
         <S.SubPageHeader>
           <S.HeaderLeft>
-            <S.BackButton onClick={() => setCurrentView('MAIN')}>
+            <S.BackButton onClick={() => navigate('/app/mypage')}>
               <ArrowLeft size={24} />
             </S.BackButton>
             <S.SubTitleGroup>
@@ -315,7 +304,6 @@ const MyPage = ({ user, onNavigate, initialView }) => {
     const [filter, setFilter] = useState('ALL');
     const filteredNotifications = NOTIFICATIONS_DATA.filter(n => filter === 'ALL' || (filter === 'UNREAD' && !n.read));
 
-    // Group by date logic... omitted for brevity if complex, but kept simple here
     const groupedNotifications = filteredNotifications.reduce((acc, curr) => {
       if (!acc[curr.date]) acc[curr.date] = [];
       acc[curr.date].push(curr);
@@ -326,7 +314,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
       <S.SubPageContainer>
         <S.SubPageHeader>
           <S.HeaderLeft>
-            <S.BackButton onClick={() => setCurrentView('MAIN')}>
+            <S.BackButton onClick={() => navigate('/app/mypage')}>
               <ArrowLeft size={24} />
             </S.BackButton>
             <S.SubTitleGroup>
@@ -385,12 +373,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
     );
   };
 
-  if (currentView === 'PROFILE') return <ProfileEditView />;
-  if (currentView === 'COUPONS') return <CouponWalletView />;
-  if (currentView === 'POINTS') return <PointHistoryView />;
-  if (currentView === 'NOTIFICATIONS') return <NotificationCenterView />;
-
-  return (
+  const MyPageMain = () => (
     <S.Container>
       <S.HeaderSection>
         <S.TitleGroup>
@@ -439,7 +422,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                 </S.ContactItem>
               </S.ContactList>
 
-              <S.EditButton onClick={() => setCurrentView('PROFILE')}>
+              <S.EditButton onClick={() => navigate('profile')}>
                 프로필 수정하기
               </S.EditButton>
             </S.ProfileBento>
@@ -481,7 +464,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                 <Ticket size={22} color="#2563eb" />
                 기프티콘 보관함
               </h3>
-              <button onClick={() => setCurrentView('COUPONS')}>
+              <button onClick={() => navigate('coupons')}>
                 전체보기 <ChevronRight size={14} />
               </button>
             </S.SectionTitle>
@@ -507,9 +490,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                 </h3>
               </S.SectionTitle>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {/* Notification Setting Removed */}
-
-                <S.SettingItem onClick={() => setCurrentView('PROFILE')} style={{ cursor: 'pointer' }}>
+                <S.SettingItem onClick={() => navigate('profile')} style={{ cursor: 'pointer' }}>
                   <S.SettingLeft>
                     <div><Lock size={18} /></div>
                     <div>
@@ -532,7 +513,7 @@ const MyPage = ({ user, onNavigate, initialView }) => {
                 <S.PointCard>
                   <p>Current Points</p>
                   <p>{displayUser.point} <span>P</span></p>
-                  <button onClick={() => setCurrentView('POINTS')}>
+                  <button onClick={() => navigate('points')}>
                     포인트 내역
                   </button>
                 </S.PointCard>
@@ -542,6 +523,16 @@ const MyPage = ({ user, onNavigate, initialView }) => {
         </S.ColRight>
       </S.MainGrid>
     </S.Container>
+  );
+
+  return (
+    <Routes>
+      <Route path="/" element={<MyPageMain />} />
+      <Route path="profile" element={<ProfileEditView />} />
+      <Route path="coupons" element={<CouponWalletView />} />
+      <Route path="points" element={<PointHistoryView />} />
+      <Route path="notifications" element={<NotificationCenterView />} />
+    </Routes>
   );
 };
 
