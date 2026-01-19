@@ -134,7 +134,7 @@ const App = () => {
                     <Route path="monitoring" element={<AdminMonitoring />} />
                     <Route path="applications" element={<AdminApplications />} />
                     <Route path="mypage" element={<AdminMyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="dashboard" replace />} />
                   </>
                 )}
 
@@ -147,7 +147,7 @@ const App = () => {
                     <Route path="consultation" element={<Consultation />} />
                     <Route path="pointmall" element={<PointMall />} />
                     <Route path="mypage/*" element={<MyPage user={user} />} />
-                    <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="dashboard" replace />} />
                   </>
                 )}
               </Routes>
