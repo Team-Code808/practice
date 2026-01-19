@@ -121,9 +121,9 @@ export const FilterButton = styled.button`
   white-space: nowrap;
 
   ${props => props.active
-        ? 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);'
-        : 'color: #64748b; &:hover { color: #cbd5e1; }'
-    }
+    ? 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);'
+    : 'color: #64748b; &:hover { color: #cbd5e1; }'
+  }
 `;
 
 export const SearchInputWrapper = styled.div`
@@ -283,9 +283,23 @@ export const StatusBadge = styled.span`
   border-radius: 9999px;
   white-space: nowrap;
   
-  ${props => props.status === '위험'
-        ? 'background-color: rgba(244, 63, 94, 0.1); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.2);'
-        : 'background-color: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2);'}
+  ${props => {
+    switch (props.status) {
+      case '출근':
+        return 'background-color: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2);'; // Green
+      case '퇴근':
+        return 'background-color: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2);'; // Slate/Gray
+      case '휴가':
+        return 'background-color: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.2);'; // Violet
+      case '자리비움':
+      case '쿨다운':
+        return 'background-color: rgba(251, 146, 60, 0.1); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.2);'; // Orange
+      case '위험': // Keep for backward compatibility if needed, or removing
+        return 'background-color: rgba(244, 63, 94, 0.1); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.2);';
+      default:
+        return 'background-color: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2);';
+    }
+  }}
 `;
 
 /* Modal Styles */
@@ -339,9 +353,18 @@ export const ModalHeader = styled.div`
     padding: 2rem 3rem;
   }
 
-  ${props => props.status === '위험' && 'background-color: #be123c;'} /* rose-700 */
-  ${props => props.status === '주의' && 'background-color: #ea580c;'} /* orange-600 */
-  ${props => props.status === '정상' && 'background-color: #4338ca;'} /* indigo-700 */
+  ${props => {
+    switch (props.status) {
+      case '출근': return 'background-color: #4338ca;'; // Indigo
+      case '퇴근': return 'background-color: #475569;'; // Slate
+      case '휴가': return 'background-color: #7c3aed;'; // Violet
+      case '자리비움':
+      case '쿨다운': return 'background-color: #ea580c;'; // Orange
+      case '위험': return 'background-color: #be123c;';
+      case '주의': return 'background-color: #ea580c;';
+      default: return 'background-color: #4338ca;';
+    }
+  }}
 `;
 
 export const ModalAvatar = styled.div`
@@ -790,4 +813,61 @@ export const WellnessValue = styled.div`
     font-weight: 700;
     color: #475569;
   }
+`;
+
+/* Calendar Widget */
+export const CalendarWidget = styled.div`
+  background-color: rgba(255, 255, 255, 0.02);
+  padding: 1.25rem;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CalendarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  text-align: center;
+  flex: 1;
+`;
+
+export const WeekDay = styled.div`
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DayCell = styled.div`
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  ${props => {
+    switch (props.status) {
+      case 'present': return 'background-color: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2);'; // Green
+      case 'late': return 'background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.2);'; // Amber
+      case 'absent': return 'background-color: rgba(244, 63, 94, 0.1); color: #fb7185; border-color: rgba(244, 63, 94, 0.2);'; // Rose
+      case 'vacation': return 'background-color: rgba(167, 139, 250, 0.1); color: #a78bfa; border-color: rgba(167, 139, 250, 0.2);'; // Violet
+      default: return '';
+    }
+  }}
 `;

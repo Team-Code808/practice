@@ -11,7 +11,8 @@ import {
   Info,
   Activity,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  Zap
 } from 'lucide-react';
 import {
   AreaChart,
@@ -31,12 +32,12 @@ import * as S from './AdminMonitoring.styles';
 
 // Mock Data
 const trendData = [
-  { month: '10월', stress: 32, consultation: 140 },
-  { month: '11월', stress: 35, consultation: 165 },
-  { month: '12월', stress: 45, consultation: 210 },
-  { month: '1월', stress: 38, consultation: 180 },
-  { month: '2월', stress: 42, consultation: 195 },
-  { month: '3월', stress: 34, consultation: 172 },
+  { month: '10월', stress: 32, consultation: 140, cooldown: 45 },
+  { month: '11월', stress: 35, consultation: 165, cooldown: 52 },
+  { month: '12월', stress: 45, consultation: 210, cooldown: 78 },
+  { month: '1월', stress: 38, consultation: 180, cooldown: 65 },
+  { month: '2월', stress: 42, consultation: 195, cooldown: 58 },
+  { month: '3월', stress: 34, consultation: 172, cooldown: 48 },
 ];
 
 const distributionData = [
@@ -88,6 +89,7 @@ const AdminMonitoring = () => {
           { label: '전체 직원', val: '142명', trend: '+2', icon: Users, color: 'blue' },
           { label: '평균 스트레스', val: '34.2%', trend: '-4.1%', icon: HeartPulse, color: 'rose' },
           { label: '위험군 (70%+)', val: '12명', trend: '-1', icon: AlertTriangle, color: 'orange' },
+          { label: '평균 쿨다운', val: '3.2회', trend: '+12%', icon: Zap, color: 'violet' },
           { label: '전월 대비 상담', val: '172건', trend: '-12%', icon: MessageSquare, color: 'emerald' },
         ].map((stat, i) => (
           <S.StatCard key={i}>
@@ -133,6 +135,10 @@ const AdminMonitoring = () => {
                 <div />
                 <span>스트레스 %</span>
               </S.LegendItem>
+              <S.LegendItem color="#fb923c">
+                <div />
+                <span>쿨다운</span>
+              </S.LegendItem>
             </S.Legend>
           </S.ChartHeader>
 
@@ -147,6 +153,10 @@ const AdminMonitoring = () => {
                   <linearGradient id="colorStress" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#fb7185" stopOpacity={0.1} />
                     <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorCooldown" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#fb923c" stopOpacity={0.1} />
+                    <stop offset="95%" stopColor="#fb923c" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
@@ -168,6 +178,7 @@ const AdminMonitoring = () => {
                 />
                 <Area type="monotone" dataKey="consultation" stroke="#818cf8" strokeWidth={3} fillOpacity={1} fill="url(#colorConsult)" />
                 <Area type="monotone" dataKey="stress" stroke="#fb7185" strokeWidth={3} fillOpacity={1} fill="url(#colorStress)" />
+                <Area type="monotone" dataKey="cooldown" stroke="#fb923c" strokeWidth={3} fillOpacity={1} fill="url(#colorCooldown)" />
               </AreaChart>
             </ResponsiveContainer>
           </S.ChartWrapper>

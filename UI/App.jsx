@@ -99,7 +99,7 @@ const App = () => {
 
   if (appState === 'LANDING') return <LandingPage onStart={handleStart} onViewFeatures={handleFeatureDetails} />;
   if (appState === 'FEATURES') return <FeatureDetails onBack={() => setAppState('LANDING')} onStart={handleStart} />;
-  if (appState === 'AUTH') return <AuthPage onLogin={handleLogin} />;
+  if (appState === 'AUTH') return <AuthPage onLogin={handleLogin} onBack={() => setAppState('LANDING')} />;
 
   return (
     <S.AppContainer $admin={isAdminMode}>
