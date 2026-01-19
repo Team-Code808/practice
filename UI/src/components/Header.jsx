@@ -90,12 +90,12 @@ const AllNotificationsModal = ({ onClose }) => {
   );
 };
 
-const Header = ({
-  isAdminMode,
-  setIsAdminMode,
-  onLogout,
-  userName
-}) => {
+import useStore from '../store/useStore';
+
+const Header = () => {
+  const { isAdminMode, setIsAdminMode, logout, user } = useStore();
+  const userName = user?.name || '';
+  const onLogout = logout;
   const navigate = useNavigate();
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
