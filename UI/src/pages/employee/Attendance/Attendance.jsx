@@ -17,7 +17,7 @@ import {
   History,
   Briefcase
 } from 'lucide-react';
-import * as S from './styles';
+import * as S from './Attendance.styles';
 
 const Attendance = () => {
   // 현재 날짜 상태 관리 (년, 월) - 초기값은 2024년 3월

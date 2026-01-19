@@ -1,32 +1,32 @@
 import React, { useEffect } from 'react';
 import useStore from './store/useStore';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout';
+import MainLayout from './layouts/MainLayout/MainLayout';
 
 // Admin Pages
-import AdminDashboard from './pages/admin/Dashboard';
-import AdminTeamManagement from './pages/admin/TeamManagement';
-import AdminMonitoring from './pages/admin/Monitoring';
-import AdminApplications from './pages/admin/Applications';
-import AdminMyPage from './pages/admin/MyPage';
+import AdminDashboard from './pages/admin/Dashboard/Dashboard';
+import AdminTeamManagement from './pages/admin/TeamManagement/TeamManagement';
+import AdminMonitoring from './pages/admin/Monitoring/Monitoring';
+import AdminApplications from './pages/admin/Applications/Applications';
+import AdminMyPage from './pages/admin/MyPage/MyPage';
 // Settings was moved but not used in App.jsx previously? Check if it needs to be added or if it was omitted. 
 // Assuming it was not in the original App.jsx routes provided.
 
 // Employee Pages
-import Dashboard from './pages/employee/Dashboard';
-import Department from './pages/employee/Department';
-import Attendance from './pages/employee/Attendance';
-import Consultation from './pages/employee/Consultation';
-import PointMall from './pages/employee/PointMall';
-import MyPage from './pages/employee/MyPage';
+import Dashboard from './pages/employee/Dashboard/Dashboard';
+import Department from './pages/employee/Department/Department';
+import Attendance from './pages/employee/Attendance/Attendance';
+import Consultation from './pages/employee/Consultation/Consultation';
+import PointMall from './pages/employee/PointMall/PointMall';
+import MyPage from './pages/employee/MyPage/MyPage';
 
 // Common Pages
-import LandingPage from './pages/common/Landing';
-import FeatureDetails from './pages/common/FeatureDetails';
+import LandingPage from './pages/common/Landing/Landing';
+import FeatureDetails from './pages/common/FeatureDetails/FeatureDetails';
 
 // Auth Pages
-import AuthPage from './pages/auth/Login';
-import NotFound from './pages/common/NotFound';
+import AuthPage from './pages/auth/Login/Login';
+import NotFound from './pages/common/NotFound/NotFound';
 
 import { NavItemType, UserRole } from './constants/types';
 import {
@@ -85,6 +85,11 @@ const App = () => {
       <Route path="/" element={<LandingPage onStart={handleStart} onViewFeatures={handleFeatureDetails} />} />
       <Route path="/features" element={<FeatureDetails onBack={handleBackToLanding} onStart={handleStart} />} />
       <Route path="/auth" element={<AuthPage />} />
+
+      {/* Search Engine & Shortcut Redirects */}
+      <Route path="/login" element={<Navigate to="/auth" replace />} />
+      <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
+      <Route path="/admin" element={<Navigate to="/app/dashboard" replace />} />
 
       <Route path="/app/*" element={
         <ProtectedRoute>

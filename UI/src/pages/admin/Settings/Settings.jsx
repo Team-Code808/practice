@@ -8,7 +8,7 @@ import {
   AlertCircle,
   Database
 } from 'lucide-react';
-import * as S from './styles';
+import * as S from './Settings.styles';
 
 const AdminSettings = () => {
   const [isSaving, setIsSaving] = useState(false);

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useStore from '../../../store/useStore';
 import StressGauge from '../../../components/StressGauge';
 import WeeklyChart from '../../../components/WeeklyChart';
 import {
@@ -21,13 +22,17 @@ import {
 } from 'lucide-react';
 
 import { NavItemType } from '../../../constants/types';
-import * as S from './styles';
+import * as S from './Dashboard.styles';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [isClockedIn, setIsClockedIn] = useState(false);
-  const [isAway, setIsAway] = useState(false);
-  const [isCoolDown, setIsCoolDown] = useState(false);
+  const {
+    attendance,
+    setClockIn,
+    setAway,
+    setCoolDown
+  } = useStore();
+  const { isClockedIn, isAway, isCoolDown, coolDownStartTime } = attendance;
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedWeek, setSelectedWeek] = useState('thisWeek'); // 'thisWeek' | 'lastWeek'
@@ -101,14 +106,13 @@ const Dashboard = () => {
     }
 
     // 실제 로직 연동 (여기서는 토글만)
-    setIsClockedIn(!isClockedIn);
+    setClockIn(!isClockedIn);
     setIsEmotionModalOpen(false);
 
     const message = modalType === 'IN' ? '출근 처리가 완료되었습니다. 오늘도 화이팅하세요!' : '퇴근 처리가 완료되었습니다. 오늘 하루도 고생 많으셨습니다!';
     alert(message);
   };
 
-  const cooldownTimerRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(0);
 
   const handleCoolDown = () => {
@@ -122,38 +126,46 @@ const Dashboard = () => {
   };
 
   const startCooldown = () => {
-    setIsCoolDown(true);
-    setTimeLeft(600); // 10 minutes in seconds
-
-    // Clear any existing timer
-    if (cooldownTimerRef.current) clearInterval(cooldownTimerRef.current);
-
-    cooldownTimerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          stopCooldown();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    setCoolDown(true);
+    // Timer updates are handled by the useEffect watching coolDownStartTime
   };
 
   const stopCooldown = () => {
-    setIsCoolDown(false);
+    setCoolDown(false);
     setTimeLeft(0);
-    if (cooldownTimerRef.current) {
-      clearInterval(cooldownTimerRef.current);
-      cooldownTimerRef.current = null;
-    }
   };
 
-  // Cleanup on unmount
+  // Cooldown Timer Logic
   useEffect(() => {
+    let interval;
+
+    if (isCoolDown && coolDownStartTime) {
+      // Calculate initial remaining time
+      const calculateRemaining = () => {
+        const elapsed = Math.floor((Date.now() - coolDownStartTime) / 1000);
+        const remaining = 600 - elapsed; // 600 seconds = 10 minutes
+        return remaining > 0 ? remaining : 0;
+      };
+
+      setTimeLeft(calculateRemaining());
+
+      interval = setInterval(() => {
+        const remaining = calculateRemaining();
+        setTimeLeft(remaining);
+
+        if (remaining <= 0) {
+          setCoolDown(false);
+          clearInterval(interval);
+        }
+      }, 1000);
+    } else {
+      setTimeLeft(0);
+    }
+
     return () => {
-      if (cooldownTimerRef.current) clearInterval(cooldownTimerRef.current);
+      if (interval) clearInterval(interval);
     };
-  }, []);
+  }, [isCoolDown, coolDownStartTime, setCoolDown]);
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -162,7 +174,7 @@ const Dashboard = () => {
   };
 
   const handleAway = () => {
-    setIsAway(!isAway);
+    setAway(!isAway);
   };
 
   return (

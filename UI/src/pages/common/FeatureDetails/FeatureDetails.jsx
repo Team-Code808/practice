@@ -11,7 +11,7 @@ import {
     MessageSquare
 } from 'lucide-react';
 import Logo from '../../../components/Logo';
-import * as S from './styles';
+import * as S from './FeatureDetails.styles';
 
 const FeatureDetails = ({ onBack, onStart }) => {
     return (

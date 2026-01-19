@@ -2,7 +2,7 @@ import React from 'react';
 import useStore from '../../store/useStore';
 import Header from '../../components/Header';
 import FooterLinks from '../../components/FooterLinks';
-import * as S from './styles';
+import * as S from './MainLayout.styles';
 
 const MainLayout = ({ children }) => {
     const { isAdminMode } = useStore();

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Sparkles,
   Mail,
@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { UserRole } from '../../../constants/types';
 import Logo from '../../../components/Logo';
-import * as S from './styles';
+import * as S from './Login.styles';
 
 const DEPARTMENTS = [
   'CS 상담 1팀', 'CS 상담 2팀', 'VIP 전담팀', '기술 지원팀',
@@ -45,7 +45,12 @@ const AuthPage = () => {
   const login = useStore((state) => state.login);
   const onLogin = login;
   const navigate = useNavigate();
-  const [step, setStep] = useState('LOGIN');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const step = searchParams.get('step') || 'LOGIN';
+
+  const setStep = (newStep) => {
+    setSearchParams({ step: newStep });
+  };
   const [formData, setFormData] = useState({
     id: '',
     password: '',
@@ -181,7 +186,7 @@ const AuthPage = () => {
         return (
           <S.Form onSubmit={handleBasicSignupSubmit}>
             <S.StepHeader>
-              <S.BackButton type="button" onClick={() => setStep('LOGIN')}>
+              <S.BackButton type="button" onClick={() => navigate(-1)}>
                 <ChevronLeft size={20} />
               </S.BackButton>
               <h3>기본 정보 입력</h3>
@@ -247,7 +252,7 @@ const AuthPage = () => {
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', animation: 'fadeIn 0.3s' }}>
             <S.StepHeader>
-              <S.BackButton onClick={() => setStep('SIGNUP_BASIC')}>
+              <S.BackButton onClick={() => navigate(-1)}>
                 <ChevronLeft size={20} />
               </S.BackButton>
               <h3>가입 유형 선택</h3>
@@ -284,7 +289,7 @@ const AuthPage = () => {
         return (
           <S.Form onSubmit={handleAdminSignup} animate>
             <S.StepHeader>
-              <S.BackButton type="button" onClick={() => setStep('SIGNUP_TYPE')}>
+              <S.BackButton type="button" onClick={() => navigate(-1)}>
                 <ChevronLeft size={20} />
               </S.BackButton>
               <h3>회사 등록</h3>
@@ -380,7 +385,7 @@ const AuthPage = () => {
         return (
           <S.Form onSubmit={handleStaffSignup} animate>
             <S.StepHeader>
-              <S.BackButton type="button" onClick={() => setStep('SIGNUP_TYPE')}>
+              <S.BackButton type="button" onClick={() => navigate(-1)}>
                 <ChevronLeft size={20} />
               </S.BackButton>
               <h3>참여 신청</h3>

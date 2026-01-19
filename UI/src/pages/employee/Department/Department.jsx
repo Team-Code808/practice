@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useStore from '../../../store/useStore';
 import {
   Users,
   Mail,
@@ -7,7 +8,7 @@ import {
   ChevronDown,
   Check
 } from 'lucide-react';
-import * as S from './styles';
+import * as S from './Department.styles';
 
 const teamMembers = [
   { id: 1, name: '이민수', role: '팀장', status: '업무 중', email: 'ms.lee@calmdesk.com', avatar: '👨‍💼', phone: '010-2841-7011' },
@@ -19,7 +20,9 @@ const teamMembers = [
 ];
 
 const Department = () => {
-  const [filterStatus, setFilterStatus] = useState('전체');
+  const { ui, setDepartmentFilter } = useStore();
+  const filterStatus = ui.departmentFilter;
+  const setFilterStatus = setDepartmentFilter; // Alias for minimal code change
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 

@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   Save
 } from 'lucide-react';
-import * as S from './styles';
+import * as S from './MyPage.styles';
 
 import useStore from '../../../store/useStore';
 

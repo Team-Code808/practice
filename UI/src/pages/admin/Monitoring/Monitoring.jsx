@@ -28,7 +28,7 @@ import {
   PieChart,
   Pie
 } from 'recharts';
-import * as S from './styles';
+import * as S from './Monitoring.styles';
 
 // Mock Data
 const trendData = [

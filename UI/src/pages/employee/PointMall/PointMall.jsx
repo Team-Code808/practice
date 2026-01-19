@@ -14,7 +14,7 @@ import {
     ArrowRight,
     X
 } from 'lucide-react';
-import * as S from './styles';
+import * as S from './PointMall.styles';
 
 const PointMall = () => {
     const [pointMallTab, setPointMallTab] = useState('MISSIONS');

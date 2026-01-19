@@ -32,7 +32,7 @@ import {
   ResponsiveContainer,
   Cell
 } from 'recharts';
-import * as S from './styles';
+import * as S from './Dashboard.styles';
 
 const deptStressData = [
   { dept: '상담 1팀', stress: 42 },
