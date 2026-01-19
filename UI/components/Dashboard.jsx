@@ -109,21 +109,56 @@ const Dashboard = () => {
   };
 
   const cooldownTimerRef = useRef(null);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const handleCoolDown = () => {
     if (isCoolDown) {
-      setIsCoolDown(false);
-      if (cooldownTimerRef.current) {
-        clearTimeout(cooldownTimerRef.current);
-        cooldownTimerRef.current = null;
-      }
+      // Manual Stop
+      stopCooldown();
     } else {
-      setIsCoolDown(true);
-      cooldownTimerRef.current = setTimeout(() => {
-        setIsCoolDown(false);
-        cooldownTimerRef.current = null;
-      }, 600000);
+      // Start
+      startCooldown();
     }
+  };
+
+  const startCooldown = () => {
+    setIsCoolDown(true);
+    setTimeLeft(600); // 10 minutes in seconds
+
+    // Clear any existing timer
+    if (cooldownTimerRef.current) clearInterval(cooldownTimerRef.current);
+
+    cooldownTimerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          stopCooldown();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const stopCooldown = () => {
+    setIsCoolDown(false);
+    setTimeLeft(0);
+    if (cooldownTimerRef.current) {
+      clearInterval(cooldownTimerRef.current);
+      cooldownTimerRef.current = null;
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (cooldownTimerRef.current) clearInterval(cooldownTimerRef.current);
+    };
+  }, []);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
   const handleAway = () => {
@@ -154,7 +189,7 @@ const Dashboard = () => {
         <S.ActionGroup>
           <S.ActionButton
             onClick={handleClockButtonClick}
-            variant={isClockedIn ? 'neutral' : 'primary'}
+            variant={isClockedIn ? 'danger' : 'primary'}
           >
             {isClockedIn ? "퇴근하기" : "출근하기"}
           </S.ActionButton>
@@ -171,11 +206,10 @@ const Dashboard = () => {
           <S.ActionButton
             onClick={handleCoolDown}
             disabled={!isClockedIn || isAway}
-            variant={!isCoolDown && isClockedIn ? 'orange' : undefined}
-            cooldownActive={isCoolDown}
+            variant={isCoolDown ? 'orange' : 'neutral'}
           >
             <Coffee className="w-4 h-4" />
-            쿨다운
+            <span>{isCoolDown ? `쿨다운 ${formatTime(timeLeft)}` : "쿨다운"}</span>
           </S.ActionButton>
         </S.ActionGroup>
       </S.GreetingSection>

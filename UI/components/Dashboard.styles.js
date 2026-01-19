@@ -137,12 +137,14 @@ export const ActionButton = styled.button`
     box-shadow: none;
   `}
 
-  /* Cooldown Active (Already applied) */
-  ${props => props.cooldownActive && css`
-    background-color: #ffedd5; /* bg-orange-100 */
-    color: #ea580c; /* text-orange-600 */
-    cursor: not-allowed;
-    box-shadow: none;
+
+
+  /* Danger / Clock Out State */
+  ${props => props.variant === 'danger' && css`
+    background-color: #ef4444; /* bg-red-500 */
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(254, 202, 202, 1); /* shadow-red-200 */
+    &:hover { background-color: #dc2626; }
   `}
 `;
 
