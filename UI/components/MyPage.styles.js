@@ -1140,9 +1140,9 @@ export const PointCard = styled.div`
   text-align: right;
   
   p:first-child {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     font-weight: 900;
-    color: #64748b;
+    color: #cbd5e1; /* slate-300 for better visibility */
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.25rem;
