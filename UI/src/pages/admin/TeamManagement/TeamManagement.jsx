@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Users,
   Search,
@@ -16,11 +16,14 @@ import {
   Calendar,
   Zap,
   Coins,
-  HeartPulse
+  HeartPulse,
+  Plus,
+  Building2
 } from 'lucide-react';
+import useStore from '../../../store/useStore';
 import * as S from './TeamManagement.styles';
 
-const DEPARTMENTS = ['전체', '상담 1팀', '상담 2팀', '상담 3팀', '운영지원', '기술지원'];
+const DEFAULT_DEPARTMENTS = ['상담 1팀', '상담 2팀', '상담 3팀', '운영지원', '기술지원'];
 
 // Helper to generate mock attendance data
 const generateMockAttendance = (seed) => {
@@ -84,9 +87,54 @@ const MOCK_TEAM = [
 ];
 
 const AdminTeamManagement = () => {
+  const { user } = useStore();
   const [selectedDept, setSelectedDept] = useState('전체');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMember, setSelectedMember] = useState(null);
+  const [showAddDeptModal, setShowAddDeptModal] = useState(false);
+  const [newDeptName, setNewDeptName] = useState('');
+  const [departments, setDepartments] = useState(['전체', ...DEFAULT_DEPARTMENTS]);
+
+  // 회사 정보에서 부서 목록 가져오기
+  useEffect(() => {
+    if (user?.companyCode) {
+      const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+      const company = companies.find(c => c.companyCode === user.companyCode);
+      if (company && company.departments) {
+        setDepartments(['전체', ...company.departments]);
+      }
+    }
+  }, [user]);
+
+  const handleAddDepartment = () => {
+    if (!newDeptName.trim()) {
+      alert('부서명을 입력해주세요.');
+      return;
+    }
+
+    if (departments.includes(newDeptName.trim())) {
+      alert('이미 존재하는 부서입니다.');
+      return;
+    }
+
+    if (user?.companyCode) {
+      const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+      const companyIndex = companies.findIndex(c => c.companyCode === user.companyCode);
+      
+      if (companyIndex >= 0) {
+        const updatedDepartments = [...companies[companyIndex].departments, newDeptName.trim()];
+        companies[companyIndex].departments = updatedDepartments;
+        localStorage.setItem('companies', JSON.stringify(companies));
+        setDepartments(['전체', ...updatedDepartments]);
+        setNewDeptName('');
+        setShowAddDeptModal(false);
+      } else {
+        alert('회사 정보를 찾을 수 없습니다.');
+      }
+    } else {
+      alert('회사 코드가 없습니다.');
+    }
+  };
 
   const filteredTeam = MOCK_TEAM.filter(member => {
     const matchesDept = selectedDept === '전체' || member.dept === selectedDept;
@@ -133,17 +181,20 @@ const AdminTeamManagement = () => {
       </S.SummaryGrid>
 
       <S.SearchBar>
-        <S.FilterScroll>
-          {DEPARTMENTS.map(dept => (
-            <S.FilterButton
-              key={dept}
-              onClick={() => setSelectedDept(dept)}
-              active={selectedDept === dept}
-            >
-              {dept}
-            </S.FilterButton>
-          ))}
-        </S.FilterScroll>
+        <S.FilterSelectWrapper>
+          <S.FilterSelect
+            value={selectedDept}
+            onChange={(e) => setSelectedDept(e.target.value)}
+          >
+            {departments.map(dept => (
+              <option key={dept} value={dept}>{dept}</option>
+            ))}
+          </S.FilterSelect>
+          <S.AddDeptButton onClick={() => setShowAddDeptModal(true)}>
+            <Plus size={16} />
+            부서 추가
+          </S.AddDeptButton>
+        </S.FilterSelectWrapper>
         <S.SearchInputWrapper>
           <Search />
           <S.SearchInput
@@ -342,6 +393,46 @@ const AdminTeamManagement = () => {
               </S.ContentGrid>
             </S.DetailContent>
           </S.ModalContainer>
+        </S.ModalOverlay>
+      )}
+
+      {/* 부서 추가 모달 */}
+      {showAddDeptModal && (
+        <S.ModalOverlay>
+          <S.Backdrop onClick={() => setShowAddDeptModal(false)} />
+          <S.AddDeptModalContainer>
+            <S.AddDeptModalHeader>
+              <h3>부서 추가</h3>
+              <S.CloseModalButton onClick={() => setShowAddDeptModal(false)}>
+                <X size={24} />
+              </S.CloseModalButton>
+            </S.AddDeptModalHeader>
+            <S.AddDeptModalContent>
+              <S.InputGroup>
+                <label>부서명</label>
+                <S.AddDeptInput
+                  type="text"
+                  placeholder="부서명을 입력하세요"
+                  value={newDeptName}
+                  onChange={(e) => setNewDeptName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddDepartment();
+                    }
+                  }}
+                  autoFocus
+                />
+              </S.InputGroup>
+              <S.AddDeptButtonGroup>
+                <S.AddDeptCancelButton onClick={() => setShowAddDeptModal(false)}>
+                  취소
+                </S.AddDeptCancelButton>
+                <S.AddDeptSubmitButton onClick={handleAddDepartment}>
+                  추가
+                </S.AddDeptSubmitButton>
+              </S.AddDeptButtonGroup>
+            </S.AddDeptModalContent>
+          </S.AddDeptModalContainer>
         </S.ModalOverlay>
       )}
     </S.Container>

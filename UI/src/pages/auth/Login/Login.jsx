@@ -12,7 +12,9 @@ import {
   Factory,
   Users,
   Key,
-  ShieldCheck
+  ShieldCheck,
+  CheckCircle,
+  XCircle
 } from 'lucide-react';
 import { UserRole } from '../../../constants/types';
 import Logo from '../../../components/Logo';
@@ -65,8 +67,13 @@ const AuthPage = () => {
     position: ''
   });
 
-  const [isCustomDept, setIsCustomDept] = useState(false);
   const [isCustomPos, setIsCustomPos] = useState(false);
+  const [companyVerification, setCompanyVerification] = useState({
+    verified: false,
+    companyName: '',
+    departments: [],
+    attempted: false // 검증 시도 여부
+  });
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -102,6 +109,24 @@ const AuthPage = () => {
 
   const handleAdminSignup = (e) => {
     e.preventDefault();
+
+    // 회사 정보를 localStorage에 저장
+    const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+    const newCompany = {
+      companyCode: formData.companyCode,
+      companyName: formData.companyName,
+      departments: ['상담 1팀', '상담 2팀', '상담 3팀'] // 기본 부서
+    };
+
+    // 이미 존재하는지 확인
+    const existingIndex = companies.findIndex(c => c.companyCode === formData.companyCode);
+    if (existingIndex >= 0) {
+      companies[existingIndex] = newCompany;
+    } else {
+      companies.push(newCompany);
+    }
+    localStorage.setItem('companies', JSON.stringify(companies));
+
     onLogin({
       id: formData.id,
       name: formData.name,
@@ -109,14 +134,56 @@ const AuthPage = () => {
       department: 'Management',
       position: 'CEO',
       companyCode: formData.companyCode,
+      companyName: formData.companyName,
       phone: formData.phone,
       joinStatus: 'APPROVED'
     });
     navigate('/app/dashboard');
   };
 
+  const handleVerifyCompanyCode = () => {
+    // Check both new and legacy storage
+    const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+    const legacyCompanies = JSON.parse(localStorage.getItem('params_companies') || '[]');
+
+    let company = companies.find(c => c.companyCode === formData.companyCode.toUpperCase());
+
+    // Fallback to legacy check if not found
+    if (!company) {
+      const legacyCompany = legacyCompanies.find(c => c.code === formData.companyCode); // legacy uses 'code' not 'companyCode'
+      if (legacyCompany) {
+        company = {
+          companyName: legacyCompany.name,
+          departments: legacyCompany.departments,
+          companyCode: legacyCompany.code
+        };
+      }
+    }
+
+    if (company) {
+      setCompanyVerification({
+        verified: true,
+        companyName: company.companyName,
+        departments: company.departments || [],
+        attempted: true
+      });
+    } else {
+      setCompanyVerification({
+        verified: false,
+        companyName: '',
+        departments: [],
+        attempted: true
+      });
+    }
+  };
+
   const handleStaffSignup = (e) => {
     e.preventDefault();
+
+    if (!companyVerification.verified) {
+      alert('회사 코드를 먼저 검증해주세요.');
+      return;
+    }
 
     const newUser = {
       id: formData.id,
@@ -124,7 +191,8 @@ const AuthPage = () => {
       role: UserRole.STAFF,
       department: formData.department,
       position: formData.position,
-      companyCode: formData.companyCode,
+      companyCode: formData.companyCode.toUpperCase(),
+      companyName: companyVerification.companyName,
       phone: formData.phone,
       joinStatus: 'PENDING'
     };
@@ -393,55 +461,71 @@ const AuthPage = () => {
 
             <S.InputGroup>
               <label>회사 코드</label>
-              <S.InputWrapper>
-                <Key />
-                <S.Input
-                  type="text"
-                  required
-                  placeholder="공유받은 회사 코드 입력"
-                  value={formData.companyCode}
-                  onChange={e => setFormData({ ...formData, companyCode: e.target.value })}
-                />
-              </S.InputWrapper>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <S.InputWrapper style={{ flex: 1 }}>
+                  <Key />
+                  <S.Input
+                    type="text"
+                    required
+                    placeholder="공유받은 회사 코드 입력"
+                    value={formData.companyCode}
+                    onChange={e => {
+                      setFormData({ ...formData, companyCode: e.target.value.toUpperCase() });
+                      setCompanyVerification({ verified: false, companyName: '', departments: [], attempted: false });
+                    }}
+                    style={{ textTransform: 'uppercase' }}
+                  />
+                </S.InputWrapper>
+                <S.VerifyButton
+                  type="button"
+                  onClick={handleVerifyCompanyCode}
+                  disabled={!formData.companyCode}
+                >
+                  검증
+                </S.VerifyButton>
+              </div>
+              {companyVerification.verified && (
+                <S.VerificationMessage success>
+                  <CheckCircle size={16} />
+                  <span>{companyVerification.companyName}입니다</span>
+                </S.VerificationMessage>
+              )}
+              {companyVerification.attempted && !companyVerification.verified && (
+                <S.VerificationMessage error>
+                  <XCircle size={16} />
+                  <span>없는 코드입니다</span>
+                </S.VerificationMessage>
+              )}
             </S.InputGroup>
 
             <S.InputGroup>
-              <label>부서</label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <S.Select
-                  noIcon
-                  required
-                  value={isCustomDept ? 'custom' : formData.department}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === 'custom') {
-                      setIsCustomDept(true);
-                      setFormData({ ...formData, department: '' });
-                    } else {
-                      setIsCustomDept(false);
-                      setFormData({ ...formData, department: val });
-                    }
-                  }}
-                  variant="indigo"
-                >
-                  <option value="" disabled>부서 선택</option>
-                  {DEPARTMENTS.map(dept => (
-                    <option key={dept} value={dept}>{dept}</option>
-                  ))}
-                  <option value="custom">직접 입력 (기타)</option>
-                </S.Select>
-                {isCustomDept && (
-                  <S.Input
-                    noIcon
-                    type="text"
-                    required
-                    placeholder="부서명 직접 입력"
-                    value={formData.department}
-                    onChange={e => setFormData({ ...formData, department: e.target.value })}
-                    style={{ animation: 'fadeIn 0.3s' }}
-                  />
+              <label>
+                부서
+                {!companyVerification.verified && (
+                  <span style={{ fontSize: '0.625rem', color: '#fb7185', marginLeft: '0.5rem' }}>
+                    (회사 코드 검증 후 선택 가능)
+                  </span>
                 )}
-              </div>
+              </label>
+              <S.Select
+                noIcon
+                required
+                disabled={!companyVerification.verified}
+                value={formData.department}
+                onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                variant="indigo"
+              >
+                <option value="" disabled>부서 선택</option>
+                {companyVerification.verified && companyVerification.departments.length > 0 ? (
+                  companyVerification.departments.map(dept => (
+                    <option key={dept} value={dept}>{dept}</option>
+                  ))
+                ) : (
+                  DEPARTMENTS.map(dept => (
+                    <option key={dept} value={dept}>{dept}</option>
+                  ))
+                )}
+              </S.Select>
             </S.InputGroup>
 
             <S.InputGroup>

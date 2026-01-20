@@ -95,34 +95,42 @@ export const SearchBar = styled.div`
   }
 `;
 
-export const FilterScroll = styled.div`
+export const FilterSelectWrapper = styled.div`
   display: flex;
-  gap: 0.25rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 0.375rem;
-  border-radius: 1rem;
-  overflow-x: auto;
+  gap: 0.75rem;
+  align-items: center;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.05);
 
   @media (min-width: 768px) {
     width: auto;
   }
-  
-  &::-webkit-scrollbar { display: none; }
 `;
 
-export const FilterButton = styled.button`
-  padding: 0.5rem 1rem;
-  border-radius: 0.75rem;
-  font-size: 0.6875rem;
-  font-weight: 900;
+export const FilterSelect = styled.select`
+  padding: 0.75rem 1rem;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: white;
+  outline: none;
   transition: all 0.2s;
-  white-space: nowrap;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  min-width: 150px;
 
-  ${props => props.active
-    ? 'background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);'
-    : 'color: #64748b; &:hover { color: #cbd5e1; }'
+  &:focus {
+    border-color: #6366f1;
+  }
+
+  option {
+    background-color: #1e293b;
+    color: white;
   }
 `;
 
@@ -870,4 +878,144 @@ export const DayCell = styled.div`
       default: return '';
     }
   }}
+`;
+
+/* 부서 추가 관련 스타일 */
+export const AddDeptButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(99, 102, 241, 0.1);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  white-space: nowrap;
+  transition: all 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.3);
+  }
+`;
+
+export const AddDeptModalContainer = styled.div`
+  position: relative;
+  background-color: #0f172a;
+  width: 100%;
+  max-width: 28rem;
+  border-radius: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ${zoomIn} 0.3s ease-out;
+  z-index: 130;
+  margin: auto;
+`;
+
+export const AddDeptModalHeader = styled.div`
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: white;
+  }
+`;
+
+export const AddDeptModalContent = styled.div`
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #0f172a;
+`;
+
+export const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+`;
+
+export const AddDeptInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  outline: none;
+  transition: all 0.2s;
+
+  &:focus {
+    border-color: #6366f1;
+  }
+
+  &::placeholder {
+    color: #64748b;
+  }
+`;
+
+export const AddDeptButtonGroup = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+`;
+
+export const AddDeptCancelButton = styled.button`
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background-color: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #334155;
+    color: white;
+  }
+`;
+
+export const AddDeptSubmitButton = styled.button`
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #4f46e5;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
 `;

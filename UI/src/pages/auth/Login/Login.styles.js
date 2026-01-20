@@ -430,3 +430,57 @@ export const InfoBox = styled.div`
     line-height: 1.625;
   }
 `;
+
+export const VerifyButton = styled.button`
+  padding: 1rem 1.5rem;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  
+  &:hover:not(:disabled) {
+    background-color: #4338ca;
+  }
+  
+  &:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+  }
+  
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+`;
+
+export const VerificationMessage = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  animation: ${fadeIn} 0.3s ease-out;
+  
+  ${props => props.success && css`
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+  `}
+  
+  ${props => props.error && css`
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+  `}
+  
+  svg {
+    flex-shrink: 0;
+  }
+`;
