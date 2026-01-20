@@ -16,7 +16,10 @@ import {
 } from 'lucide-react';
 import * as S from './PointMall.styles';
 
+import useStore from '../../../store/useStore';
+
 const PointMall = () => {
+    const { items: shopItems } = useStore();
     const [pointMallTab, setPointMallTab] = useState('MISSIONS');
     const [selectedItem, setSelectedItem] = useState(null);
     const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
@@ -120,13 +123,6 @@ const PointMall = () => {
         }
     };
 
-    const shopItems = [
-        { name: '스타벅스 아메리카노', price: '4,500', img: '☕' },
-        { name: '배달의민족 1만원권', price: '10,000', img: '🛵' },
-        { name: '반차 휴가권', price: '15,000', img: '🏖️' },
-        { name: '편의점 5천원권', price: '5,000', img: '🏪' },
-    ];
-
     return (
         <>
             <S.Container>
@@ -182,20 +178,22 @@ const PointMall = () => {
                             </S.SearchBar>
                         </S.ShopHeader>
                         <S.ItemsGrid>
-                            {shopItems.map((item, idx) => (
-                                <S.ItemCard key={idx}>
-                                    <S.ItemImage>
-                                        {item.img}
-                                    </S.ItemImage>
-                                    <S.ItemInfo>
-                                        <h3>{item.name}</h3>
-                                        <p>{item.price} <span>P</span></p>
-                                    </S.ItemInfo>
-                                    <S.ExchangeButton onClick={() => handlePurchaseClick(item)}>
-                                        교환하기
-                                    </S.ExchangeButton>
-                                </S.ItemCard>
-                            ))}
+                            {shopItems
+                                .filter(item => item.isActive)
+                                .map((item) => (
+                                    <S.ItemCard key={item.id}>
+                                        <S.ItemImage>
+                                            {item.img}
+                                        </S.ItemImage>
+                                        <S.ItemInfo>
+                                            <h3>{item.name}</h3>
+                                            <p>{item.price} <span>P</span></p>
+                                        </S.ItemInfo>
+                                        <S.ExchangeButton onClick={() => handlePurchaseClick(item)}>
+                                            교환하기
+                                        </S.ExchangeButton>
+                                    </S.ItemCard>
+                                ))}
                         </S.ItemsGrid>
                     </S.ShopContainer>
                 ) : (
