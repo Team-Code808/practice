@@ -78,31 +78,31 @@ const generateMockAttendance = (seed) => {
 
 const agents = [
   {
-    id: 1, name: '박진호', dept: '상담 1팀', role: '시니어', stress: 88, status: '통화 중', avatar: '👨‍💼',
+    id: 1, name: '박진호', dept: '상담 1팀', role: '시니어', stress: 88, status: '업무 중', avatar: '👨‍💼',
     phone: '010-3921-7025', email: 'jh.park@calmdesk.com', joinDate: '2021.11.15',
     metrics: { csat: 4.2, aht: '4m 12s', attendance: 92, leave: 8, cooldowns: 12, alerts: 5, points: '2,120' },
     attendanceRecord: generateMockAttendance(1)
   },
   {
-    id: 2, name: '이지은', dept: '상담 2팀', role: '상담원', stress: 82, status: '대기', avatar: '👩‍💼',
+    id: 2, name: '이지은', dept: '상담 2팀', role: '상담원', stress: 82, status: '자리비움', avatar: '👩‍💼',
     phone: '010-4822-7042', email: 'je.lee@calmdesk.com', joinDate: '2023.02.01',
     metrics: { csat: 4.5, aht: '3m 58s', attendance: 95, leave: 11, cooldowns: 8, alerts: 3, points: '3,400' },
     attendanceRecord: generateMockAttendance(2)
   },
   {
-    id: 3, name: '강동원', dept: '상담 1팀', role: '상담원', stress: 79, status: '식사 중', avatar: '👨‍💻',
+    id: 3, name: '강동원', dept: '상담 1팀', role: '상담원', stress: 79, status: '자리비움', avatar: '👨‍💻',
     phone: '010-5811-7103', email: 'dw.kang@calmdesk.com', joinDate: '2022.08.20',
     metrics: { csat: 3.9, aht: '5m 05s', attendance: 89, leave: 5.5, cooldowns: 15, alerts: 4, points: '1,850' },
     attendanceRecord: generateMockAttendance(3)
   },
   {
-    id: 4, name: '김태리', dept: '상담 3팀', role: '상담원', stress: 75, status: '통화 중', avatar: '👩‍🔬',
+    id: 4, name: '김태리', dept: '상담 3팀', role: '상담원', stress: 75, status: '업무 중', avatar: '👩‍🔬',
     phone: '010-6721-7118', email: 'tr.kim@calmdesk.com', joinDate: '2023.01.10',
     metrics: { csat: 4.7, aht: '3m 30s', attendance: 100, leave: 18, cooldowns: 1, alerts: 1, points: '5,200' },
     attendanceRecord: generateMockAttendance(4)
   },
   {
-    id: 5, name: '최우식', dept: '상담 2팀', role: '상담원', stress: 72, status: '대기', avatar: '🧔',
+    id: 5, name: '최우식', dept: '상담 2팀', role: '상담원', stress: 72, status: '자리비움', avatar: '🧔',
     phone: '010-7214-7150', email: 'ws.choi@calmdesk.com', joinDate: '2022.12.05',
     metrics: { csat: 4.1, aht: '4m 45s', attendance: 94, leave: 12, cooldowns: 6, alerts: 2, points: '2,900' },
     attendanceRecord: generateMockAttendance(5)
@@ -423,7 +423,7 @@ const AdminDashboard = () => {
                         );
                       })}
                     </S.CalendarGrid>
-                  </S.CalendarWidget>
+                  </S.StressWidget>
                 </S.LeftColumn>
 
                 {/* 오른쪽 영역: 웰니스 및 이력 */}

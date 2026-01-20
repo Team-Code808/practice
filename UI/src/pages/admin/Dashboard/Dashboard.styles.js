@@ -411,7 +411,7 @@ export const StatusRow = styled.div`
   span:last-child {
     font-size: 0.5625rem;
     font-weight: 700;
-    ${props => props.status === '통화 중' ? 'color: #818cf8;' : 'color: #64748b;'}
+    ${props => props.status === '업무 중' ? 'color: #818cf8;' : 'color: #64748b;'}
   }
 `;
 
