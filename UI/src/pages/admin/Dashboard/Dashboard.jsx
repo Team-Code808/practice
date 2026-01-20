@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Users,
   Activity,
@@ -122,6 +123,7 @@ const agents = [
 const departments = ['전체', '상담 1팀', '상담 2팀', '상담 3팀'];
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [selectedDept, setSelectedDept] = useState('전체');
   const [chartType, setChartType] = useState('stress'); // 'stress' 또는 'cooldown'
   const [selectedMember, setSelectedMember] = useState(null);
@@ -336,7 +338,7 @@ const AdminDashboard = () => {
             )}
           </S.AgentList>
 
-          <S.DetailButton>
+          <S.DetailButton onClick={() => navigate('/app/admin/monitoring')}>
             상세 모니터링 이동
           </S.DetailButton>
         </S.TopListSection>
