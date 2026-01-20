@@ -71,6 +71,41 @@ export const PeriodButton = styled.button`
   }
 `;
 
+export const PeriodDropdownContainer = styled.div`
+  position: relative;
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background-color: #1e293b;
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  min-width: 140px;
+  z-index: 50;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+`;
+
+export const DropdownItem = styled.button`
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: ${props => props.active ? '#fff' : '#94a3b8'};
+  background-color: ${props => props.active ? '#334155' : 'transparent'};
+  transition: all 0.2s;
+
+  &:hover {
+    color: white;
+    background-color: #334155;
+  }
+`;
+
 export const PrintButton = styled.button`
   padding: 0.5rem 1rem;
   background-color: #4f46e5; /* indigo-600 */

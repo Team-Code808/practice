@@ -63,6 +63,10 @@ const deptComparison = [
 ];
 
 const AdminMonitoring = () => {
+  const [isPeriodOpen, setIsPeriodOpen] = React.useState(false);
+  const [selectedPeriod, setSelectedPeriod] = React.useState('2026년 1분기');
+  const periods = ['2026년 1분기', '2025년 4분기', '2025년 3분기', '2025년 2분기'];
+
   return (
     <S.Container>
       {/* Header with Title & Filter */}
@@ -75,10 +79,28 @@ const AdminMonitoring = () => {
           <p>Advanced Emotional Analytics</p>
         </S.TitleBox>
         <S.HeaderControls>
-          <S.PeriodButton>
-            2026년 1분기
-            <ChevronDown size={14} />
-          </S.PeriodButton>
+          <S.PeriodDropdownContainer>
+            <S.PeriodButton onClick={() => setIsPeriodOpen(!isPeriodOpen)}>
+              {selectedPeriod}
+              <ChevronDown size={14} style={{ transform: isPeriodOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+            </S.PeriodButton>
+            {isPeriodOpen && (
+              <S.DropdownMenu>
+                {periods.map(period => (
+                  <S.DropdownItem
+                    key={period}
+                    onClick={() => {
+                      setSelectedPeriod(period);
+                      setIsPeriodOpen(false);
+                    }}
+                    active={selectedPeriod === period}
+                  >
+                    {period}
+                  </S.DropdownItem>
+                ))}
+              </S.DropdownMenu>
+            )}
+          </S.PeriodDropdownContainer>
           <S.PrintButton>분석 보고서 출력</S.PrintButton>
         </S.HeaderControls>
       </S.Header>
@@ -137,7 +159,7 @@ const AdminMonitoring = () => {
               </S.LegendItem>
               <S.LegendItem color="#fb923c">
                 <div />
-                <span>쿨다운</span>
+                <span>쿨다운 횟수</span>
               </S.LegendItem>
             </S.Legend>
           </S.ChartHeader>
@@ -176,9 +198,9 @@ const AdminMonitoring = () => {
                   }}
                   itemStyle={{ fontWeight: 900 }}
                 />
-                <Area type="monotone" dataKey="consultation" stroke="#818cf8" strokeWidth={3} fillOpacity={1} fill="url(#colorConsult)" />
-                <Area type="monotone" dataKey="stress" stroke="#fb7185" strokeWidth={3} fillOpacity={1} fill="url(#colorStress)" />
-                <Area type="monotone" dataKey="cooldown" stroke="#fb923c" strokeWidth={3} fillOpacity={1} fill="url(#colorCooldown)" />
+                <Area name="상담" type="monotone" dataKey="consultation" stroke="#818cf8" strokeWidth={3} fillOpacity={1} fill="url(#colorConsult)" />
+                <Area name="스트레스" type="monotone" dataKey="stress" stroke="#fb7185" strokeWidth={3} fillOpacity={1} fill="url(#colorStress)" />
+                <Area name="쿨다운" type="monotone" dataKey="cooldown" stroke="#fb923c" strokeWidth={3} fillOpacity={1} fill="url(#colorCooldown)" />
               </AreaChart>
             </ResponsiveContainer>
           </S.ChartWrapper>
