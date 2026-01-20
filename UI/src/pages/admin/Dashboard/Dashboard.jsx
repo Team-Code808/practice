@@ -118,7 +118,7 @@ const AdminDashboard = () => {
 
   return (
     <S.Container>
-      {/* Admin Quick Banner */}
+      {/* 관리자 퀵 배너 */}
       <S.QuickBanner>
         <S.BannerContent>
           <S.ShieldIconBox>
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
         </S.BannerDecor>
       </S.QuickBanner>
 
-      {/* Stats Grid - Softened Dark Theme */}
+      {/* 통계 그리드 - 부드러운 다크 테마 */}
       <S.StatsGrid>
         {stats.map((stat, i) => (
           <S.StatCard key={i}>
@@ -157,7 +157,7 @@ const AdminDashboard = () => {
       </S.StatsGrid>
 
       <S.MainGrid>
-        {/* Weekly Stress Chart by Department */}
+        {/* 부서별 주간 스트레스 차트 */}
         <S.ChartSection>
           <S.SectionHeader>
             <S.HeaderLeft>
@@ -250,7 +250,7 @@ const AdminDashboard = () => {
           </S.ChartWrapper>
         </S.ChartSection>
 
-        {/* High Stress Top 5 List */}
+        {/* 스트레스 고위험군 Top 5 리스트 */}
         <S.TopListSection>
           <S.SectionHeader>
             <S.HeaderLeft>
@@ -265,7 +265,7 @@ const AdminDashboard = () => {
             </S.SearchButton>
           </S.SectionHeader>
 
-          {/* Department Filter Tabs */}
+          {/* 부서 필터 탭 */}
           <S.FilterTabs>
             {departments.map((dept) => (
               <S.TabButton
@@ -319,7 +319,7 @@ const AdminDashboard = () => {
           <S.Backdrop onClick={() => setSelectedMember(null)} />
           <S.ModalContainer>
 
-            {/* Upper Profile Header */}
+            {/* 상단 프로필 헤더 */}
             <S.ModalHeader status={selectedMember.status}>
               <S.ModalAvatar>{selectedMember.avatar}</S.ModalAvatar>
               <S.ModalInfo>
@@ -351,12 +351,12 @@ const AdminDashboard = () => {
               </S.CloseModalButton>
             </S.ModalHeader>
 
-            {/* Main Content Area */}
+            {/* 메인 콘텐츠 영역 */}
             <S.DetailContent>
               <S.ContentGrid>
-                {/* Left Section: Stress & Performance */}
+                {/* 왼쪽 영역: 스트레스 및 성과 */}
                 <S.LeftColumn>
-                  {/* Real-time Stress Bar */}
+                  {/* 실시간 스트레스 바 */}
                   <S.StressWidget>
                     <S.WidgetHeader>
                       <p>
@@ -420,7 +420,7 @@ const AdminDashboard = () => {
                   </S.MetricsGrid>
                 </S.LeftColumn>
 
-                {/* Right Section: Wellness & History */}
+                {/* 오른쪽 영역: 웰니스 및 이력 */}
                 <S.RightColumn>
                   {/* 웰니스 모니터링 */}
                   <S.WellnessSection>

@@ -32,7 +32,7 @@ const AllNotificationsModal = ({ onClose }) => {
     <S.ModalOverlay>
       <S.Backdrop onClick={onClose} />
       <S.ModalContent>
-        {/* Header */}
+        {/* 헤더 */}
         <S.ModalHeader>
           <div>
             <h2>알림 센터</h2>
@@ -43,7 +43,7 @@ const AllNotificationsModal = ({ onClose }) => {
           </S.CloseButton>
         </S.ModalHeader>
 
-        {/* Tabs */}
+        {/* 탭 */}
         <S.ModalTabs>
           <S.ModalTabButton
             active={filter === 'ALL'}
@@ -60,7 +60,7 @@ const AllNotificationsModal = ({ onClose }) => {
           </S.ModalTabButton>
         </S.ModalTabs>
 
-        {/* List */}
+        {/* 리스트 */}
         <S.ModalList>
           {filtered.length > 0 ? filtered.map(item => (
             <S.ModalItem key={item.id} read={item.read}>
@@ -102,7 +102,7 @@ const Header = () => {
   const [showAllNotificationsModal, setShowAllNotificationsModal] = useState(false);
   const notificationRef = useRef(null);
 
-  const notifications = NOTIFICATIONS_DATA.slice(0, 3); // Preview only latest 3
+  const notifications = NOTIFICATIONS_DATA.slice(0, 3); // 최신 3개만 미리보기
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -134,7 +134,7 @@ const Header = () => {
 
   const currentNavItems = isAdminMode ? adminNavItems : userNavItems;
 
-  // Determine active tab based on path
+  // 경로(path)에 따라 활성 탭 결정
   const currentPath = location.pathname;
   const isMyPageActive = currentPath.includes('/app/mypage');
 
@@ -158,7 +158,7 @@ const Header = () => {
       <S.HeaderContainer $isAdminMode={isAdminMode}>
         <S.InnerContent>
           <S.HeaderRow>
-            {/* Left Section */}
+            {/* 왼쪽 영역 */}
             <S.LeftSection>
               <S.BrandGroup>
                 <S.LogoBox onClick={() => navigate('/app/dashboard')}>
@@ -182,7 +182,7 @@ const Header = () => {
               </S.BrandGroup>
             </S.LeftSection>
 
-            {/* Center Navigation */}
+            {/* 중앙 내비게이션 */}
             <S.CenterNav>
               {currentNavItems.map((item) => {
                 const isActive = activeTab === item.id;
@@ -201,7 +201,7 @@ const Header = () => {
               })}
             </S.CenterNav>
 
-            {/* Right Section */}
+            {/* 오른쪽 영역 */}
             <S.RightSection>
               <S.RightGroup>
                 <S.ProfileButton
@@ -226,7 +226,7 @@ const Header = () => {
                 </S.ProfileButton>
 
                 <S.ActionDivider $isAdminMode={isAdminMode}>
-                  {/* Notification Button & Popup */}
+                  {/* 알림 버튼 및 팝업 */}
                   <div style={{ position: 'relative' }} ref={notificationRef}>
                     <S.IconButton
                       onClick={() => setShowNotifications(!showNotifications)}
@@ -282,7 +282,7 @@ const Header = () => {
         </S.InnerContent>
       </S.HeaderContainer>
 
-      {/* All Notifications Modal */}
+      {/* 전체 알림 모달 */}
       {showAllNotificationsModal && (
         <AllNotificationsModal onClose={() => setShowAllNotificationsModal(false)} />
       )}

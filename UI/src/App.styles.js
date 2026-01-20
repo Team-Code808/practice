@@ -10,11 +10,6 @@ const slideUp = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-
-/* Layout styles moved to layouts/MainLayout/styles.js */
-
-
-/* Placeholders */
 export const PlaceholderContainer = styled.div`
   min-height: 60vh;
   display: flex;

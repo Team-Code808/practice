@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useStore from './store/useStore';
-import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout/MainLayout';
 
-// Admin Pages
+// 관리자 페이지 (Admin Pages)
 import AdminDashboard from './pages/admin/Dashboard/Dashboard';
 import AdminTeamManagement from './pages/admin/TeamManagement/TeamManagement';
 import AdminMonitoring from './pages/admin/Monitoring/Monitoring';
@@ -11,10 +11,8 @@ import AdminApplications from './pages/admin/Applications/Applications';
 import AdminGifticonManagement from './pages/admin/GifticonManagement/GifticonManagement';
 import PurchaseHistory from './pages/admin/GifticonManagement/PurchaseHistory/PurchaseHistory';
 import AdminMyPage from './pages/admin/MyPage/MyPage';
-// Settings was moved but not used in App.jsx previously? Check if it needs to be added or if it was omitted. 
-// Assuming it was not in the original App.jsx routes provided.
 
-// Employee Pages
+// 직원 페이지 (Employee Pages)
 import Dashboard from './pages/employee/Dashboard/Dashboard';
 import Department from './pages/employee/Department/Department';
 import Attendance from './pages/employee/Attendance/Attendance';
@@ -22,19 +20,16 @@ import Consultation from './pages/employee/Consultation/Consultation';
 import PointMall from './pages/employee/PointMall/PointMall';
 import MyPage from './pages/employee/MyPage/MyPage';
 
-// Common Pages
+// 공통 페이지 (Common Pages)
 import LandingPage from './pages/common/Landing/Landing';
 import FeatureDetails from './pages/common/FeatureDetails/FeatureDetails';
 
-// Auth Pages
+// 인증 페이지 (Auth Pages)
 import AuthPage from './pages/auth/Login/Login';
 import NotFound from './pages/common/NotFound/NotFound';
 
-import { NavItemType, UserRole } from './constants/types';
 import {
   ShieldAlert,
-  Lock,
-  Construction,
   Clock
 } from 'lucide-react';
 import * as S from './App.styles';
@@ -88,7 +83,7 @@ const App = () => {
       <Route path="/features" element={<FeatureDetails onBack={handleBackToLanding} onStart={handleStart} />} />
       <Route path="/auth" element={<AuthPage />} />
 
-      {/* Search Engine & Shortcut Redirects */}
+      {/* 검색 엔진 및 단축 경로 리다이렉트 */}
       <Route path="/login" element={<Navigate to="/auth" replace />} />
       <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
       <Route path="/admin" element={<Navigate to="/app/dashboard" replace />} />
@@ -102,7 +97,7 @@ const App = () => {
               <StatusPlaceholder icon={ShieldAlert} title="신청 반려됨" description="입사 신청이 반려되었습니다." />
             ) : (
               <Routes>
-                {/* Admin Routes */}
+                {/* 관리자 라우트 */}
                 {isAdminMode && (
                   <>
                     <Route path="dashboard" element={<AdminDashboard />} />
@@ -116,7 +111,7 @@ const App = () => {
                   </>
                 )}
 
-                {/* Staff Routes */}
+                {/* 직원 라우트 */}
                 {!isAdminMode && (
                   <>
                     <Route path="dashboard" element={<Dashboard />} />

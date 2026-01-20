@@ -9,9 +9,9 @@ const StressGauge = ({ percentage }) => {
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   const getColor = (p) => {
-    if (p > 70) return "#ef4444"; // red
-    if (p > 40) return "#f97316"; // orange
-    return "#3b82f6"; // blue
+    if (p > 70) return "#ef4444";
+    if (p > 40) return "#f97316";
+    return "#3b82f6";
   };
 
   return (
