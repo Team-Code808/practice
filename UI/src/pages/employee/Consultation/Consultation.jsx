@@ -45,10 +45,7 @@ const CounselingRequestPage = () => {
                 <span>•</span>
                 <span>상담 시간은 따로 지정하지 않으며, 관리자가 근무 시간 중 가장 적절한 때에 호출합니다.</span>
               </S.GuideItem>
-              <S.GuideItem>
-                <span>•</span>
-                <span>상담 대기열에 추가되면 상담 전까지 '쿨다운' 상태를 유지할 수 있습니다.</span>
-              </S.GuideItem>
+
             </S.GuideList>
           </S.GuideCard>
 

@@ -6,7 +6,7 @@ const slideInBottom = keyframes`
 `;
 
 export const Container = styled.div`
-  max-width: 56rem; /* 4xl */
+  max-width: 64rem; /* 5xl */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
