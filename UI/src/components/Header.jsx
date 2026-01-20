@@ -129,6 +129,7 @@ const Header = () => {
     { id: NavItemType.ADMIN_USERS, label: '팀원관리', icon: Users, path: '/app/users' },
     { id: NavItemType.ADMIN_MONITORING, label: '상세분석', icon: Activity, path: '/app/monitoring' },
     { id: NavItemType.ADMIN_APPLICATIONS, label: '신청관리', icon: ClipboardList, path: '/app/applications' },
+    { id: 'ADMIN_GIFTICONS', label: '기프티콘 관리', icon: Coins, path: '/app/gifticons' },
   ];
 
   const currentNavItems = isAdminMode ? adminNavItems : userNavItems;
