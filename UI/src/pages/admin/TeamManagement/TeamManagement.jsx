@@ -29,9 +29,9 @@ const generateMockAttendance = (seed) => {
     // Basic pattern based on seed to make them different
     const rand = (seed + i * 7) % 100;
 
-    // Weekends (assuming Mar 1, 2024 was Friday for simplicity in visual, let's just use mock logic)
-    // 2024.03.01 is Friday. Sat/Sun are 2,3, 9,10...
-    const dayOfWeek = (i + 4) % 7; // 0=Sun, 1=Mon... if 1st is Fri(5)
+    // Weekends (Jan 1, 2026 is Thursday)
+    // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+    const dayOfWeek = (i + 3) % 7; // (1+3)%7 = 4 (Thu)
 
     if (dayOfWeek === 0 || dayOfWeek === 6) {
       attendance[i] = ''; // Weekend
@@ -232,7 +232,7 @@ const AdminTeamManagement = () => {
                     <S.WidgetHeader>
                       <p>
                         <Calendar size={12} color="#818cf8" />
-                        근태 현황 (2024.03)
+                        근태 현황 (2026.01)
                       </p>
                       <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.625rem', color: '#64748b', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
@@ -322,8 +322,8 @@ const AdminTeamManagement = () => {
                     </S.SectionTitle>
                     <S.HistoryList>
                       {[
-                        { title: '심층 심리 상담 완료', date: '2024.03.20', type: 'Consultation', icon: <MessageCircle size={18} /> },
-                        { title: '반차 휴가 사용', date: '2024.03.14', type: 'Leave', icon: <Palmtree size={18} /> }
+                        { title: '심층 심리 상담 완료', date: '2026.01.20', type: 'Consultation', icon: <MessageCircle size={18} /> },
+                        { title: '반차 휴가 사용', date: '2026.01.14', type: 'Leave', icon: <Palmtree size={18} /> }
                       ].map((item, idx) => (
                         <S.HistoryItem key={idx}>
                           <S.HistoryContent>

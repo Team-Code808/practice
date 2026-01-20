@@ -462,8 +462,8 @@ const AdminDashboard = () => {
                     </S.SectionTitle>
                     <S.HistoryList>
                       {[
-                        { title: '심층 심리 상담 완료', date: '2024.03.20', type: 'Consultation', icon: <MessageCircle size={18} /> },
-                        { title: '반차 휴가 사용', date: '2024.03.14', type: 'Leave', icon: <Palmtree size={18} /> }
+                        { title: '심층 심리 상담 완료', date: '2026.01.20', type: 'Consultation', icon: <MessageCircle size={18} /> },
+                        { title: '반차 휴가 사용', date: '2026.01.14', type: 'Leave', icon: <Palmtree size={18} /> }
                       ].map((item, idx) => (
                         <S.HistoryItem key={idx}>
                           <S.HistoryContent>

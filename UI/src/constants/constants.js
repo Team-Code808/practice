@@ -12,9 +12,9 @@ export const MOCK_USER = {
 
 // Added status field to match requirements in MyPage.tsx
 export const COUPONS = [
-  { id: 1, name: '스타벅스 아메리카노', shop: 'Starbucks', date: '2024.12.31 까지', color: 'bg-emerald-500', icon: '☕', status: 'AVAILABLE' },
-  { id: 2, name: '배달의민족 1만원권', shop: 'Baemin', date: '2024.06.15 까지', color: 'bg-cyan-500', icon: '🛵', status: 'AVAILABLE' },
-  { id: 3, name: 'BHC 후라이드 치킨', shop: 'BHC', date: '2024.05.20 까지', color: 'bg-amber-500', icon: '🍗', status: 'AVAILABLE' },
+  { id: 1, name: '스타벅스 아메리카노', shop: 'Starbucks', date: '2026.12.31 까지', color: 'bg-emerald-500', icon: '☕', status: 'AVAILABLE' },
+  { id: 2, name: '배달의민족 1만원권', shop: 'Baemin', date: '2026.06.15 까지', color: 'bg-cyan-500', icon: '🛵', status: 'AVAILABLE' },
+  { id: 3, name: 'BHC 후라이드 치킨', shop: 'BHC', date: '2026.05.20 까지', color: 'bg-amber-500', icon: '🍗', status: 'AVAILABLE' },
 ];
 
 // Added missing NOTIFICATIONS_DATA export
@@ -25,7 +25,7 @@ export const NOTIFICATIONS_DATA = [
     title: '미션 완료',
     message: '오늘의 출근 완료 미션을 성공적으로 마쳤습니다.',
     time: '오전 09:05',
-    date: '2024.03.21',
+    date: '2026.01.20',
     read: false
   },
   {
@@ -33,8 +33,8 @@ export const NOTIFICATIONS_DATA = [
     type: 'alert',
     title: '스트레스 경고',
     message: '현재 스트레스 지수가 높습니다. 잠시 휴식을 취하는 것은 어떨까요?',
-    time: '오후 02:30',
-    date: '2024.03.21',
+    time: '오전 10:30',
+    date: '2026.01.20',
     read: true
   },
   {
@@ -43,7 +43,7 @@ export const NOTIFICATIONS_DATA = [
     title: '공지사항',
     message: '다음 주 월요일은 정기 시스템 점검이 예정되어 있습니다.',
     time: '어제',
-    date: '2024.03.20',
+    date: '2026.01.19',
     read: true
   }
 ];

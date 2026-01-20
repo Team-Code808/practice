@@ -219,11 +219,11 @@ const MyPage = () => {
   const PointHistoryView = () => {
     const [filter, setFilter] = useState('ALL');
     const history = [
-      { id: 1, type: 'EARN', title: '주간 미션 달성', date: '2024.03.21 14:00', amount: 50, balance: 2450 },
-      { id: 2, type: 'USE', title: '스타벅스 아메리카노 교환', date: '2024.03.20 09:30', amount: -4500, balance: 2400 },
-      { id: 3, type: 'EARN', title: '정시 출근 보너스', date: '2024.03.20 08:50', amount: 10, balance: 6900 },
-      { id: 4, type: 'EARN', title: '칭찬 카드 획득', date: '2024.03.19 17:20', amount: 30, balance: 6890 },
-      { id: 5, type: 'EARN', title: '정시 출근 보너스', date: '2024.03.19 08:55', amount: 10, balance: 6860 },
+      { id: 1, type: 'EARN', title: '주간 미션 달성', date: '2026.01.20 09:00', amount: 50, balance: 2450 },
+      { id: 2, type: 'USE', title: '스타벅스 아메리카노 교환', date: '2026.01.20 09:30', amount: -4500, balance: 2400 },
+      { id: 3, type: 'EARN', title: '정시 출근 보너스', date: '2026.01.20 08:50', amount: 10, balance: 6900 },
+      { id: 4, type: 'EARN', title: '칭찬 카드 획득', date: '2026.01.19 17:20', amount: 30, balance: 6890 },
+      { id: 5, type: 'EARN', title: '정시 출근 보너스', date: '2026.01.19 08:55', amount: 10, balance: 6860 },
     ];
     const filteredHistory = history.filter(item => filter === 'ALL' || item.type === filter);
 

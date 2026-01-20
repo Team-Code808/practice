@@ -88,7 +88,7 @@ const LandingPage = ({ onStart, onViewFeatures }) => {
           <Logo size={32} showText={true} textColor="text-slate-800" />
         </S.LogoWrapper>
         <FooterLinks />
-        <S.Copyright>© 2024 Calm Desk. All rights reserved.</S.Copyright>
+        <S.Copyright>© 2026 Calm Desk. All rights reserved.</S.Copyright>
       </S.Footer>
     </S.Container>
   );

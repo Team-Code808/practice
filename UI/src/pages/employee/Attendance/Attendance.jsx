@@ -20,30 +20,30 @@ import {
 import * as S from './Attendance.styles';
 
 const Attendance = () => {
-  // 현재 날짜 상태 관리 (년, 월) - 초기값은 2024년 3월
-  const [currentDate, setCurrentDate] = useState(new Date(2024, 2));
+  // 현재 날짜 상태 관리 (년, 월) - 초기값은 2026년 1월
+  const [currentDate, setCurrentDate] = useState(new Date(2026, 0));
 
-  const [selectedDay, setSelectedDay] = useState(21);
+  const [selectedDay, setSelectedDay] = useState(20);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 현재 보고 있는 연도와 월
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth(); // 0 ~ 11
 
-  // 기준이 되는 오늘 날짜 (데모용)
-  const today = 21;
+  // 기준이 되는 오늘 날짜 (데모용 - 2026.01.20)
+  const today = 20;
 
   const attendanceHistory = [
-    { id: 1, day: 20, date: '2024.03.20 (수)', clockIn: '08:52', clockOut: '18:05', status: '정상', duration: '9h 13m', note: '특이사항 없음' },
-    { id: 2, day: 19, date: '2024.03.19 (화)', clockIn: '09:12', clockOut: '18:30', status: '지각', duration: '9h 18m', note: '교통 체증으로 인한 지각' },
-    { id: 3, day: 18, date: '2024.03.18 (월)', clockIn: '08:45', clockOut: '18:10', status: '정상', duration: '9h 25m', note: '특이사항 없음' },
-    { id: 4, day: 15, date: '2024.03.15 (금)', clockIn: '08:58', clockOut: '17:55', status: '정상', duration: '8h 57m', note: '조기 퇴근 승인' },
+    { id: 1, day: 20, date: '2026.01.20 (화)', clockIn: '08:52', clockOut: '18:05', status: '정상', duration: '9h 13m', note: '특이사항 없음' },
+    { id: 2, day: 19, date: '2026.01.19 (월)', clockIn: '09:12', clockOut: '18:30', status: '지각', duration: '9h 18m', note: '교통 체증으로 인한 지각' },
+    { id: 3, day: 16, date: '2026.01.16 (금)', clockIn: '08:45', clockOut: '18:10', status: '정상', duration: '9h 25m', note: '특이사항 없음' },
+    { id: 4, day: 15, date: '2026.01.15 (목)', clockIn: '08:58', clockOut: '17:55', status: '정상', duration: '8h 57m', note: '조기 퇴근 승인' },
   ];
 
   const leaveRequests = [
-    { id: 1, type: '연차', period: '2024.03.25 - 03.26', status: '승인대기', days: '2일' },
-    { id: 2, type: '반차', period: '2024.03.14 (오후)', status: '승인완료', days: '0.5일' },
-    { id: 3, type: '워케이션', period: '2024.03.27 - 03.28', status: '승인완료', days: '0.0일' },
+    { id: 1, type: '연차', period: '2026.01.25 - 01.26', status: '승인대기', days: '2일' },
+    { id: 2, type: '반차', period: '2026.01.14 (오후)', status: '승인완료', days: '0.5일' },
+    { id: 3, type: '워케이션', period: '2026.01.27 - 01.28', status: '승인완료', days: '0.0일' },
   ];
 
   // 동적으로 해당 월의 일수와 시작 요일 계산
@@ -69,8 +69,8 @@ const Attendance = () => {
 
     let status = 'none';
 
-    // Mock data는 2024년 3월 기준이므로, 현재 보고 있는 달이 2024년 3월일 때만 상태 표시
-    const isTargetMonth = year === 2024 && month === 2; // 3월은 index 2
+    // Mock data는 2026년 1월 기준이므로, 현재 보고 있는 달이 2026년 1월일 때만 상태 표시
+    const isTargetMonth = year === 2026 && month === 0;
 
     if (isTargetMonth) {
       if ([14, 25, 26].includes(day)) {
@@ -79,7 +79,7 @@ const Attendance = () => {
         status = 'workcation';
       }
       else if (day <= today) {
-        if ([4, 5, 6, 7, 8, 11, 12, 13, 15, 18, 20, 21, 22].includes(day)) status = 'normal';
+        if ([5, 6, 7, 8, 9, 12, 13, 15, 16, 20].includes(day)) status = 'normal';
         if ([19].includes(day)) status = 'late';
       }
       else {
@@ -95,8 +95,8 @@ const Attendance = () => {
   const getSelectedDayDetails = () => {
     if (!selectedDay) return null;
 
-    // 선택된 날짜에 대한 정보 조회도 2024년 3월 기준 mock data
-    const isTargetMonth = year === 2024 && month === 2;
+    // 선택된 날짜에 대한 정보 조회도 2026년 1월 기준 mock data
+    const isTargetMonth = year === 2026 && month === 0;
     if (!isTargetMonth) {
       return {
         day: selectedDay,
