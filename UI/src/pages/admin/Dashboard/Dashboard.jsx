@@ -53,41 +53,71 @@ const deptCooldownData = [
   { dept: '기술지원', count: 2 },
 ];
 
+// Helper to generate mock attendance data
+const generateMockAttendance = (seed) => {
+  const attendance = {};
+  for (let i = 1; i <= 31; i++) {
+    // Basic pattern based on seed to make them different
+    const rand = (seed + i * 7) % 100;
+
+    // Weekends (Jan 1, 2026 is Thursday)
+    // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+    const dayOfWeek = (i + 3) % 7; // (1+3)%7 = 4 (Thu)
+
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      attendance[i] = ''; // Weekend
+    } else {
+      if (rand < 5) attendance[i] = 'absent';
+      else if (rand < 15) attendance[i] = 'late';
+      else if (rand < 25) attendance[i] = 'vacation';
+      else attendance[i] = 'present';
+    }
+  }
+  return attendance;
+};
+
 const agents = [
   {
     id: 1, name: '박진호', dept: '상담 1팀', role: '시니어', stress: 88, status: '통화 중', avatar: '👨‍💼',
     phone: '010-3921-7025', email: 'jh.park@calmdesk.com', joinDate: '2021.11.15',
-    metrics: { csat: 4.2, aht: '4m 12s', attendance: 92, leave: 8, cooldowns: 12, alerts: 5, points: '2,120' }
+    metrics: { csat: 4.2, aht: '4m 12s', attendance: 92, leave: 8, cooldowns: 12, alerts: 5, points: '2,120' },
+    attendanceRecord: generateMockAttendance(1)
   },
   {
     id: 2, name: '이지은', dept: '상담 2팀', role: '상담원', stress: 82, status: '대기', avatar: '👩‍💼',
     phone: '010-4822-7042', email: 'je.lee@calmdesk.com', joinDate: '2023.02.01',
-    metrics: { csat: 4.5, aht: '3m 58s', attendance: 95, leave: 11, cooldowns: 8, alerts: 3, points: '3,400' }
+    metrics: { csat: 4.5, aht: '3m 58s', attendance: 95, leave: 11, cooldowns: 8, alerts: 3, points: '3,400' },
+    attendanceRecord: generateMockAttendance(2)
   },
   {
     id: 3, name: '강동원', dept: '상담 1팀', role: '상담원', stress: 79, status: '식사 중', avatar: '👨‍💻',
     phone: '010-5811-7103', email: 'dw.kang@calmdesk.com', joinDate: '2022.08.20',
-    metrics: { csat: 3.9, aht: '5m 05s', attendance: 89, leave: 5.5, cooldowns: 15, alerts: 4, points: '1,850' }
+    metrics: { csat: 3.9, aht: '5m 05s', attendance: 89, leave: 5.5, cooldowns: 15, alerts: 4, points: '1,850' },
+    attendanceRecord: generateMockAttendance(3)
   },
   {
     id: 4, name: '김태리', dept: '상담 3팀', role: '상담원', stress: 75, status: '통화 중', avatar: '👩‍🔬',
     phone: '010-6721-7118', email: 'tr.kim@calmdesk.com', joinDate: '2023.01.10',
-    metrics: { csat: 4.7, aht: '3m 30s', attendance: 100, leave: 18, cooldowns: 1, alerts: 1, points: '5,200' }
+    metrics: { csat: 4.7, aht: '3m 30s', attendance: 100, leave: 18, cooldowns: 1, alerts: 1, points: '5,200' },
+    attendanceRecord: generateMockAttendance(4)
   },
   {
     id: 5, name: '최우식', dept: '상담 2팀', role: '상담원', stress: 72, status: '대기', avatar: '🧔',
     phone: '010-7214-7150', email: 'ws.choi@calmdesk.com', joinDate: '2022.12.05',
-    metrics: { csat: 4.1, aht: '4m 45s', attendance: 94, leave: 12, cooldowns: 6, alerts: 2, points: '2,900' }
+    metrics: { csat: 4.1, aht: '4m 45s', attendance: 94, leave: 12, cooldowns: 6, alerts: 2, points: '2,900' },
+    attendanceRecord: generateMockAttendance(5)
   },
   {
     id: 6, name: '한소희', dept: '상담 3팀', role: '상담원', stress: 65, status: '업무 중', avatar: '👩‍🎨',
     phone: '010-8123-7200', email: 'sh.han@calmdesk.com', joinDate: '2024.01.15',
-    metrics: { csat: 4.9, aht: '3m 20s', attendance: 99, leave: 15, cooldowns: 0, alerts: 0, points: '1,200' }
+    metrics: { csat: 4.9, aht: '3m 20s', attendance: 99, leave: 15, cooldowns: 0, alerts: 0, points: '1,200' },
+    attendanceRecord: generateMockAttendance(6)
   },
   {
     id: 7, name: '조정석', dept: '상담 1팀', role: '팀장', stress: 58, status: '업무 중', avatar: '👨‍🎨',
     phone: '010-1234-5678', email: 'js.jo@calmdesk.com', joinDate: '2020.03.10',
-    metrics: { csat: 4.8, aht: '3m 50s', attendance: 98, leave: 14, cooldowns: 2, alerts: 0, points: '5,800' }
+    metrics: { csat: 4.8, aht: '3m 50s', attendance: 98, leave: 14, cooldowns: 2, alerts: 0, points: '5,800' },
+    attendanceRecord: generateMockAttendance(7)
   },
 ];
 
@@ -360,68 +390,57 @@ const AdminDashboard = () => {
                   <S.StressWidget>
                     <S.WidgetHeader>
                       <p>
-                        <Activity size={12} color="#818cf8" />
-                        실시간 스트레스 지표
+                        <Calendar size={12} color="#818cf8" />
+                        근태 현황 (2026.01)
                       </p>
-                      <S.BadgeSmall>{selectedMember.stress > 60 ? '주의 필요' : '정상 범위'}</S.BadgeSmall>
+                      <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.625rem', color: '#64748b', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'rgba(34, 197, 94, 0.2)' }}></div>
+                          출근
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'rgba(245, 158, 11, 0.2)' }}></div>
+                          지각
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'rgba(244, 63, 94, 0.2)' }}></div>
+                          결근
+                        </div>
+                      </div>
                     </S.WidgetHeader>
-                    <S.StressValue>
-                      <span>{selectedMember.stress}</span>
-                      <span>%</span>
-                    </S.StressValue>
-                    <S.ProgressBar>
-                      <div style={{ width: `${selectedMember.stress}%` }} />
-                    </S.ProgressBar>
-                  </S.StressWidget>
+                    <S.CalendarGrid>
+                      {['일', '월', '화', '수', '목', '금', '토'].map(d => (
+                        <S.WeekDay key={d}>{d}</S.WeekDay>
+                      ))}
+                      {Array.from({ length: 31 }, (_, i) => {
+                        const day = i + 1;
+                        const status = selectedMember.attendanceRecord?.[day] || '';
 
-                  {/* 핵심 지표 섹션 */}
-                  <S.MetricsGrid>
-                    {/* 성과 포인트 */}
-                    <S.MetricCard>
-                      <S.MetricTitle>
-                        <S.MetricIcon color="amber">
-                          <Coins size={20} />
-                        </S.MetricIcon>
-                        <S.MetricName>성과 포인트</S.MetricName>
-                      </S.MetricTitle>
-                      <S.MetricValue color="amber">
-                        <p>{selectedMember.metrics.points}</p>
-                        <span>P</span>
-                      </S.MetricValue>
-                    </S.MetricCard>
-
-                    {/* 출근 달성률 */}
-                    <S.MetricCard>
-                      <S.MetricTitle>
-                        <S.MetricIcon color="emerald">
-                          <Trophy size={20} />
-                        </S.MetricIcon>
-                        <S.MetricName>출근 달성률</S.MetricName>
-                      </S.MetricTitle>
-                      <S.MetricValue color="emerald">
-                        <p>{selectedMember.metrics.attendance}</p>
-                        <span>%</span>
-                      </S.MetricValue>
-                    </S.MetricCard>
-
-                    {/* 쿨다운 누른 횟수 */}
-                    <S.MetricCard>
-                      <S.MetricTitle>
-                        <S.MetricIcon color="orange">
-                          <Zap size={20} />
-                        </S.MetricIcon>
-                        <S.MetricName>쿨다운 누른 횟수</S.MetricName>
-                      </S.MetricTitle>
-                      <S.MetricValue color="orange">
-                        <p>{selectedMember.metrics.cooldowns}</p>
-                        <span>회</span>
-                      </S.MetricValue>
-                    </S.MetricCard>
-                  </S.MetricsGrid>
+                        return (
+                          <S.DayCell key={day} status={status}>
+                            {day}
+                          </S.DayCell>
+                        );
+                      })}
+                    </S.CalendarGrid>
+                  </S.CalendarWidget>
                 </S.LeftColumn>
 
                 {/* 오른쪽 영역: 웰니스 및 이력 */}
                 <S.RightColumn>
+                  {/* Cooldown Stats */}
+                  <S.WellnessItem>
+                    <S.WellnessLeft>
+                      <S.WellnessIcon color="orange">
+                        <Zap size={18} />
+                      </S.WellnessIcon>
+                      <S.WellnessLabel>쿨다운 횟수</S.WellnessLabel>
+                    </S.WellnessLeft>
+                    <S.WellnessValue color="#fb923c">
+                      <p>{selectedMember.metrics.cooldowns}</p>
+                      <span>회</span>
+                    </S.WellnessValue>
+                  </S.WellnessItem>
                   {/* 웰니스 모니터링 */}
                   <S.WellnessSection>
                     <S.SectionTitle>

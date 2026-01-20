@@ -974,3 +974,60 @@ export const WellnessValue = styled.div`
     color: #475569;
   }
 `;
+
+/* Calendar Widget */
+export const CalendarWidget = styled.div`
+  background-color: rgba(255, 255, 255, 0.02);
+  padding: 1.25rem;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CalendarGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  text-align: center;
+  flex: 1;
+`;
+
+export const WeekDay = styled.div`
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DayCell = styled.div`
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  ${props => {
+    switch (props.status) {
+      case 'present': return 'background-color: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2);'; // Green
+      case 'late': return 'background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.2);'; // Amber
+      case 'absent': return 'background-color: rgba(244, 63, 94, 0.1); color: #fb7185; border-color: rgba(244, 63, 94, 0.2);'; // Rose
+      case 'vacation': return 'background-color: rgba(167, 139, 250, 0.1); color: #a78bfa; border-color: rgba(167, 139, 250, 0.2);'; // Violet
+      default: return '';
+    }
+  }}
+`;
