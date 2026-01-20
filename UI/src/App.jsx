@@ -9,6 +9,7 @@ import AdminTeamManagement from './pages/admin/TeamManagement/TeamManagement';
 import AdminMonitoring from './pages/admin/Monitoring/Monitoring';
 import AdminApplications from './pages/admin/Applications/Applications';
 import AdminGifticonManagement from './pages/admin/GifticonManagement/GifticonManagement';
+import PurchaseHistory from './pages/admin/GifticonManagement/PurchaseHistory/PurchaseHistory';
 import AdminMyPage from './pages/admin/MyPage/MyPage';
 // Settings was moved but not used in App.jsx previously? Check if it needs to be added or if it was omitted. 
 // Assuming it was not in the original App.jsx routes provided.
@@ -109,6 +110,7 @@ const App = () => {
                     <Route path="monitoring" element={<AdminMonitoring />} />
                     <Route path="applications" element={<AdminApplications />} />
                     <Route path="gifticons" element={<AdminGifticonManagement />} />
+                    <Route path="gifticons/history" element={<PurchaseHistory />} />
                     <Route path="mypage" element={<AdminMyPage />} />
                     <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>

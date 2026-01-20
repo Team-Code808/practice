@@ -32,12 +32,12 @@ import * as S from './Monitoring.styles';
 
 // Mock Data
 const trendData = [
-  { month: '10월', stress: 32, consultation: 140, cooldown: 45 },
-  { month: '11월', stress: 35, consultation: 165, cooldown: 52 },
-  { month: '12월', stress: 45, consultation: 210, cooldown: 78 },
-  { month: '1월', stress: 38, consultation: 180, cooldown: 65 },
-  { month: '2월', stress: 42, consultation: 195, cooldown: 58 },
-  { month: '3월', stress: 34, consultation: 172, cooldown: 48 },
+  { month: '8월', stress: 32, consultation: 140, cooldown: 45 },
+  { month: '9월', stress: 35, consultation: 165, cooldown: 52 },
+  { month: '10월', stress: 45, consultation: 210, cooldown: 78 },
+  { month: '11월', stress: 38, consultation: 180, cooldown: 65 },
+  { month: '12월', stress: 42, consultation: 195, cooldown: 58 },
+  { month: '1월', stress: 34, consultation: 172, cooldown: 48 },
 ];
 
 const distributionData = [
@@ -76,7 +76,7 @@ const AdminMonitoring = () => {
         </S.TitleBox>
         <S.HeaderControls>
           <S.PeriodButton>
-            2024년 1분기
+            2026년 1분기
             <ChevronDown size={14} />
           </S.PeriodButton>
           <S.PrintButton>분석 보고서 출력</S.PrintButton>

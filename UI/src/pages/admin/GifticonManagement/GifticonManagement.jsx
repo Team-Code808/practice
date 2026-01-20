@@ -1,10 +1,13 @@
-import React from 'react';
-import { Gift, CheckCircle2, XCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Gift, CheckCircle2, XCircle, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import useStore from '../../../store/useStore';
 import * as S from './GifticonManagement.styles';
 
 const AdminGifticonManagement = () => {
-    const { items, toggleItemStatus, activateAll, deactivateAll } = useStore();
+    const navigate = useNavigate();
+    const { items, toggleItemStatus, activateAll, deactivateAll, updateItemQuantity } = useStore();
+    const [editingQuantity, setEditingQuantity] = useState({});
 
     return (
         <S.Container>
@@ -13,16 +16,20 @@ const AdminGifticonManagement = () => {
                     <Gift size={32} />
                     기프티콘 관리
                 </S.Title>
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <S.ButtonGroup>
+                    <S.BulkButton onClick={() => navigate('/app/gifticons/history')}>
+                        <ShoppingBag size={18} />
+                        구매 내역
+                    </S.BulkButton>
                     <S.BulkButton onClick={activateAll} variant="activate">
-                        <CheckCircle2 size={20} />
+                        <CheckCircle2 size={18} />
                         전체 활성화
                     </S.BulkButton>
                     <S.BulkButton onClick={deactivateAll} variant="deactivate">
-                        <XCircle size={20} />
+                        <XCircle size={18} />
                         전체 비활성화
                     </S.BulkButton>
-                </div>
+                </S.ButtonGroup>
             </S.PageHeader>
 
             <S.Grid>
@@ -35,6 +42,57 @@ const AdminGifticonManagement = () => {
                             <S.ItemName>{item.name}</S.ItemName>
                             <S.ItemPrice><span>{item.price}</span> P</S.ItemPrice>
                         </S.ItemInfo>
+
+                        <S.QuantityRow>
+                            <S.QuantityLabel>수량</S.QuantityLabel>
+                            <S.QuantityControls>
+                                <S.QuantityButton
+                                    onClick={() => updateItemQuantity(item.id, (item.quantity || 0) - 1)}
+                                    disabled={(item.quantity || 0) <= 0}
+                                >
+                                    <Minus size={14} />
+                                </S.QuantityButton>
+                                {editingQuantity[item.id] !== undefined ? (
+                                    <S.QuantityInput
+                                        type="number"
+                                        min="0"
+                                        value={editingQuantity[item.id]}
+                                        onChange={(e) => {
+                                            const value = parseInt(e.target.value) || 0;
+                                            setEditingQuantity({ ...editingQuantity, [item.id]: value });
+                                        }}
+                                        onBlur={() => {
+                                            const value = Math.max(0, editingQuantity[item.id] || 0);
+                                            updateItemQuantity(item.id, value);
+                                            setEditingQuantity({ ...editingQuantity, [item.id]: undefined });
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                const value = Math.max(0, editingQuantity[item.id] || 0);
+                                                updateItemQuantity(item.id, value);
+                                                setEditingQuantity({ ...editingQuantity, [item.id]: undefined });
+                                                e.target.blur();
+                                            } else if (e.key === 'Escape') {
+                                                setEditingQuantity({ ...editingQuantity, [item.id]: undefined });
+                                                e.target.blur();
+                                            }
+                                        }}
+                                        autoFocus
+                                    />
+                                ) : (
+                                    <S.QuantityValue
+                                        onClick={() => setEditingQuantity({ ...editingQuantity, [item.id]: item.quantity || 0 })}
+                                    >
+                                        {item.quantity || 0}
+                                    </S.QuantityValue>
+                                )}
+                                <S.QuantityButton
+                                    onClick={() => updateItemQuantity(item.id, (item.quantity || 0) + 1)}
+                                >
+                                    <Plus size={14} />
+                                </S.QuantityButton>
+                            </S.QuantityControls>
+                        </S.QuantityRow>
 
                         <S.StatusRow>
                             <S.StatusBadge active={item.isActive}>

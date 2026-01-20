@@ -15,7 +15,7 @@ const MainLayout = ({ children }) => {
             </S.MainContent>
             <S.Footer $admin={isAdminMode}>
                 <S.FooterContent>
-                    <p>© 2024 Calm Desk Admin Suite. All rights reserved.</p>
+                    <p>© 2026 Calm Desk Admin Suite. All rights reserved.</p>
                     <FooterLinks />
                 </S.FooterContent>
             </S.Footer>

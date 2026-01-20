@@ -263,16 +263,34 @@ export const ItemInfo = styled.div`
   }
 `;
 
+export const QuantityInfo = styled.p`
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  
+  span {
+    color: #3b82f6;
+    font-weight: 700;
+  }
+`;
+
 export const ExchangeButton = styled.button`
   width: 100%;
   margin-top: 1rem;
   padding: 0.625rem;
-  background-color: #f8fafc;
-  color: #94a3b8;
+  background-color: ${props => props.disabled ? '#f1f5f9' : '#f8fafc'};
+  color: ${props => props.disabled ? '#cbd5e1' : '#94a3b8'};
   border-radius: 0.75rem;
   font-size: 0.75rem; /* xs */
   font-weight: 900;
   transition: all 0.2s;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  
+  &:hover:not(:disabled) {
+    background-color: #f59e0b;
+    color: white;
+  }
 `;
 
 /* Missions Section */

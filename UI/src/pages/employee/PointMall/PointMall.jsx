@@ -19,7 +19,7 @@ import * as S from './PointMall.styles';
 import useStore from '../../../store/useStore';
 
 const PointMall = () => {
-    const { items: shopItems } = useStore();
+    const { items: shopItems, addPurchaseHistory, user } = useStore();
     const [pointMallTab, setPointMallTab] = useState('MISSIONS');
     const [selectedItem, setSelectedItem] = useState(null);
     const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
@@ -94,9 +94,21 @@ const PointMall = () => {
     };
 
     const handleConfirmPurchase = () => {
-        alert(`${selectedItem.name} 교환이 완료되었습니다!\n(포인트가 차감되었습니다)`);
-        setIsPurchaseModalOpen(false);
-        setSelectedItem(null);
+        if (selectedItem && user) {
+            // 구매 내역 저장
+            addPurchaseHistory(
+                selectedItem.id,
+                user.id || user.userId || 'unknown',
+                user.name || user.userName || '알 수 없음',
+                selectedItem.name,
+                selectedItem.price,
+                selectedItem.img
+            );
+            
+            alert(`${selectedItem.name} 교환이 완료되었습니다!\n(포인트가 차감되었습니다)`);
+            setIsPurchaseModalOpen(false);
+            setSelectedItem(null);
+        }
     };
 
     const handleMissionClick = (id) => {
@@ -188,9 +200,15 @@ const PointMall = () => {
                                         <S.ItemInfo>
                                             <h3>{item.name}</h3>
                                             <p>{item.price} <span>P</span></p>
+                                            <S.QuantityInfo>
+                                                남은 수량: <span>{item.quantity || 0}개</span>
+                                            </S.QuantityInfo>
                                         </S.ItemInfo>
-                                        <S.ExchangeButton onClick={() => handlePurchaseClick(item)}>
-                                            교환하기
+                                        <S.ExchangeButton 
+                                            onClick={() => handlePurchaseClick(item)}
+                                            disabled={!item.quantity || item.quantity <= 0}
+                                        >
+                                            {(!item.quantity || item.quantity <= 0) ? '품절' : '교환하기'}
                                         </S.ExchangeButton>
                                     </S.ItemCard>
                                 ))}
