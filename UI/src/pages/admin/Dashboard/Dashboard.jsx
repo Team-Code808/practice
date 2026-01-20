@@ -19,7 +19,6 @@ import {
   Palmtree,
   Calendar,
   Zap,
-  Coins,
   MessageCircle
 } from 'lucide-react';
 import {
@@ -53,19 +52,18 @@ const deptCooldownData = [
   { dept: '기술지원', count: 2 },
 ];
 
-// Helper to generate mock attendance data
+// 근태 데이터 생성 헬퍼 함수
 const generateMockAttendance = (seed) => {
   const attendance = {};
   for (let i = 1; i <= 31; i++) {
-    // Basic pattern based on seed to make them different
     const rand = (seed + i * 7) % 100;
 
-    // Weekends (Jan 1, 2026 is Thursday)
-    // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+    // 주말 (2026년 1월 1일은 목요일)
+    // 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토
     const dayOfWeek = (i + 3) % 7; // (1+3)%7 = 4 (Thu)
 
     if (dayOfWeek === 0 || dayOfWeek === 6) {
-      attendance[i] = ''; // Weekend
+      attendance[i] = ''; // 주말
     } else {
       if (rand < 5) attendance[i] = 'absent';
       else if (rand < 15) attendance[i] = 'late';
@@ -125,7 +123,7 @@ const departments = ['전체', '상담 1팀', '상담 2팀', '상담 3팀'];
 
 const AdminDashboard = () => {
   const [selectedDept, setSelectedDept] = useState('전체');
-  const [chartType, setChartType] = useState('stress'); // 'stress' | 'cooldown'
+  const [chartType, setChartType] = useState('stress'); // 'stress' 또는 'cooldown'
   const [selectedMember, setSelectedMember] = useState(null);
 
   const filteredAgents = agents

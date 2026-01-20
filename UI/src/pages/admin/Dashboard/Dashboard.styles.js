@@ -1,6 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 
-// Animations
+// 애니메이션
 const slideInBottom = keyframes`
   from { opacity: 0; transform: translateY(1rem); }
   to { opacity: 1; transform: translateY(0); }
@@ -13,7 +13,7 @@ export const Container = styled.div`
   animation: ${slideInBottom} 0.7s ease-out;
 `;
 
-/* Admin Quick Banner */
+/* 관리자 퀵 배너 */
 export const QuickBanner = styled.div`
   background-color: #4f46e5; /* indigo-600 */
   padding: 1.5rem;
@@ -99,7 +99,7 @@ export const BannerDecor = styled.div`
   pointer-events: none;
 `;
 
-/* Stats Grid */
+/* 통계 그리드 */
 export const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -171,7 +171,7 @@ export const TrendText = styled.p`
   ${props => props.trendType === 'neutral' && 'color: #64748b;'}
 `;
 
-/* Main Content Grid */
+/* 메인 콘텐츠 그리드 */
 export const MainGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -182,7 +182,7 @@ export const MainGrid = styled.div`
   }
 `;
 
-/* Weekly Chart Section */
+/* 주간 차트 섹션 */
 export const ChartSection = styled.div`
   background-color: #1e293b;
   border: 1px solid rgba(51, 65, 85, 0.5);
@@ -270,7 +270,7 @@ export const ChartWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-/* High Stress Section */
+/* 스트레스 고위험군 섹션 */
 export const TopListSection = styled.div`
   background-color: #1e293b;
   border: 1px solid rgba(51, 65, 85, 0.5);
@@ -322,9 +322,9 @@ export const TabButton = styled.button`
   transition: all 0.2s;
   
   ${props => props.active
-        ? 'background-color: #334155; color: #818cf8; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);'
-        : 'color: #64748b; &:hover { color: #cbd5e1; }'
-    }
+    ? 'background-color: #334155; color: #818cf8; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);'
+    : 'color: #64748b; &:hover { color: #cbd5e1; }'
+  }
 `;
 
 export const AgentList = styled.div`
@@ -457,7 +457,7 @@ export const DetailButton = styled.button`
   }
 `;
 
-// Animations
+// 애니메이션
 const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
@@ -468,7 +468,7 @@ const zoomIn = keyframes`
   to { opacity: 1; transform: scale(1); }
 `;
 
-/* Modal Styles */
+/* 모달 스타일 */
 export const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;
@@ -654,7 +654,7 @@ export const CloseModalButton = styled.button`
   &:hover { color: white; background-color: rgba(0, 0, 0, 0.4); }
 `;
 
-/* Detail Content */
+/* 상세 내용 콘텐츠 */
 export const DetailContent = styled.div`
   flex: 1;
   padding: 1.5rem;
@@ -699,7 +699,7 @@ export const RightColumn = styled.div`
   }
 `;
 
-/* Stress Bar Widget */
+/* 스트레스 바 위젯 */
 export const StressWidget = styled.div`
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1.25rem;
@@ -768,7 +768,7 @@ export const ProgressBar = styled.div`
   }
 `;
 
-/* Key Metrics Grid */
+/* 주요 지표 그리드 */
 export const MetricsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
