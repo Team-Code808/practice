@@ -12,7 +12,6 @@ import {
   Copy,
   Check,
   User as UserIcon,
-  Briefcase,
   ArrowLeft,
   Save
 } from 'lucide-react';
@@ -251,12 +250,6 @@ const AdminMyPage = () => {
                 </S.ItemLeft>
                 <ChevronRight size={16} color="#334155" />
               </S.SettingsItem>
-
-              {/* Dark Mode Toggle */}
-
-
-
-
             </S.SettingsList>
           </S.SettingsCard>
         </S.RightCol>

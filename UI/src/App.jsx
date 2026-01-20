@@ -50,21 +50,6 @@ const App = () => {
   const handleFeatureDetails = () => navigate('/features');
   const handleBackToLanding = () => navigate('/');
 
-  const AdminPlaceholder = ({ icon: Icon, title, description }) => (
-    <S.PlaceholderContainer>
-      <S.PlaceholderIconBox $mode="admin">
-        <Icon />
-      </S.PlaceholderIconBox>
-      <S.PlaceholderText $mode="admin">
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </S.PlaceholderText>
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <S.Badge>Coming Soon</S.Badge>
-      </div>
-    </S.PlaceholderContainer>
-  );
-
   const StatusPlaceholder = ({ icon: Icon, title, description }) => (
     <S.PlaceholderContainer>
       <S.PlaceholderIconBox>

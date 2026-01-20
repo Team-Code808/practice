@@ -59,15 +59,4 @@ export const PlaceholderText = styled.div`
   }
 `;
 
-export const Badge = styled.div`
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.625rem; /* 10px */
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  
-  background-color: rgba(99, 102, 241, 0.1); /* indigo-500/10 */
-  color: #818cf8; /* indigo-400 */
-  border: 1px solid rgba(99, 102, 241, 0.2);
-`;
+
