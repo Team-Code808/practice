@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   ClipboardList,
   Plane,
@@ -13,6 +13,22 @@ import {
   UserPlus
 } from 'lucide-react';
 import * as S from './Applications.styles';
+
+const LEAVE_REQUESTS = [
+  { id: 1, name: '정태양', dept: '상담 1팀', type: '연차', period: '2026.01.25 - 01.26', status: '대기', reason: '가족 모임 참석', day: 25, avatar: '🧔' },
+  { id: 2, name: '서예진', dept: '상담 3팀', type: '반차', period: '2026.01.22 (오후)', status: '대기', reason: '병원 정기 검진', day: 22, avatar: '👩‍🎨' },
+  { id: 3, name: '이민수', dept: '상담 1팀', type: '연차', period: '2026.01.15', status: '승인', reason: '개인 사유', day: 15, avatar: '👨‍💼' },
+  { id: 4, name: '김지아', dept: '상담 2팀', type: '반차', period: '2026.01.12 (오전)', status: '반려', reason: '업무 폭주 기간', day: 12, avatar: '👩‍💼' },
+  { id: 5, name: '박진호', dept: '상담 1팀', type: '연차', period: '2026.01.25', status: '승인', reason: '개인 휴식', day: 25, avatar: '👨‍💻' },
+  { id: 6, name: '최우식', dept: '상담 2팀', type: '연차', period: '2026.01.22', status: '대기', reason: '이사 준비', day: 22, avatar: '👨‍🎨' },
+  { id: 7, name: '이수민', dept: '개발팀', type: '워케이션', period: '2026.01.27 - 01.28', status: '대기', reason: '제주도 워케이션 근무', day: 27, avatar: '👩‍💻' },
+];
+
+const CONSULTATION_REQUESTS = [
+  { id: 101, name: '박진호', dept: '상담 1팀', type: '긴급 상담', time: '2026.01.21 14:30', status: '대기', message: '악성 민원으로 인한 멘탈 케어 필요', day: 21 },
+  { id: 102, name: '이지은', dept: '상담 2팀', type: '일반 상담', time: '2026.01.21 15:00', status: '대기', message: '직무 스트레스 및 진로 상담', day: 21 },
+  { id: 103, name: '강동원', dept: '상담 1팀', type: '일반 상담', time: '2026.01.20 11:00', status: '승인', message: '업무 조정 관련 면담', day: 20 },
+];
 
 const AdminApplications = () => {
   const [activeSubTab, setActiveSubTab] = useState('LEAVE');
@@ -60,46 +76,28 @@ const AdminApplications = () => {
     setSelectedRequest(null);
   };
 
-  const leaveRequests = [
-    { id: 1, name: '정태양', dept: '상담 1팀', type: '연차', period: '2026.01.25 - 01.26', status: '대기', reason: '가족 모임 참석', day: 25, avatar: '🧔' },
-    { id: 2, name: '서예진', dept: '상담 3팀', type: '반차', period: '2026.01.22 (오후)', status: '대기', reason: '병원 정기 검진', day: 22, avatar: '👩‍🎨' },
-    { id: 3, name: '이민수', dept: '상담 1팀', type: '연차', period: '2026.01.15', status: '승인', reason: '개인 사유', day: 15, avatar: '👨‍💼' },
-    { id: 4, name: '김지아', dept: '상담 2팀', type: '반차', period: '2026.01.12 (오전)', status: '반려', reason: '업무 폭주 기간', day: 12, avatar: '👩‍💼' },
-    { id: 5, name: '박진호', dept: '상담 1팀', type: '연차', period: '2026.01.25', status: '승인', reason: '개인 휴식', day: 25, avatar: '👨‍💻' },
-    { id: 6, name: '최우식', dept: '상담 2팀', type: '연차', period: '2026.01.22', status: '대기', reason: '이사 준비', day: 22, avatar: '👨‍🎨' },
-    { id: 7, name: '이수민', dept: '개발팀', type: '워케이션', period: '2026.01.27 - 01.28', status: '대기', reason: '제주도 워케이션 근무', day: 27, avatar: '👩‍💻' },
-  ];
-
-  const consultationRequests = [
-    { id: 101, name: '박진호', dept: '상담 1팀', type: '긴급 상담', time: '2026.01.21 14:30', status: '대기', message: '악성 민원으로 인한 멘탈 케어 필요', day: 21 },
-    { id: 102, name: '이지은', dept: '상담 2팀', type: '일반 상담', time: '2026.01.21 15:00', status: '대기', message: '직무 스트레스 및 진로 상담', day: 21 },
-    { id: 103, name: '강동원', dept: '상담 1팀', type: '일반 상담', time: '2026.01.20 11:00', status: '완료', message: '업무 조정 관련 면담', day: 20 },
-  ];
-
-  const getFilteredList = () => {
+  const filteredList = useMemo(() => {
     let list = [];
-    if (activeSubTab === 'LEAVE') list = leaveRequests;
-    else if (activeSubTab === 'CONSULTATION') list = consultationRequests;
+    if (activeSubTab === 'LEAVE') list = LEAVE_REQUESTS;
+    else if (activeSubTab === 'CONSULTATION') list = CONSULTATION_REQUESTS;
     else if (activeSubTab === 'JOIN') list = joinRequests;
 
-    return list.filter(req => {
-      if (statusFilter === '전체') return true;
-      return req.status === statusFilter;
-    });
-  };
+    if (statusFilter === '전체') return list;
+    return list.filter(req => req.status === statusFilter);
+  }, [activeSubTab, statusFilter, joinRequests]);
 
   const calendarGrid = Array.from({ length: 35 }, (_, i) => {
     const day = i - 5 + 1;
     if (day <= 0 || day > 31) return null;
-    const leaves = leaveRequests.filter(l => l.day === day);
-    const consults = consultationRequests.filter(c => c.day === day);
+    const leaves = LEAVE_REQUESTS.filter(l => l.day === day);
+    const consults = CONSULTATION_REQUESTS.filter(c => c.day === day);
     return { day, leaves, consults };
   });
 
   const getRequestsForSelectedDay = () => {
     if (selectedDay === null) return [];
-    const leaves = leaveRequests.filter(l => l.day === selectedDay).map(l => ({ ...l, category: 'LEAVE' }));
-    const consults = consultationRequests.filter(c => c.day === selectedDay).map(c => ({ ...c, category: 'CONSULTATION' }));
+    const leaves = LEAVE_REQUESTS.filter(l => l.day === selectedDay).map(l => ({ ...l, category: 'LEAVE' }));
+    const consults = CONSULTATION_REQUESTS.filter(c => c.day === selectedDay).map(c => ({ ...c, category: 'CONSULTATION' }));
     return [...leaves, ...consults];
   };
 
@@ -233,8 +231,12 @@ const AdminApplications = () => {
                 {['전체', '대기', '승인', '반려'].map(status => (
                   <S.FilterChip
                     key={status}
+                    type="button"
                     active={statusFilter === status}
-                    onClick={() => setStatusFilter(status)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setStatusFilter(status);
+                    }}
                   >
                     {status}
                   </S.FilterChip>
@@ -243,7 +245,7 @@ const AdminApplications = () => {
             </S.ListHeader>
 
             <S.ScrollList>
-              {getFilteredList().map((req, idx) => (
+              {filteredList.map((req, idx) => (
                 <S.ListItem
                   key={req.id || idx}
                   onClick={() => setSelectedRequest(req)}
@@ -268,7 +270,7 @@ const AdminApplications = () => {
                   </S.ItemBottom>
                 </S.ListItem>
               ))}
-              {getFilteredList().length === 0 && (
+              {filteredList.length === 0 && (
                 <S.EmptyList>내역이 없습니다.</S.EmptyList>
               )}
             </S.ScrollList>
@@ -317,17 +319,18 @@ const AdminApplications = () => {
                   </S.DetailHeader>
 
                   <S.ContentBox>
-                    <p>
-                      {req.type === '입사 신청' ? '신청 정보' : '사유 / 메시지'}
-                    </p>
-                    <p>
-                      {req.reason || req.message || '입력된 상세 내용이 없습니다.'}
-                    </p>
-                    {req.type === '입사 신청' && (
-                      <S.JoinInfo>
-                        <p>연락처: {req.phone}</p>
-                        <p>입사희망일: {req.joinDate}</p>
-                      </S.JoinInfo>
+                    {req.type === '입사 신청' ? (
+                      <>
+                        <S.JoinInfo style={{ marginTop: 0, paddingTop: 0, borderTop: 'none' }}>
+                          <p>지원 직급: {req.position}</p>
+                          <p>연락처: {req.phone}</p>
+                        </S.JoinInfo>
+                      </>
+                    ) : (
+                      <>
+                        <p>사유 / 메시지</p>
+                        <p>{req.reason || req.message || '입력된 상세 내용이 없습니다.'}</p>
+                      </>
                     )}
                   </S.ContentBox>
 
