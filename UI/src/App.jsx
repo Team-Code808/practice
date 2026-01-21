@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import useStore from './store/useStore';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+
 import MainLayout from './layouts/MainLayout/MainLayout';
 
 // Admin Pages
@@ -8,8 +9,6 @@ import AdminDashboard from './pages/admin/Dashboard/Dashboard';
 import AdminTeamManagement from './pages/admin/TeamManagement/TeamManagement';
 import AdminMonitoring from './pages/admin/Monitoring/Monitoring';
 import AdminApplications from './pages/admin/Applications/Applications';
-import AdminGifticonManagement from './pages/admin/GifticonManagement/GifticonManagement';
-import PurchaseHistory from './pages/admin/GifticonManagement/PurchaseHistory/PurchaseHistory';
 import AdminMyPage from './pages/admin/MyPage/MyPage';
 // Settings was moved but not used in App.jsx previously? Check if it needs to be added or if it was omitted. 
 // Assuming it was not in the original App.jsx routes provided.
@@ -31,6 +30,7 @@ import AuthPage from './pages/auth/Login/Login';
 import NotFound from './pages/common/NotFound/NotFound';
 
 import { NavItemType, UserRole } from './constants/types';
+
 import {
   ShieldAlert,
   Lock,
@@ -39,8 +39,10 @@ import {
 } from 'lucide-react';
 import * as S from './App.styles';
 
+
 const ProtectedRoute = ({ children }) => {
   const user = useStore((state) => state.user);
+
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -48,12 +50,14 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
+
   const { user, isAdminMode } = useStore();
   const navigate = useNavigate();
 
   const handleStart = () => navigate('/auth');
   const handleFeatureDetails = () => navigate('/features');
   const handleBackToLanding = () => navigate('/');
+
 
   const AdminPlaceholder = ({ icon: Icon, title, description }) => (
     <S.PlaceholderContainer>
@@ -88,10 +92,12 @@ const App = () => {
       <Route path="/features" element={<FeatureDetails onBack={handleBackToLanding} onStart={handleStart} />} />
       <Route path="/auth" element={<AuthPage />} />
 
+
       {/* Search Engine & Shortcut Redirects */}
       <Route path="/login" element={<Navigate to="/auth" replace />} />
       <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
       <Route path="/admin" element={<Navigate to="/app/dashboard" replace />} />
+
 
       <Route path="/app/*" element={
         <ProtectedRoute>
@@ -109,8 +115,7 @@ const App = () => {
                     <Route path="users" element={<AdminTeamManagement />} />
                     <Route path="monitoring" element={<AdminMonitoring />} />
                     <Route path="applications" element={<AdminApplications />} />
-                    <Route path="gifticons" element={<AdminGifticonManagement />} />
-                    <Route path="gifticons/history" element={<PurchaseHistory />} />
+                    {/* v zvzsdvava */}
                     <Route path="mypage" element={<AdminMyPage />} />
                     <Route path="*" element={<Navigate to="/app/dashboard" replace />} />
                   </>
