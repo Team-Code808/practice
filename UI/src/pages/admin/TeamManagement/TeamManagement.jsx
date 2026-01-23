@@ -263,6 +263,10 @@ const AdminTeamManagement = () => {
                     <Calendar />
                     <span>{selectedMember.joinDate} 입사</span>
                   </S.ContactChip>
+                  <S.ContactChip>
+                    <Palmtree size={14} />
+                    <span>잔여 연차: {selectedMember.metrics.leave}일</span>
+                  </S.ContactChip>
                 </S.ContactRow>
               </S.ModalInfo>
 
